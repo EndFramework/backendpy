@@ -22,6 +22,10 @@ Python 3.8+
 ```shell
 $ pip3 install backendpy
 ```
+Or use the following command to install optional additional libraries:
+```shell
+$ pip3 install backendpy[full]
+```
 You also need to install an ASGI server such as Uvicorn, Hypercorn or Daphne:
 ```shell
 $ pip3 install uvicorn
