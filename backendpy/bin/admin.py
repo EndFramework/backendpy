@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 import sys
 import argparse
@@ -16,20 +14,21 @@ except ImportError:
 LOGGER = logging.getLogger(__name__)
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(prog='backendpy', allow_abbrev=False)
     sub_parser = parser.add_subparsers(dest='command')
 
     create_project = sub_parser.add_parser('create_project')
-    init_project = sub_parser.add_parser('init_project')
-    create_app = sub_parser.add_parser('create_app')
-    create_db = sub_parser.add_parser('create_db')
-
     create_project.add_argument('-n', '--name', type=str, required=True)
     create_project.add_argument('-f', '--full', action='store_true', default=False)
 
+    sub_parser.add_parser('init_project')
+
+    create_app = sub_parser.add_parser('create_app')
     create_app.add_argument('-n', '--name', type=str, required=True)
     create_app.add_argument('-f', '--full', action='store_true', default=False)
+
+    sub_parser.add_parser('create_db')
 
     args = parser.parse_args()
 
@@ -263,23 +262,23 @@ active =
                  ),
                 (os.path.join(project_module_path, 'asgi.py'), 0o644,
                  '''from backendpy.app import Backendpy
-                 
+
 app = Backendpy()
-  
+
 '''),
                 (os.path.join(project_module_path, 'backendpy.sh'), 0o744,
                  '''# export BACKENDPY_ENV = dev
 # gunicorn asgi:app -w 4 -k uvicorn.workers.UvicornWorker
 uvicorn asgi:app --host '127.0.0.1' --port 8000
-                 
+
 '''),
                 (os.path.join(project_module_path, 'apps', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'main.py'), 0o644,
                  '''from backendpy.app import App
 from .controllers.api import routes
-                 
-                 
+
+
 app = App(
     routes=[routes])
 
@@ -288,10 +287,10 @@ app = App(
                 (os.path.join(project_module_path, 'apps', 'hello', 'controllers', 'api.py'), 0o644,
                  '''from backendpy.router import Routes
 from backendpy.response import response
-                 
+
 routes = Routes()
-                 
-                 
+
+
 @routes.uri(r'^/hello-world$', ['GET'])
 async def hello(request):
     return response.Text('Hello World!')
@@ -350,10 +349,10 @@ app = App(
                 (os.path.join(app_path, 'controllers', 'api.py'), 0o644,
                  '''from backendpy.router import Routes
 from backendpy.response.formatted import Success
-                 
+
 routes = Routes()
-                 
-                 
+
+
 @routes.uri(r'^/hello-world$', ['GET'])
 async def hello(request):
     return Success('Hello World!')
@@ -363,10 +362,10 @@ async def hello(request):
                  '''from backendpy.router import Routes
 from backendpy.response.response import HTML
 from backendpy.templates import Template
-                 
+
 routes = Routes()
-                 
-                 
+
+
 @routes.uri(r'^/home$', ['GET'])
 async def home(request):
     context = {'message': 'Hello World!'}
@@ -376,12 +375,12 @@ async def home(request):
                 (os.path.join(app_path, 'controllers', 'hooks.py'), 0o644,
                  '''from backendpy.hook import Hooks
 from backendpy.logging import logging
-                 
+
 LOGGER = logging.getLogger(__name__)
-                 
+
 hooks = Hooks()
-                 
-                 
+
+
 @hooks.event('startup')
 async def hello():
     LOGGER.info("Hello World!")
@@ -390,7 +389,7 @@ async def hello():
                 (os.path.join(app_path, 'controllers', 'errors.py'), 0o644,
                  '''from backendpy.response.formatted import ErrorList, ErrorCode
 from backendpy.response.response import Status
-                 
+
 errors = ErrorList(
     ErrorCode(2000, "Example server error!", Status.INTERNAL_SERVER_ERROR),
     ErrorCode(2001, "Example bad request error!", Status.BAD_REQUEST),
@@ -430,8 +429,8 @@ errors = ErrorList(
                 (os.path.join(app_path, 'main.py'), 0o644,
                  '''from backendpy.app import App
 from .controllers.api import routes
-                 
-                 
+
+
 app = App(
     routes=[routes])
 
@@ -440,10 +439,10 @@ app = App(
                 (os.path.join(app_path, 'controllers', 'api.py'), 0o644,
                  '''from backendpy.router import Routes
 from backendpy.response import response
-                 
+
 routes = Routes()
-                 
-                 
+
+
 @routes.uri(r'^/hello-world$', ['GET'])
 async def hello(request):
     return response.Text('Hello World!')
@@ -462,4 +461,3 @@ async def hello(request):
             exit()
         finally:
             LOGGER.info(f"Backendpy app created successfully!")
-
