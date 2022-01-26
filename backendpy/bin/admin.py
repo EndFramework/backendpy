@@ -61,78 +61,52 @@ def main():
 f'''; Backendpy Configurations
 
 [networking]
-allowed_hosts =
-    127.0.0.1
-    localhost
 stream_size = 32768
 
 [environment]
 media_path = {os.path.join(project_path, 'media')}
 
-[logs]
-logging = True
-log_level = error
-log_path = /var/log/backendpy
-
 [apps]
 active =
-    backendpy_accounts
-    backendpy_contents
     {project_name}.apps.hello
+;   backendpy_accounts
 
-[middlewares]
-active =
-    backendpy_accounts.middleware.auth.AuthMiddleware
+;[middlewares]
+;active =
+;    backendpy_accounts.middleware.auth.AuthMiddleware
 
-[database]
-host = localhost
-port = 5432
-name = {project_name}
-username = postgres
-password = 
-
-[keys]
-aes_key = 11111111111111111111111111111111
-auth_tokens_secret = 2222222222222222222222222222
+;[database]
+;host = localhost
+;port = 5432
+;name = {project_name}
+;username = 
+;password = 
 
 '''),
                 (os.path.join(project_module_path, 'config.dev.ini'), 0o600,
 f'''; Backendpy Configurations
 
 [networking]
-allowed_hosts =
-    127.0.0.1
-    localhost
 stream_size = 32768
 
 [environment]
 media_path = {os.path.join(project_path, 'media', 'dev')}
 
-[logs]
-logging = True
-log_level = debug
-log_path = /var/log/backendpy/dev
-
 [apps]
 active =
-    backendpy_accounts
-    backendpy_contents
     {project_name}.apps.hello
+;   backendpy_accounts
 
-[middlewares]
-active =
-    backendpy_accounts.middleware.auth.AuthMiddleware
+;[middlewares]
+;active =
+;    backendpy_accounts.middleware.auth.AuthMiddleware
 
-[database]
-host = localhost
-port = 5432
-name = {project_name}_dev
-username = postgres
-password = 
-
-[keys]
-aes_key = 11111111111111111111111111111111
-auth_tokens_secret = 2222222222222222222222222222
+;[database]
+;host = localhost
+;port = 5432
+;name = {project_name}_dev
+;username = 
+;password = 
 
 '''),
                 (os.path.join(project_module_path, 'asgi.py'), 0o644,
@@ -237,8 +211,12 @@ errors = ErrorList(
 
 '''),
                 (os.path.join(project_path, '.gitignore'), 0o644,
-'''config*.ini
-/media/*
+'''__pycache__/
+*.py[cod]
+*$py.class
+
+config*.ini
+media/*
 '''),
             )
 
@@ -297,8 +275,12 @@ async def hello(request):
 
 '''),
                 (os.path.join(project_path, '.gitignore'), 0o644,
-'''config*.ini
-/media/*
+f'''__pycache__/
+*.py[cod]
+*$py.class
+
+config*.ini
+media/*
 '''),
             )
         try:
