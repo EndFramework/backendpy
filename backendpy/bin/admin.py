@@ -53,12 +53,13 @@ def main():
                 (os.path.join(project_module_path, 'apps'), 0o755),
                 (os.path.join(project_module_path, 'apps', 'hello'), 0o755),
                 (os.path.join(project_module_path, 'apps', 'hello', 'controllers'), 0o755),
+                (os.path.join(project_module_path, 'apps', 'hello', 'middlewares'), 0o755),
                 (os.path.join(project_module_path, 'apps', 'hello', 'db'), 0o755),
                 (os.path.join(project_module_path, 'apps', 'hello', 'templates'), 0o755))
             files = (
                 (os.path.join(project_module_path, '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'config.ini'), 0o600,
-f'''; Backendpy Configurations
+                    f'''; Backendpy Configurations
 
 [networking]
 stream_size = 32768
@@ -71,8 +72,9 @@ active =
     {project_name}.apps.hello
 ;   backendpy_accounts
 
-;[middlewares]
-;active =
+[middlewares]
+active =
+    {project_name}.apps.hello.middlewares.example.Example
 ;    backendpy_accounts.middleware.auth.AuthMiddleware
 
 ;[database]
@@ -84,7 +86,7 @@ active =
 
 '''),
                 (os.path.join(project_module_path, 'config.dev.ini'), 0o600,
-f'''; Backendpy Configurations
+                    f'''; Backendpy Configurations
 
 [networking]
 stream_size = 32768
@@ -99,6 +101,7 @@ active =
 
 ;[middlewares]
 ;active =
+    {project_name}.apps.hello.middlewares.example.Example
 ;    backendpy_accounts.middleware.auth.AuthMiddleware
 
 ;[database]
@@ -110,23 +113,24 @@ active =
 
 '''),
                 (os.path.join(project_module_path, 'asgi.py'), 0o644,
-'''from backendpy.app import Backendpy
-from backendpy.db import set_database_hooks
+                    '''from backendpy.app import Backendpy
+# from backendpy.db import set_database_hooks
 
 app = Backendpy()
-set_database_hooks(app)
+# Uncomment this line to activate default database sessions
+# set_database_hooks(app)
 
 '''),
                 (os.path.join(project_module_path, 'backendpy.sh'), 0o744,
-'''# export BACKENDPY_ENV = dev
-# gunicorn asgi:app -w 4 -k uvicorn.workers.UvicornWorker
+                    '''# Uncomment this line to use dev environment
+# export BACKENDPY_ENV = dev
 uvicorn asgi:app --host '127.0.0.1' --port 8000
 
 '''),
                 (os.path.join(project_module_path, 'apps', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'main.py'), 0o644,
-'''from backendpy.app import App
+                    '''from backendpy.app import App
 from .controllers import api, views
 from .controllers.hooks import hooks
 from .controllers.errors import errors
@@ -135,14 +139,14 @@ app = App(
     routes=[api.routes, views.routes],
     hooks=[hooks],
     errors=[errors],
-    models=['hello.db.models'],
+    # models=['hello.db.models'],
     template_dirs=['templates'])
 
 '''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'controllers', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'controllers', 'api.py'), 0o644,
-'''from backendpy.router import Routes
-from backendpy.response.formatted import Success
+                    '''from backendpy.router import Routes
+from backendpy.response.formatted import Success, Error
 
 routes = Routes()
 
@@ -151,9 +155,14 @@ routes = Routes()
 async def hello(request):
     return Success('Hello World!')
 
+
+@routes.uri(r'^/example-error$', ['GET'])
+async def example_error(request):
+    raise Error(2001)
+
 '''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'controllers', 'views.py'), 0o644,
-'''from backendpy.router import Routes
+                    '''from backendpy.router import Routes
 from backendpy.response.response import HTML
 from backendpy.templates import Template
 
@@ -167,7 +176,7 @@ async def home(request):
 
 '''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'controllers', 'hooks.py'), 0o644,
-'''from backendpy.hook import Hooks
+                    '''from backendpy.hook import Hooks
 from backendpy.logging import logging
 
 LOGGER = logging.getLogger(__name__)
@@ -176,12 +185,12 @@ hooks = Hooks()
 
 
 @hooks.event('startup')
-async def hello():
-    LOGGER.info("Hello World!")
+async def example():
+    LOGGER.debug("Example event executed!")
 
 '''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'controllers', 'errors.py'), 0o644,
-'''from backendpy.response.formatted import ErrorList, ErrorCode
+                    '''from backendpy.response.formatted import ErrorList, ErrorCode
 from backendpy.response.response import Status
 
 errors = ErrorList(
@@ -190,15 +199,29 @@ errors = ErrorList(
 )
 
 '''),
+                (os.path.join(project_module_path, 'apps', 'hello', 'middlewares', '__init__.py'), 0o644, ''),
+                (os.path.join(project_module_path, 'apps', 'hello', 'middlewares', 'example.py'), 0o644,
+                    '''from backendpy.middleware.middleware import Middleware
+
+LOGGER = logging.getLogger(__name__)
+
+class Example(Middleware):
+
+    @staticmethod
+    async def process_request(request):
+        LOGGER.debug("Example request middleware executed!")
+        return request
+
+'''),      
                 (os.path.join(project_module_path, 'apps', 'hello', 'db', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'db', 'models.py'), 0o644,
-                '''
+                    '''
 '''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'db', 'queries.py'), 0o644,
-                '''
+                    '''
 '''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'templates', 'home.html'), 0o644,
-'''<!DOCTYPE html>
+                    '''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -211,7 +234,7 @@ errors = ErrorList(
 
 '''),
                 (os.path.join(project_path, '.gitignore'), 0o644,
-'''__pycache__/
+                    '''__pycache__/
 *.py[cod]
 *$py.class
 
@@ -230,7 +253,7 @@ media/*
             files = (
                 (os.path.join(project_module_path, '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'config.ini'), 0o600,
-                 f'''; Backendpy Configurations
+                    f'''; Backendpy Configurations
 
 [apps]
 active =
@@ -239,21 +262,21 @@ active =
 '''
                  ),
                 (os.path.join(project_module_path, 'asgi.py'), 0o644,
-                 '''from backendpy.app import Backendpy
+                    '''from backendpy.app import Backendpy
 
 app = Backendpy()
 
 '''),
                 (os.path.join(project_module_path, 'backendpy.sh'), 0o744,
-                 '''# export BACKENDPY_ENV = dev
-# gunicorn asgi:app -w 4 -k uvicorn.workers.UvicornWorker
+                    '''# Uncomment this line to use dev environment
+# export BACKENDPY_ENV = dev
 uvicorn asgi:app --host '127.0.0.1' --port 8000
-
+                 
 '''),
                 (os.path.join(project_module_path, 'apps', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'main.py'), 0o644,
-                 '''from backendpy.app import App
+                    '''from backendpy.app import App
 from .controllers.api import routes
 
 
@@ -263,7 +286,7 @@ app = App(
 '''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'controllers', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'controllers', 'api.py'), 0o644,
-                 '''from backendpy.router import Routes
+                    '''from backendpy.router import Routes
 from backendpy.response import response
 
 routes = Routes()
@@ -275,7 +298,7 @@ async def hello(request):
 
 '''),
                 (os.path.join(project_path, '.gitignore'), 0o644,
-f'''__pycache__/
+                    '''__pycache__/
 *.py[cod]
 *$py.class
 
@@ -309,12 +332,13 @@ media/*
             paths = (
                 (app_path, 0o755),
                 (os.path.join(app_path, 'controllers'), 0o755),
+                (os.path.join(app_path, 'middlewares'), 0o755),
                 (os.path.join(app_path, 'db'), 0o755),
                 (os.path.join(app_path, 'templates'), 0o755))
             files = (
                 (os.path.join(app_path, '__init__.py'), 0o644, ''),
                 (os.path.join(app_path, 'main.py'), 0o644,
-                 f'''from backendpy.app import App
+                    f'''from backendpy.app import App
 from .controllers import api, views
 from .controllers.hooks import hooks
 from .controllers.errors import errors
@@ -323,14 +347,14 @@ app = App(
     routes=[api.routes, views.routes],
     hooks=[hooks],
     errors=[errors],
-    models=['{app_path}.db.models'],
+    # models=['{app_path}.db.models'],
     template_dirs=['templates'])
 
 '''),
                 (os.path.join(app_path, 'controllers', '__init__.py'), 0o644, ''),
                 (os.path.join(app_path, 'controllers', 'api.py'), 0o644,
-                 '''from backendpy.router import Routes
-from backendpy.response.formatted import Success
+                    '''from backendpy.router import Routes
+from backendpy.response.formatted import Success, Error
 
 routes = Routes()
 
@@ -339,9 +363,14 @@ routes = Routes()
 async def hello(request):
     return Success('Hello World!')
 
+
+@routes.uri(r'^/example-error$', ['GET'])
+async def example_error(request):
+    raise Error(2001)
+
 '''),
                 (os.path.join(app_path, 'controllers', 'views.py'), 0o644,
-                 '''from backendpy.router import Routes
+                    '''from backendpy.router import Routes
 from backendpy.response.response import HTML
 from backendpy.templates import Template
 
@@ -355,7 +384,7 @@ async def home(request):
 
 '''),
                 (os.path.join(app_path, 'controllers', 'hooks.py'), 0o644,
-                 '''from backendpy.hook import Hooks
+                    '''from backendpy.hook import Hooks
 from backendpy.logging import logging
 
 LOGGER = logging.getLogger(__name__)
@@ -365,11 +394,11 @@ hooks = Hooks()
 
 @hooks.event('startup')
 async def hello():
-    LOGGER.info("Hello World!")
+    LOGGER.debug("Example event executed!")
 
 '''),
                 (os.path.join(app_path, 'controllers', 'errors.py'), 0o644,
-                 '''from backendpy.response.formatted import ErrorList, ErrorCode
+                    '''from backendpy.response.formatted import ErrorList, ErrorCode
 from backendpy.response.response import Status
 
 errors = ErrorList(
@@ -378,17 +407,31 @@ errors = ErrorList(
 )
 
 '''),
+                (os.path.join(project_module_path, 'apps', 'hello', 'middlewares', '__init__.py'), 0o644, ''),
+                (os.path.join(project_module_path, 'apps', 'hello', 'middlewares', 'example.py'), 0o644,
+                    '''from backendpy.middleware.middleware import Middleware
+
+LOGGER = logging.getLogger(__name__)
+
+class Example(Middleware):
+                 
+    @staticmethod
+    async def process_request(request):
+        LOGGER.debug("Example request middleware executed!")
+        return request
+
+'''),
                 (os.path.join(app_path, 'db', '__init__.py'), 0o644, ''),
                 (os.path.join(app_path, 'db', 'models.py'), 0o644,
-                 '''
-                 '''
+                    '''
+'''
                  ),
                 (os.path.join(app_path, 'db', 'queries.py'), 0o644,
-                 '''
-                 '''
+                    '''
+'''
                  ),
                 (os.path.join(app_path, 'templates', 'home.html'), 0o644,
-                 '''<!DOCTYPE html>
+                    '''<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -409,7 +452,7 @@ errors = ErrorList(
             files = (
                 (os.path.join(app_path, '__init__.py'), 0o644, ''),
                 (os.path.join(app_path, 'main.py'), 0o644,
-                 '''from backendpy.app import App
+                    '''from backendpy.app import App
 from .controllers.api import routes
 
 
@@ -419,7 +462,7 @@ app = App(
 '''),
                 (os.path.join(app_path, 'controllers', '__init__.py'), 0o644, ''),
                 (os.path.join(app_path, 'controllers', 'api.py'), 0o644,
-                 '''from backendpy.router import Routes
+                    '''from backendpy.router import Routes
 from backendpy.response import response
 
 routes = Routes()
