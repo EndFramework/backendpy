@@ -75,7 +75,7 @@ active =
 [middlewares]
 active =
     {project_name}.apps.hello.middlewares.example.Example
-;    backendpy_accounts.middleware.auth.AuthMiddleware
+;   backendpy_accounts.middleware.auth.AuthMiddleware
 
 ;[database]
 ;host = localhost
@@ -99,10 +99,10 @@ active =
     {project_name}.apps.hello
 ;   backendpy_accounts
 
-;[middlewares]
-;active =
+[middlewares]
+active =
     {project_name}.apps.hello.middlewares.example.Example
-;    backendpy_accounts.middleware.auth.AuthMiddleware
+;   backendpy_accounts.middleware.auth.AuthMiddleware
 
 ;[database]
 ;host = localhost
@@ -202,8 +202,10 @@ errors = ErrorList(
                 (os.path.join(project_module_path, 'apps', 'hello', 'middlewares', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'middlewares', 'example.py'), 0o644,
                     '''from backendpy.middleware.middleware import Middleware
+from backendpy.logging import logging
 
 LOGGER = logging.getLogger(__name__)
+
 
 class Example(Middleware):
 
@@ -410,8 +412,10 @@ errors = ErrorList(
                 (os.path.join(project_module_path, 'apps', 'hello', 'middlewares', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'middlewares', 'example.py'), 0o644,
                     '''from backendpy.middleware.middleware import Middleware
+from backendpy.logging import logging
 
 LOGGER = logging.getLogger(__name__)
+
 
 class Example(Middleware):
                  
