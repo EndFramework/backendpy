@@ -349,7 +349,7 @@ app = App(
     routes=[api.routes, views.routes],
     hooks=[hooks],
     errors=[errors],
-    # models=['{app_path}.db.models'],
+    # models=['{app_name}.db.models'],
     template_dirs=['templates'])
 
 '''),
