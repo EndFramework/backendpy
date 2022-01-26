@@ -130,7 +130,7 @@ uvicorn asgi:app --host '127.0.0.1' --port 8000
                 (os.path.join(project_module_path, 'apps', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'main.py'), 0o644,
-                    '''from backendpy.app import App
+                    f'''from backendpy.app import App
 from .controllers import api, views
 from .controllers.hooks import hooks
 from .controllers.errors import errors
@@ -139,7 +139,7 @@ app = App(
     routes=[api.routes, views.routes],
     hooks=[hooks],
     errors=[errors],
-    # models=['hello.db.models'],
+    # models=['{project_name}.apps.hello.db.models'],
     template_dirs=['templates'])
 
 '''),
@@ -349,7 +349,7 @@ app = App(
     routes=[api.routes, views.routes],
     hooks=[hooks],
     errors=[errors],
-    # models=['{app_name}.db.models'],
+    # models=['<APP PYTHON PATH.>{app_name}.db.models'],
     template_dirs=['templates'])
 
 '''),
