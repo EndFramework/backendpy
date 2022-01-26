@@ -409,8 +409,8 @@ errors = ErrorList(
 )
 
 '''),
-                (os.path.join(project_module_path, 'apps', 'hello', 'middlewares', '__init__.py'), 0o644, ''),
-                (os.path.join(project_module_path, 'apps', 'hello', 'middlewares', 'example.py'), 0o644,
+                (os.path.join(app_path, 'middlewares', '__init__.py'), 0o644, ''),
+                (os.path.join(app_path, 'middlewares', 'example.py'), 0o644,
                     '''from backendpy.middleware.middleware import Middleware
 from backendpy.logging import logging
 
