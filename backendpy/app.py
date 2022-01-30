@@ -15,7 +15,7 @@ from .request import Request
 from .response.exception import ExceptionResponse
 from .response.formatted import Error, ErrorList
 from .errors import errors
-from .templates import Template
+from .template import Template
 from .logging import logging
 
 LOGGER = logging.getLogger(__name__)

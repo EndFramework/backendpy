@@ -164,7 +164,7 @@ async def example_error(request):
                 (os.path.join(project_module_path, 'apps', 'hello', 'controllers', 'views.py'), 0o644,
                     '''from backendpy.router import Routes
 from backendpy.response.response import HTML
-from backendpy.templates import Template
+from backendpy.template import Template
 
 routes = Routes()
 
@@ -374,7 +374,7 @@ async def example_error(request):
                 (os.path.join(app_path, 'controllers', 'views.py'), 0o644,
                     '''from backendpy.router import Routes
 from backendpy.response.response import HTML
-from backendpy.templates import Template
+from backendpy.template import Template
 
 routes = Routes()
 
