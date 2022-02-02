@@ -33,27 +33,27 @@ $ pip3 install uvicorn
 ### Examples
 #### Basic usage
 
-*asgi.py*
+*project/main.py*
 ```python
 from backendpy.app import Backendpy
 from backendpy.response import response
 
-backendpy = Backendpy()
+application = Backendpy()
 
-@backendpy.uri(r'^/hello-world$', ['GET'])
+@application.uri(r'^/hello-world$', ['GET'])
 async def hello(request):
     return response.Text('Hello, World!')
 ```
-Run:
+Run inside the project path:
 ```shell
-$ uvicorn asgi:backendpy
+$ uvicorn main:application
 ```
 
-#### Application based usage
+#### Backendpy app based usage
 
 Example app:
 
-*python_path/hello_app/main.py*
+*hello_app/main.py*
 ```python
 from backendpy.app import App
 from .handlers import routes
@@ -61,7 +61,7 @@ from .handlers import routes
 app = App(
     routes=[routes])
 ```
-*python_path/hello_app/handlers.py*
+*hello_app/handlers.py*
 ```python
 from backendpy.router import Routes
 from backendpy.response import response
@@ -74,16 +74,33 @@ async def hello(request):
 ```
 Example project:
 
-*project/asgi.py*
+*project/main.py*
 ```python
 from backendpy.app import Backendpy
 
-backendpy = Backendpy()
+application = Backendpy()
 ```
 *project/config.ini*
 ```ini
 [apps]
 active =
-    python_path.hello_app
+    app_python_path.hello_app
 ```
-Run project with `uvicorn asgi:backendpy`
+Run project with `uvicorn main:application`
+
+### Command line
+#### Project creation
+```shell
+$ backendpy create_project --name myproject
+```
+And to create a project with more complete sample components:
+```shell
+$ backendpy create_project --name myproject --full
+```
+#### App creation
+```shell
+$ backendpy create_app --name myapp
+```
+```shell
+$ backendpy create_app --name myapp --full
+```

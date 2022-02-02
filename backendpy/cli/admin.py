@@ -112,11 +112,11 @@ active =
 ;password = 
 
 '''),
-                (os.path.join(project_module_path, 'asgi.py'), 0o644,
+                (os.path.join(project_module_path, 'main.py'), 0o644,
                     '''from backendpy.app import Backendpy
 # from backendpy.db import set_database_hooks
 
-app = Backendpy()
+application = Backendpy()
 # Uncomment this line to activate default database sessions
 # set_database_hooks(app)
 
@@ -124,7 +124,7 @@ app = Backendpy()
                 (os.path.join(project_module_path, 'backendpy.sh'), 0o744,
                     '''# Uncomment this line to use dev environment
 # export BACKENDPY_ENV = dev
-uvicorn asgi:app --host '127.0.0.1' --port 8000
+uvicorn main:application --host '127.0.0.1' --port 8000
 
 '''),
                 (os.path.join(project_module_path, 'apps', '__init__.py'), 0o644, ''),
@@ -263,16 +263,16 @@ active =
 
 '''
                  ),
-                (os.path.join(project_module_path, 'asgi.py'), 0o644,
+                (os.path.join(project_module_path, 'main.py'), 0o644,
                     '''from backendpy.app import Backendpy
 
-app = Backendpy()
+application = Backendpy()
 
 '''),
                 (os.path.join(project_module_path, 'backendpy.sh'), 0o744,
                     '''# Uncomment this line to use dev environment
 # export BACKENDPY_ENV = dev
-uvicorn asgi:app --host '127.0.0.1' --port 8000
+uvicorn main:application --host '127.0.0.1' --port 8000
                  
 '''),
                 (os.path.join(project_module_path, 'apps', '__init__.py'), 0o644, ''),
