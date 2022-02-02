@@ -118,7 +118,7 @@ active =
 
 application = Backendpy()
 # Uncomment this line to activate default database sessions
-# set_database_hooks(app)
+# set_database_hooks(application)
 
 '''),
                 (os.path.join(project_module_path, 'backendpy.sh'), 0o744,
