@@ -9,8 +9,8 @@ class Middleware:
     def process_application(application: Backendpy):
         """
         Capture application and return modified version of it.
-        :param application: the Application class modified instance in queue
-        :return:
+        :param application: the Backendpy class instance in queue
+        :return: Backendpy class instance
         """
         return application
 
@@ -19,8 +19,8 @@ class Middleware:
         """
         Capture request and return modified version of the request
         or raise the Response exception to end request evaluation queue.
-        :param request: the Request class modified instance in queue
-        :return:
+        :param request: the Request class instance in queue
+        :return: Request class instance
         """
         return request
 
@@ -30,8 +30,8 @@ class Middleware:
         Capture handler and return modified version of the handler
         or raise the Response exception to end request evaluation queue.
         :param request: the Request class modified instance in queue
-        :param handler: the handler modified function in queue
-        :return:
+        :param handler: the handler function in queue
+        :return: Handler function
         """
         return handler
 
@@ -41,7 +41,7 @@ class Middleware:
         Capture response and return modified version of the response
         or raise the Response exception to end response evaluation queue.
         :param request: the Request class modified instance in queue
-        :param response: the Response class modified instance in queue
-        :return:
+        :param response: the Response class instance in queue
+        :return: Response class instance
         """
         return response
