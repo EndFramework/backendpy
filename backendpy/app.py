@@ -6,7 +6,7 @@ from pathlib import Path
 from contextvars import ContextVar
 from typing import Dict, List, AnyStr, Callable, Any
 from configparser import ConfigParser
-from .helpers.bytes import to_bytes
+from .utils.bytes import to_bytes
 from .configuration import get_config, parse_list
 from .router import Router, Routes
 from .hook import HookRunner, Hooks

@@ -109,8 +109,7 @@ def get_suffix_mimetype(filename):
 def get_type(value):
     if not value:
         raise Exception('file text content error')
-    # value = file.read()
-    # binery files signatures list
+    # Binery files signatures list
     type_signs = [
         # image
         (['jpeg', 'jpg'],
@@ -189,11 +188,11 @@ def get_type(value):
                    (0, b'504b0304', -44, b'504b0607', -4, b'0000'), (0, b'504b0506'), (0, b'504b0708'),
                    (0, b'504b030414000100630000000000'), (60, b'504b4c495445'), (1052, b'504b537058'),
                    (58304, b'57696e5a6970')]),
-        # (FIXME:match .odt)
-        # other
         (['iso'], [(0, b'4344303031')]),
+        # TODO: .odt
     ]
-    # plain text file checkers
+
+    # Plain text file checkers
     type_checkers = []
 
     def check_xml(value):
@@ -217,18 +216,18 @@ def get_type(value):
 
     type_checkers.append(check_xml)
 
-    # zip wrapped file checker
+    # Zip wrapped file checker
     def check_zip_wrapped(value):
-        # odt: vagti unzip mikonim file mimetype hast ba mohtavaye: application/vnd.oasis.opendocument.text
-        # docx: vagti unzip mikonim file [Content_Types].xml hast ba mohtavaye: application/vnd.openxmlformats
+        # odt: when unzip: mimetype file content: application/vnd.oasis.opendocument.text
+        # docx: when unzip: [Content_Types].xml content: application/vnd.openxmlformats
         # -officedocument.wordprocessingml.document.main+xml
         # zip
         return ['zip']
 
-    # convert file value to hex
+    # Convert to hex
     h = binascii.hexlify(value)
-    # print(str(value[:1024]))
-    # check major binery files
+
+    # Check major binary files
     for typ in type_signs:
         for sign in typ[1]:
             matched = False
@@ -248,7 +247,8 @@ def get_type(value):
                     return check_zip_wrapped(value)
                 else:
                     return typ[0]
-    # check major text files
+
+    # Check major text files
     else:
         for func in type_checkers:
             result = func(value)

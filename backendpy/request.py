@@ -1,6 +1,6 @@
 from urllib.parse import parse_qs
 from email.parser import BytesParser
-from .helpers.json import from_json
+from .utils.json import from_json
 
 
 class Request:

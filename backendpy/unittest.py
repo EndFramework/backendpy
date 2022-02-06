@@ -1,7 +1,7 @@
 import unittest
 import asyncio
 import functools
-from .helpers import http
+from .utils import http
 
 
 class AsyncTestCase(unittest.TestCase):

@@ -4,7 +4,7 @@ import re
 import datetime
 import uuid
 from urllib.parse import urlparse
-from ..helpers.file import get_human_readable_size, get_extension, get_type
+from ..utils.file import get_human_readable_size, get_extension, get_type
 try:
     from sqlalchemy import select, exists
 except ImportError:
