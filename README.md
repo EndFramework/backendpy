@@ -35,14 +35,14 @@ $ pip3 install uvicorn
 
 *project/main.py*
 ```python
-from backendpy.app import Backendpy
-from backendpy.response import response
+from backendpy import Backendpy
+from backendpy.response import Text
 
 application = Backendpy()
 
 @application.uri(r'^/hello-world$', ['GET'])
 async def hello(request):
-    return response.Text('Hello, World!')
+    return Text('Hello, World!')
 ```
 Run inside the project path:
 ```shell
@@ -64,19 +64,19 @@ app = App(
 *hello_app/handlers.py*
 ```python
 from backendpy.router import Routes
-from backendpy.response import response
+from backendpy.response import Text
 
 routes = Routes()
 
 @routes.uri(r'^/hello-world$', ['GET'])
 async def hello(request):
-    return response.Text('Hello World!')
+    return Text('Hello World!')
 ```
 Example project:
 
 *project/main.py*
 ```python
-from backendpy.app import Backendpy
+from backendpy import Backendpy
 
 application = Backendpy()
 ```
