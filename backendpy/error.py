@@ -2,18 +2,6 @@ from .response import Status, JSON
 from .exception import ExceptionResponse
 
 
-class Success(JSON):
-    def __init__(self, data=None, status=Status.OK, headers=None, compress=False):
-        super().__init__(body=None, status=status, headers=headers, compress=compress)
-        self.data = data
-
-    async def __call__(self, *args, **kwargs):
-        self.body = {'status': 'success'}
-        if self.data is not None:
-            self.body['data'] = self.data
-        return await super().__call__(*args, **kwargs)
-
-
 class Error(ExceptionResponse, JSON):
     def __init__(self, code, message_data=None, data=None, headers=None, compress=False):
         JSON.__init__(self, body=None, status=None, headers=headers, compress=compress)
@@ -90,3 +78,13 @@ class ErrorList:
 
     def __getitem__(self, item):
         return self._items[item]
+
+
+base_errors = ErrorList(
+    ErrorCode(1000, "Server error: {}", Status.INTERNAL_SERVER_ERROR),
+    ErrorCode(1001, "Request data receive error: {}", Status.INTERNAL_SERVER_ERROR),
+    ErrorCode(1002, "Middleware error: {}", Status.INTERNAL_SERVER_ERROR),
+    ErrorCode(1003, "Handler error: {}", Status.INTERNAL_SERVER_ERROR),
+    ErrorCode(1004, "Data handler error: {}", Status.INTERNAL_SERVER_ERROR),
+    ErrorCode(1005, "Not found", Status.NOT_FOUND),
+    ErrorCode(1006, "Unexpected data", Status.BAD_REQUEST),)

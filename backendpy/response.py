@@ -5,9 +5,9 @@ import types
 from mimetypes import guess_type
 from urllib.parse import unquote
 import aiofiles.os
-from ..utils.bytes import to_bytes
-from ..utils.json import to_json
-from ..utils.file import read_file_chunks, read_file
+from .utils.bytes import to_bytes
+from .utils.json import to_json
+from .utils.file import read_file_chunks, read_file
 
 
 class Status:
@@ -170,3 +170,15 @@ class Redirect(Response):
                                   [b'pragma', b'no-cache'],
                                   [b'cache-control', b'no-cache']],
                          content_type=b'application/octet-stream')
+
+
+class Success(JSON):
+    def __init__(self, data=None, status=Status.OK, headers=None, compress=False):
+        super().__init__(body=None, status=status, headers=headers, compress=compress)
+        self.data = data
+
+    async def __call__(self, *args, **kwargs):
+        self.body = {'status': 'success'}
+        if self.data is not None:
+            self.body['data'] = self.data
+        return await super().__call__(*args, **kwargs)

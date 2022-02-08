@@ -5,11 +5,11 @@ from sqlalchemy.ext.asyncio import async_scoped_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
-from .configuration import parse_list
+from .config import parse_list
 from .app import App
-from .logging import logging
+from .logging import get_logger
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = get_logger(__name__)
 Base = declarative_base()
 
 

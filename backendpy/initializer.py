@@ -3,10 +3,10 @@ import sys
 import importlib
 from inspect import iscoroutinefunction
 from .app import App
-from .configuration import get_config, parse_list
-from .logging import logging
+from .config import get_config, parse_list
+from .logging import get_logger
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = get_logger(__name__)
 
 
 class Init:

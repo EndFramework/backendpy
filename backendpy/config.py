@@ -1,8 +1,8 @@
 import configparser
 import os
-from .logging import logging
+from .logging import get_logger
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = get_logger(__name__)
 
 
 def get_config(project_path, error_logs=False):

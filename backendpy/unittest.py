@@ -1,12 +1,10 @@
 import unittest
 import asyncio
 import functools
-from .utils import http
 
 
 class AsyncTestCase(unittest.TestCase):
     def __init__(self, methodName='runTest'):
-        self.client = http.AsyncHttpClient()
         self._event_loop = asyncio.get_event_loop()
         super().__init__(methodName=methodName)
 
@@ -25,5 +23,4 @@ class AsyncTestCase(unittest.TestCase):
 
 class TestCase(unittest.TestCase):
     def __init__(self, methodName='runTest'):
-        self.client = http.HttpClient()
         super().__init__(methodName=methodName)

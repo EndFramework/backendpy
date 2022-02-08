@@ -10,31 +10,31 @@ class Hooks:
     def items(self):
         return self._items
 
-    def register_event(self, name, func):
+    def register(self, event_name, func):
         assert iscoroutinefunction(func)
-        self._register_event(name, func)
+        self._register(event_name, func)
 
-    def register_events(self, items: Dict[AnyStr, List[Callable]]):
-        for name, funcs in items.items():
+    def register_batch(self, items: Dict[AnyStr, List[Callable]]):
+        for event_name, funcs in items.items():
             for func in funcs:
-                self.register_event(name, func)
+                self.register(event_name, func)
 
     def event(self, name):
-        def decorator_register_event(func):
-            self.register_event(name, func)
-        return decorator_register_event
+        def decorator_register(func):
+            self.register(name, func)
+        return decorator_register
 
     def merge(self, other):
         if not isinstance(other, self.__class__):
-            raise TypeError(f'can not merge the "Hooks" and "{type(other)}"')
-        for name, funcs in other.items.items():
+            raise TypeError(f'Can not merge the "Hooks" and "{type(other)}"')
+        for event_name, funcs in other.items.items():
             for func in funcs:
-                self._register_event(name, func)
+                self._register(event_name, func)
 
-    def _register_event(self, name, func):
-        if name not in self._items:
-            self._items[name]: List[Callable] = list()
-        self._items[name].append(func)
+    def _register(self, event_name, func):
+        if event_name not in self._items:
+            self._items[event_name]: List[Callable] = list()
+        self._items[event_name].append(func)
 
     def __getitem__(self, name):
         return self._items[name]
@@ -44,10 +44,10 @@ class Hooks:
 
     def __add__(self, other):
         if not isinstance(other, self.__class__):
-            raise TypeError(f'can not concat the "Hooks" and "{type(other)}"')
+            raise TypeError(f'Can not concat the "Hooks" and "{type(other)}"')
         new = self.__class__()
-        new.register_events(self._items)
-        new.register_events(other.items)
+        new.register_batch(self._items)
+        new.register_batch(other.items)
         return new
 
 
@@ -55,7 +55,7 @@ class HookRunner:
     def __init__(self):
         self.hooks = Hooks()
 
-    async def execute(self, name, args=None):
+    async def trigger(self, name, args=None):
         if name in self.hooks:
             for func in self.hooks[name]:
                 if args is not None:

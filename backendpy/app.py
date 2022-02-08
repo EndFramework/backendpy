@@ -7,18 +7,17 @@ from contextvars import ContextVar
 from typing import Dict, List, AnyStr, Callable, Any
 from configparser import ConfigParser
 from .utils.bytes import to_bytes
-from .configuration import get_config, parse_list
+from .config import get_config, parse_list
 from .router import Router, Routes
 from .hook import HookRunner, Hooks
-from .middleware.processor import MiddlewareProcessor
+from .middleware import MiddlewareProcessor
 from .request import Request
-from .response.exception import ExceptionResponse
-from .response.formatted import Error, ErrorList
-from .errors import errors
-from .template import Template
-from .logging import logging
+from .exception import ExceptionResponse
+from .error import Error, ErrorList, base_errors
+from .templating import Template
+from .logging import get_logger
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = get_logger(__name__)
 
 
 class Backendpy:
@@ -37,7 +36,7 @@ class Backendpy:
         self._router = Router()
         self._middleware_processor = MiddlewareProcessor(
             paths=parse_list(self.config['middlewares']['active']))
-        self.errors = errors
+        self.errors = base_errors
         self._project_apps = self._get_project_apps()
         for app_data in self._project_apps:
             if app_data['app'].routes:
@@ -250,7 +249,7 @@ class Backendpy:
         return self._hook_runner.hooks.event(*args, **kwargs)
 
     async def execute_event(self, *args, **kwargs):
-        return await self._hook_runner.execute(*args, **kwargs)
+        return await self._hook_runner.trigger(*args, **kwargs)
 
     def _get_project_apps(self):
         apps: List[Dict] = list()
