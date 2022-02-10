@@ -66,7 +66,8 @@ class Backendpy:
             try:
                 request = self._get_request()
             except Exception as e:
-                response = Error(1000, e)
+                LOGGER.exception(e)
+                response = Error(1000)
                 await self._send_response(send, *await response(None))
                 return
 
@@ -122,8 +123,8 @@ class Backendpy:
             request.apply_scope(scope)
             request.apply_body(await self._get_request_body(receive))
         except Exception as e:
-            LOGGER.exception(e)
-            raise Error(1001, e)
+            LOGGER.exception(f'Request data receive error: {e}')
+            raise Error(1000)
 
     async def _get_response(self, request):
         try:
@@ -131,19 +132,19 @@ class Backendpy:
         except ExceptionResponse as e:
             return await e(request)
         except Exception as e:
-            LOGGER.exception(e)
-            response = Error(1002, e)
+            LOGGER.exception(f'Middleware error: {e}')
+            response = Error(1000)
             return await response(request)
 
         try:
             handler, data_handler_cls, request.url_vars = \
                 self._router.match(request.path, request.method, request.scheme)
             if not handler:
-                response = Error(1005)
+                response = Error(1001)
                 return await response(request)
         except Exception as e:
             LOGGER.exception(e)
-            response = Error(1000, e)
+            response = Error(1000)
             return await response(request)
 
         try:
@@ -153,8 +154,8 @@ class Backendpy:
         except ExceptionResponse as e:
             return await e(request)
         except Exception as e:
-            LOGGER.exception(e)
-            response = Error(1002, e)
+            LOGGER.exception(f'Middleware error: {e}')
+            response = Error(1000)
             return await response(request)
 
         try:
@@ -163,11 +164,11 @@ class Backendpy:
                 request.cleaned_data, data_errors = \
                     await data_handler_cls(request=request).get_cleaned_data()
             if data_errors:
-                response = Error(1006, data=data_errors)
+                response = Error(1002, data=data_errors)
                 return await response(request)
         except Exception as e:
-            LOGGER.exception(e)
-            response = Error(1004, e)
+            LOGGER.exception(f'Data handler error: {e}')
+            response = Error(1000)
             return await response(request)
 
         try:
@@ -175,8 +176,8 @@ class Backendpy:
         except ExceptionResponse as e:
             return await e(request)
         except Exception as e:
-            LOGGER.exception(e)
-            response = Error(1003, e)
+            LOGGER.exception(f'Handler error: {e}')
+            response = Error(1000)
             return await response(request)
 
         try:
@@ -186,8 +187,8 @@ class Backendpy:
         except ExceptionResponse as e:
             return await e(request)
         except Exception as e:
-            LOGGER.exception(e)
-            response = Error(1002, e)
+            LOGGER.exception(f'Middleware error: {e}')
+            response = Error(1000)
             return await response(request)
 
         return await response(request)
