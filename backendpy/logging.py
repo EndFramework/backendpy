@@ -1,10 +1,9 @@
 import logging as _logging
 
-
+NOTSET = _logging.NOTSET
 DEBUG = _logging.DEBUG
 INFO = _logging.INFO
 WARNING = _logging.WARNING
-WARN = _logging.WARN
 ERROR = _logging.ERROR
 CRITICAL = _logging.CRITICAL
 
