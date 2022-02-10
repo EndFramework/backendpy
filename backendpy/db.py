@@ -1,4 +1,5 @@
 import importlib
+import asyncio
 from sqlalchemy import create_engine, text
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio import async_scoped_session
@@ -41,34 +42,36 @@ def get_db_session(engine, scope_func):
 
 
 def create_database(app_config):
-    _create_database(app_config)
-    _create_tables(app_config)
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(_create_database(app_config))
+    loop.run_until_complete(_create_tables(app_config))
 
 
-def _create_database(app_config):
+async def _create_database(app_config):
     try:
         LOGGER.info('Start creating database …')
-        engine = create_engine('postgresql://{username}:{password}@{host}:{port}'
-                               .format(**app_config['database']), echo=True, future=True)
-        # Todo: postgresql+asyncpg://
-        with engine.connect() as conn:
-            conn.connection.connection.set_isolation_level(0)
-            conn.execute(text('CREATE DATABASE {}'.format(app_config['database']['name'])))
-            conn.commit()
+        engine = create_async_engine(
+            'postgresql+asyncpg://{username}:{password}@{host}:{port}'.format(**app_config['database']),
+            echo=True, future=True, isolation_level='AUTOCOMMIT')
+        async with engine.connect() as conn:
+            await conn.execute(text('CREATE DATABASE {}'.format(app_config['database']['name'])))
             LOGGER.info('Database creation completed successfully!')
+        await engine.dispose()
     except Exception as e:
         LOGGER.error(e)
         LOGGER.warning('Database creation excepted')
 
 
-def _create_tables(app_config):
+async def _create_tables(app_config):
     try:
         LOGGER.info('Start creating tables …')
-        engine = create_engine('postgresql://{username}:{password}@{host}:{port}/{name}'
-                               .format(**app_config['database']), echo=True, future=True)
-        # Todo: postgresql+asyncpg://
-        _import_models(app_config)
-        Base.metadata.create_all(bind=engine)
+        engine = create_async_engine(
+            'postgresql+asyncpg://{username}:{password}@{host}:{port}/{name}'.format(**app_config['database']),
+            echo=True, future=True)
+        async with engine.begin() as conn:
+            _import_models(app_config)
+            await conn.run_sync(Base.metadata.create_all)
+        await engine.dispose()
         LOGGER.info('Tables creation completed successfully!')
     except Exception as e:
         LOGGER.error(e)
