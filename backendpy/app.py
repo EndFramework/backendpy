@@ -263,9 +263,9 @@ class Backendpy:
                         path=os.path.dirname(os.path.abspath(module.__file__)),
                         app=app))
                 else:
-                    LOGGER.error(f'app "{package_name}" instance error')
+                    LOGGER.error(f'"{package_name}" app instance error')
             except (ImportError, AttributeError):
-                LOGGER.error(f'app "{package_name}" instance import error')
+                LOGGER.error(f'"{package_name}" app instance import error')
         return apps
 
     @staticmethod
