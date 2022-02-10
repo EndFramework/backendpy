@@ -1,4 +1,4 @@
-![alt text](https://github.com/savangco/backend.py/blob/master/assets/backendpy_logo_small.png?raw=true)
+![alt text](https://github.com/savangco/backendpy/blob/master/assets/backendpy_logo_small.png?raw=true)
 
 # Backendpy
 Async (ASGI) Python web framework for building the backend of your project!
@@ -84,7 +84,7 @@ application = Backendpy()
 ```ini
 [apps]
 active =
-    app_python_path.hello_app
+    app_path.hello_app
 ```
 Run project with `uvicorn main:application`
 
@@ -93,7 +93,7 @@ Run project with `uvicorn main:application`
 ```shell
 $ backendpy create_project --name myproject
 ```
-And to create a project with more complete sample components:
+To create a project with more complete sample components:
 ```shell
 $ backendpy create_project --name myproject --full
 ```
