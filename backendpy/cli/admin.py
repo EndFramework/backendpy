@@ -123,7 +123,7 @@ application = Backendpy()
 '''),
                 (os.path.join(project_module_path, 'backendpy.sh'), 0o744,
                     '''# Uncomment this line to use dev environment
-# export BACKENDPY_ENV = dev
+# export BACKENDPY_ENV=dev
 uvicorn main:application --host '127.0.0.1' --port 8000
 
 '''),
@@ -272,7 +272,7 @@ application = Backendpy()
 '''),
                 (os.path.join(project_module_path, 'backendpy.sh'), 0o744,
                     '''# Uncomment this line to use dev environment
-# export BACKENDPY_ENV = dev
+# export BACKENDPY_ENV=dev
 uvicorn main:application --host '127.0.0.1' --port 8000
                  
 '''),
