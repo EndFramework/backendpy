@@ -1,0 +1,114 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-13 01:16+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../introduction.rst:2 ace9a8f898e64436b1162ccf71cce742
+msgid "Introduction"
+msgstr ""
+
+#: ../../introduction.rst:3 f49dde0fb23844eaba9fe4183a489875
+msgid ""
+"**Backendpy** is an open-source framework for building the back-end of "
+"web projects with the Python programming language."
+msgstr ""
+
+#: ../../introduction.rst:6 59d101b2e2474c44a16c55364719d6ad
+msgid "Why Backendpy?"
+msgstr ""
+
+#: ../../introduction.rst:7 453da917856f46fdb7e07870e1ca0ab3
+msgid ""
+"This framework does not deprive developers of their freedom by "
+"restricting them to pre-defined structures, nor does it leave some "
+"repetitive and time-consuming tasks to the developer."
+msgstr ""
+
+#: ../../introduction.rst:9 c023df098136409a9e38ffc09e86d02a
+msgid "Some of the features of Backendpy are:"
+msgstr ""
+
+#: ../../introduction.rst:11 9c5925088db04fe8b74d06538f33893f
+msgid "Asynchronous programming (ASGI-based projects)"
+msgstr ""
+
+#: ../../introduction.rst:12 d62b8033377d42248a040f410b8bb764
+msgid ""
+"Application-based architecture and the ability to install third-party "
+"applications in a project"
+msgstr ""
+
+#: ../../introduction.rst:13 3a67c838df6a4d619429587f767fdb47
+msgid ""
+"Support of middlewares for different layers such as Application, Handler,"
+" Request or Response"
+msgstr ""
+
+#: ../../introduction.rst:14 390af1bc0a4b4721b5869313d499fd8e
+msgid "Supports events and hooks"
+msgstr ""
+
+#: ../../introduction.rst:15 c9c03dd1d6a04c4ea8d8a3aad0bcbf74
+msgid ""
+"Data handler classes, including validators and filters to automatically "
+"apply to request input data"
+msgstr ""
+
+#: ../../introduction.rst:16 aba02eebb6e747a69e61766ab9c993c4
+msgid ""
+"Supports a variety of responses including JSON, HTML, file and… with "
+"various settings such as stream, gzip and…"
+msgstr ""
+
+#: ../../introduction.rst:17 0992a1ecaf8846e286f95508ea5e974d
+msgid ""
+"Router with the ability to define urls as Python decorator or as separate"
+" files"
+msgstr ""
+
+#: ../../introduction.rst:18 a8e7ea39de7d470ca57e236b2e24a6ca
+msgid "Application-specific error codes"
+msgstr ""
+
+#: ../../introduction.rst:19 ebd561e05c4f42b1a77044645ff0df87
+msgid ""
+"Optional default database layer by the Sqlalchemy async ORM with "
+"management of sessions for the scope of each request"
+msgstr ""
+
+#: ../../introduction.rst:20 4727a4eaef1646a3a2e15614f4d69e1b
+msgid "Optional default templating layer by the Jinja template engine"
+msgstr ""
+
+#: ../../introduction.rst:21 b07b0a769c624b35adc599f1d712b7cb
+msgid "…"
+msgstr ""
+
+#: ../../introduction.rst:24 377b56c8996c4e7e98fc8a1ab08c643d
+msgid "License"
+msgstr ""
+
+#: ../../introduction.rst:25 b72cd9a8988744b1ae6c521f9a1a10dd
+msgid ""
+"The Backendpy framework licensed under the BSD 3-Clause terms. The source"
+" code is available at https://github.com/savangco/backendpy."
+msgstr ""
+
+#: ../../introduction.rst:30 30df139384df41e9b9db24ee4074aa6c
+msgid "This project is under active development."
+msgstr ""
+
