@@ -22,7 +22,7 @@ msgstr "مقدمه"
 msgid ""
 "**Backendpy** is an open-source framework for building the back-end of "
 "web projects with the Python programming language."
-msgstr "‫**Backendpy** یک چارچوب آزاد و متن‌باز برای ساخت پروژه‌های تحت وب با زبان برنامه‌نویسی پایتون است.‬"
+msgstr "‫Backendpy یک چارچوب آزاد و متن‌باز برای ساخت پروژه‌های تحت وب با زبان برنامه‌نویسی پایتون است.‬"
 
 #: ../../introduction.rst:6 59d101b2e2474c44a16c55364719d6ad
 msgid "Why Backendpy?"
