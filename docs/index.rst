@@ -14,11 +14,7 @@ Overview
 
    introduction
    installation
-   projects
-   apps
-   deployment
-   api
-   cli
+
 
 
 
