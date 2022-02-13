@@ -23,8 +23,8 @@ msgid "Overview"
 msgstr "‫مرور کلی‬"
 
 #: ../../index.rst:26 aaab60aec4df458e8ac40a8fb5cab16a
-msgid "‫شاخص‌ها و جدول‌ها‬"
-msgstr ""
+msgid "Indices and tables"
+msgstr "‫شاخص‌ها و جدول‌ها‬"
 
 #: ../../index.rst:28 b45a32c8235b42aa8ee8ef5e47586f3c
 msgid ":ref:`genindex`"
