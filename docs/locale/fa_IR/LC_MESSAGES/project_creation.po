@@ -1,17 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2022, Savang Co.
 # This file is distributed under the same license as the Backendpy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-13 01:16+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,13 +16,13 @@ msgstr ""
 
 #: ../../project_creation.rst:2 435079627d8540a095ddcd84d4cab49d
 msgid "Project Creation"
-msgstr ""
+msgstr "‫ایجاد پروژه‬"
 
 #: ../../project_creation.rst:5 4f333a6314e5457488cf65933dbd4772
 msgid "Structure"
-msgstr ""
+msgstr "‫ساختار‬"
 
 #: ../../project_creation.rst:8 a40de8be422f4427943599da01065dda
 msgid "Command line creation"
-msgstr ""
+msgstr "‫ایجاد با دستور خط‌فرمان‬"
 

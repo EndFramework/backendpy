@@ -1,17 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2022, Savang Co.
 # This file is distributed under the same license as the Backendpy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-13 01:16+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,11 +16,11 @@ msgstr ""
 
 #: ../../installation.rst:2 06a90642170b4003bd499ed357ca2b4d
 msgid "Installation"
-msgstr ""
+msgstr "‫نصب‬"
 
 #: ../../installation.rst:5 1b2c32d8c38541e990562cb60d0c69e3
 msgid "Requirements"
-msgstr ""
+msgstr "‫نیازمندی‌ها‬"
 
 #: ../../installation.rst:6 022562a7d9f14b52b03e3e9f34b3829a
 msgid "Python 3.8+"
@@ -31,36 +28,36 @@ msgstr ""
 
 #: ../../installation.rst:9 16db6a59d65145b6bdb8a49bf97a2435
 msgid "Using pip"
-msgstr ""
+msgstr "‫با pip‬"
 
 #: ../../installation.rst:10 28a3950212684033b20dd84b03431df0
 msgid "To install the Backendpy framework using pip:"
-msgstr ""
+msgstr "‫برای نصب چارچوب Backendpy توسط pip از دستور زیر استفاده می‌کنیم:‬"
 
 #: ../../installation.rst:16 7ecaf48295d04796b6484840952f484e
 msgid ""
 "If you also want to use the optional framework features (such as "
 "database, templating, etc.), you can use the following command to install"
 " the framework with additional dependencies:"
-msgstr ""
+msgstr "‫در صورتی که قصد استفاده از امکانات اختیاری چارچوب (مانند لایه‌های پیش‌فرض ORM، Templating و …) را نیز داشته باشید، می‌توانید از دستور زیر برای نصب چارچوب به‌همراه نصب کتابخانه‌های خارجی مرتبط با این بخش‌ها استفاده کنید:‬"
 
 #: ../../installation.rst:22 6e1f6bb4d4664e6f9352932dde606578
 msgid ""
 "If you only need one of these features, you can install the required "
 "dependencies separately. The list of these requirements is as follows:"
-msgstr ""
+msgstr "‫در صورت نیاز فقط به یکی از این ویژگی‌ها، می‌توانید بسته‌‌های اضافی موردنظر مرتبط را به‌طور مجزا با ابزار pip نصب کنید. فهرست این نیازمندی‌ها به شرح زیر است:‬"
 
 #: ../../installation.rst:24 f597debd24e44304ab7f252f190c9ad1
 msgid "Optional requirements"
-msgstr ""
+msgstr "‫نیازمندی‌های اختیاری‬"
 
 #: ../../installation.rst:28 3fe4c85f2910423fa1124733134343c0
 msgid "Name"
-msgstr ""
+msgstr "‫نام‬"
 
 #: ../../installation.rst:29 23966b803c8e4441934411766751cb6b
 msgid "Usage"
-msgstr ""
+msgstr "‫مورد استفاده‬"
 
 #: ../../installation.rst:30 756c68e805fb43a480920039525e5803
 msgid "asyncpg"
@@ -69,7 +66,7 @@ msgstr ""
 #: ../../installation.rst:31 ../../installation.rst:33
 #: 439fd92cbc6f44fa978f484c713bb493 52556618e7574768b482a473d7737d47
 msgid "If using default ORM"
-msgstr ""
+msgstr "‫در صورت استفاده از لایه‌ی ORM پیش‌فرض‬"
 
 #: ../../installation.rst:32 8ec68aae8d974bb8a36848eeb38b7827
 msgid "sqlalchemy>=1.4.27"
@@ -81,7 +78,7 @@ msgstr ""
 
 #: ../../installation.rst:35 94eb801461864ce7b420eecc67625fdb
 msgid "If using default Templating"
-msgstr ""
+msgstr "‫در صورت استفاده از لایه‌ی Templating پیش‌فرض‬"
 
 #: ../../installation.rst:36 f5fb65813fb04390bc00044ce9b99b9c
 msgid "aiohttp"
@@ -89,7 +86,7 @@ msgstr ""
 
 #: ../../installation.rst:37 475c9c9cb4d940babdb5c54c65945e86
 msgid "If using the AsyncHttpClient class of the backendpy.utils.http"
-msgstr ""
+msgstr "‫در صورت استفاده از کلاس AsyncHttpClient از ماژول backendpy.utils.http‬"
 
 #: ../../installation.rst:38 eda8dd8e90774102a3f576db887e0649
 msgid "requests"
@@ -97,7 +94,7 @@ msgstr ""
 
 #: ../../installation.rst:39 dcae65d823b94e038ce5d48a741bbbf0
 msgid "If using the HttpClient class of the backendpy.utils.http"
-msgstr ""
+msgstr "‫در صورت استفاده از کلاس HttpClient از ماژول backendpy.utils.http‬"
 
 #: ../../installation.rst:40 547617db072c4c209ce28d017a499f05
 msgid "pillow"
@@ -105,7 +102,7 @@ msgstr ""
 
 #: ../../installation.rst:41 7e91e760dc2945f29120725820c6b666
 msgid "If using the ModifyImage filter of the backendpy.data_handler.filters"
-msgstr ""
+msgstr "‫در صورت استفاده از فیلتر ModifyImage از ماژول backendpy.data_handler.filters‬"
 
 #: ../../installation.rst:42 ce09d2a404684cb8b26d0b9d809aebc8
 msgid "ujson"
@@ -115,11 +112,11 @@ msgstr ""
 msgid ""
 "If installed, ujson.loads will be used instead of json.loads, which is "
 "faster"
-msgstr ""
+msgstr "‫درصورت نصب‌بودن، به جای json.loads از ujson.loads استفاده خواهد شد که سرعت بیشتری دارد‬"
 
 #: ../../installation.rst:45 51d9d5d4afa140d9ab2bc2f1553ffd9d
 msgid ""
 "You also need to install an ASGI server such as Uvicorn, Hypercorn or "
 "Daphne:"
-msgstr ""
+msgstr "‫همچنین نیاز است که یک سرور ASGI دلخواه مانند Daphne، Hypercorn، Uvicorn را نصب کنیم:‬"
 

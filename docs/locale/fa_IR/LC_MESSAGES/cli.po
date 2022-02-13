@@ -1,17 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2022, Savang Co.
 # This file is distributed under the same license as the Backendpy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-13 01:16+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,5 +16,5 @@ msgstr ""
 
 #: ../../cli.rst:2 cab6ff1cc2a44ba28339ea6bd5b436ba
 msgid "CLI Commands References"
-msgstr ""
+msgstr "‫مرجع دستورات CLI‬"
 

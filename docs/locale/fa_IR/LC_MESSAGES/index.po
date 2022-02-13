@@ -1,17 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2022, Savang Co.
 # This file is distributed under the same license as the Backendpy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-13 01:16+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,14 +16,14 @@ msgstr ""
 
 #: ../../index.rst:9 5a08703ee9bd434a99f1d1517f108611
 msgid "Contents:"
-msgstr ""
+msgstr "‫فهرست:‬"
 
 #: ../../index.rst:7 a129b2332686417f8f1c13c724117dcd
 msgid "Overview"
-msgstr ""
+msgstr "‫مرور کلی‬"
 
 #: ../../index.rst:26 aaab60aec4df458e8ac40a8fb5cab16a
-msgid "Indices and tables"
+msgid "‫شاخص‌ها و جدول‌ها‬"
 msgstr ""
 
 #: ../../index.rst:28 b45a32c8235b42aa8ee8ef5e47586f3c
