@@ -22,24 +22,32 @@ If you also want to use the optional framework features (such as database, templ
 If you only need one of these features, you can install the required dependencies separately. The list of these requirements is as follows:
 
 .. list-table:: Optional requirements
-    :widths: 20 80
+    :widths: 15 15 70
     :header-rows: 1
 
     * - Name
+      - Version
       - Usage
     * - asyncpg
+      - >=0.25.0
       - If using default ORM
-    * - sqlalchemy>=1.4.27
+    * - sqlalchemy
+      - >=1.4.27
       - If using default ORM
     * - jinja2
+      - >=3.0.0
       - If using default Templating
     * - aiohttp
+      - >=3.8.0
       - If using the AsyncHttpClient class of the backendpy.utils.http
     * - requests
+      - >=2.27.0
       - If using the HttpClient class of the backendpy.utils.http
     * - pillow
+      - >=9.0.0
       - If using the ModifyImage filter of the backendpy.data_handler.filters
     * - ujson
+      - >=5.1.0
       - If installed, ujson.loads will be used instead of json.loads, which is faster
 
 You also need to install an ASGI server such as Uvicorn, Hypercorn or Daphne:
