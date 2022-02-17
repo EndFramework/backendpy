@@ -1,12 +1,14 @@
+# Backendpy docs persian translations
 # Copyright (C) 2022, Savang Co.
 # This file is distributed under the same license as the Backendpy package.
 # Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-13 01:16+0330\n"
+"POT-Creation-Date: 2022-02-17 18:21+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,4 +19,55 @@ msgstr ""
 #: ../../run.rst:2 4ffa537048b341f3b9898a502cd5cb81
 msgid "Run"
 msgstr "‫اجرا‬"
+
+#: ../../run.rst:4 40c5c8b98a9b4ace85dc539d5d16cebe
+msgid ""
+"You can use different ASGI servers such as Uvicorn, Hypercorn and Daphne "
+"to run the project. For this purpose, you must first install your desired"
+" server (see the :doc:`installation` section)."
+msgstr ""
+"‫برای اجرای یک پروژه می‌توانید از سرورهای مختلف ASGI مانند Uvicorn، "
+"Hypercorn و Daphne استفاده کنید. برای این منظور ابتدا باید سرور مورد نظر "
+"خود را (طبق بخش :doc:`installation`) نصب کنید.‬"
+
+#: ../../run.rst:7 3c7079eb83414bdf900135074e5dec29
+msgid "Then enter the project path and use the following commands:"
+msgstr "‫سپس وارد مسیر پروژه شده و از دستورات زیر استفاده کنید:‬"
+
+#: ../../run.rst:9 56645810000f44fabfed3836b087497f
+msgid "For Uvicorn"
+msgstr "‫برای Uvicorn‬"
+
+#: ../../run.rst:14 206c2f23e7354683ac5cf97de03cefb7
+msgid "For Hypercorn"
+msgstr "‫برای Hypercorn‬"
+
+#: ../../run.rst:19 3d6edbb5eb284adca60e3ae24bd6b632
+msgid "For Daphne"
+msgstr "‫برای Daphne‬"
+
+#: ../../run.rst:25 35cd22ddb7d84ae1802f15d36c553cc8
+msgid ""
+"In these examples, we assume that the name of the main module of the "
+"project is \"main.py\" and the instance name of the Backendpy class "
+"inside it is \"bp\". These names are optional."
+msgstr ""
+"‫در این مثال‌ها فرض کرده‌ایم که نام ماژول اصلی پروژه main.py و نام "
+"نمونه‌ی کلاس Backendpy داخل آن bp است. این نام‌ها اختیاری‌اند.‬"
+
+#: ../../run.rst:28 f111a9ac237849bcb8c1189c054e6d5b
+msgid ""
+"The server is now accessible (depending on the host and port running on "
+"it) for example at http://127.0.0.1:8000."
+msgstr ""
+"‫اکنون سرور (بسته به host و port مورد استفاده) به عنوان مثال در آدرس "
+"http://127.0.0.1:8000 قابل دسترس است.‬"
+
+#: ../../run.rst:30 bff75c61876f41899a03ee560d28342c
+msgid ""
+"For more information on the options of each server, refer to their "
+"documentation."
+msgstr ""
+"‫برای اطلاعات بیشتر در مورد نحوه‌ی استفاده از هرکدام از سرورها، به "
+"مستندات آن‌ها رجوع کنید.‬"
 

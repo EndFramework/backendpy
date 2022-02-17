@@ -1,0 +1,67 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-17 18:12+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../management.rst:2 3243d28e060f40b18f03721b28f7601b
+msgid "Management"
+msgstr "‫مدیریت‬"
+
+#: ../../management.rst:4 993cdd8c9bd148a99a50c9f8058774ca
+msgid "The following commands can be used by the system administrator:"
+msgstr "‫دستورات زیر می‌تواند توسط مدیر سیستم مورد استفاده قرار گیرند:‬"
+
+#: ../../management.rst:7 f00935b70a674ea58f76783ca3392058
+msgid "Creating Database"
+msgstr "‫ایجاد پایگاه داده‬"
+
+#: ../../management.rst:8 d6e49e6b74d74ecbacea56ad759ccd7f
+msgid ""
+"If you are using the default ORM, you can create the database and all "
+"data model tables within the project automatically by the following "
+"command (after entering the project path in the command line):"
+msgstr ""
+"‫اگر از ORM پیش‌فرض استفاده می‌کنید، می‌توانید با دستور زیر (پس از وارد "
+"شدن به مسیر پروژه در خط فرمان) پایگاه داده و تمام جداول مدل‌های داده‌ی "
+"پروژه را به طور خودکار ایجاد کنید:‬"
+
+#: ../../management.rst:17 0f3ea164d4374e099e30a4fa4763814c
+msgid "Initialization"
+msgstr "‫مقداردهی اولیه‬"
+
+#: ../../management.rst:18 17af1f20c393452983d86a727033fe88
+msgid ""
+"Some applications require the initial storage of data in the database, "
+"the creation of files, and so on, before they can be used. For example, "
+"before using some systems, information such as user roles, admin account,"
+" etc. related to the users application must be stored in the database."
+msgstr ""
+"‫برخی از اپلیکیشن‌ها قبل از اینکه بتوان از آن‌ها استفاده کرد، به "
+"ذخیره‌سازی اولیه‌ی داده‌هایی در پایگاه‌داده، ایجاد فایل‌ها و … نیاز دارند. "
+"به عنوان مثال، قبل از استفاده از برخی از سیستم‌ها، ابتدا باید اطلاعاتی "
+"مانند گروه‌های کاربری، حساب مدیر و … مربوط به اپلیکیشن کاربران، "
+"در پایگاه داده ذخیره شده باشند.‬"
+
+#: ../../management.rst:22 2aba9b1e04c44aebb59e39d5a82b75c3
+msgid ""
+"By running the following command in the project path, Backendpy framework"
+" will execute the initialization scripts of all the apps enabled on the "
+"project and will also take the required input data on the command line:"
+msgstr ""
+"‫با اجرای دستور زیر در مسیر پروژه، فریم ورک Backendpy اسکریپت‌های "
+"مقداردهی اولیه‌ی کلیه‌ی اپلیکیشن‌های فعال در پروژه را اجرا می‌کند و "
+"همچنین در صورت نیاز داده‌های ورودی را در خط‌فرمان دریافت می‌کند:‬"

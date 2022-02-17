@@ -1,12 +1,14 @@
+# Backendpy docs persian translations
 # Copyright (C) 2022, Savang Co.
 # This file is distributed under the same license as the Backendpy package.
 # Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-13 01:16+0330\n"
+"POT-Creation-Date: 2022-02-16 22:44+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,4 +19,80 @@ msgstr ""
 #: ../../configurations.rst:2 4a2666acf6534489a553ef0370139a55
 msgid "Configurations"
 msgstr "‫تنظیمات‬"
+
+#: ../../configurations.rst:4 3a70eb8cda0a40289c1a146f6558a0c8
+msgid ""
+"In Backendpy projects, all the settings of a project are defined in the "
+"``config.ini`` file, which is located in the root path of each project "
+"and next to the main module of the project. This config file is defined "
+"in INI format, which includes sections and options. The basic list of "
+"framework configs and example of their definition is as follows:"
+msgstr ""
+"‫در پروژه‌های Backendpy تمامی تنظیمات پروژه، داخل فایل ``config.ini`` "
+"تعریف می‌شوند که در مسیر ریشه‌ی هر پروژه و در کنار ماژول اصلی پروژه قرار "
+"می‌گیرد. این فایل تنظیمات با فرمت INI تعریف می‌شود که شامل sectionها و "
+"optionها است. فهرست پایه‌ی تنظیمات چارچوب و مثالی از نحوه‌ی تعریف آن‌ها "
+"به شرح زیر است:‬"
+
+#: ../../configurations.rst:9 fea48306db1b4064b036878c37f9d37e
+msgid "project/config.ini"
+msgstr ""
+
+#: ../../configurations.rst:36 9601d8b07dd4447a87c4cd08be6d3c31
+msgid ""
+"In ini format, ``;`` is used for comments, ``[]`` is used to define "
+"sections, ``key = value`` is used to define values and the lines are used"
+" for list values."
+msgstr ""
+"‫در فرمت INI برای commentها از ``;``، برای تعریف بخش‌ها از ``[]``، برای "
+"تعریف مقادیر از ``key = value`` و برای مقادیر لیست هم از خطوط زیرهم "
+"استفاده می‌شود.‬"
+
+#: ../../configurations.rst:39 dfdb7330d72f47e3b8a352925f6c7778
+msgid ""
+"**networking** section contains values related to the server and the "
+"network."
+msgstr "‫بخش **networking** شامل مقادیر مرتبط با سرور و شبکه است.‬"
+
+#: ../../configurations.rst:41 84c5a929127b47e09ed2696a7622eb45
+msgid ""
+"**environment** section contains values such as the path to the media "
+"files and etc."
+msgstr "‫بخش **environment** شامل مقادیری از قبیل مسیر فایل‌های media و … است.‬"
+
+#: ../../configurations.rst:43 9e5c726b276640aa9f548de9440e576f
+msgid "**apps** section contains a list of the project active applications."
+msgstr "‫بخش **apps** شامل لیست اپلیکیشن‌های فعال پروژه است.‬"
+
+#: ../../configurations.rst:45 421e71ad9e5840038e1fb10c1ddf195e
+msgid "**middlewares** section contains a list of the project active middlewares."
+msgstr "‫بخش **middlewares** شامل لیست middlewareهای فعال پروژه است.‬"
+
+#: ../../configurations.rst:47 123ba88dbfe3461d87daf461f66deaf9
+msgid ""
+"**database** section, if using the default ORM, will include the settings"
+" related to it."
+msgstr ""
+"‫بخش **database** هم در صورت استفاده از ORM پیش‌فرض، شامل تنظیمات مرتبط "
+"با آن خواهد بود.‬"
+
+#: ../../configurations.rst:49 eba93d41041741d29a93540861dce056
+msgid ""
+"Also other custom settings may be required by any of the active apps, "
+"which must also be specified in this file. For example, an account "
+"application might have settings like this:"
+msgstr ""
+"‫همچنین ممکن است تنظیمات اختصاصی دیگری برای هر یک از اپلیکیشن‌های فعال "
+"موردنیاز باشد که آن‌ها نیز باید در این فایل مشخص شوند. برای مثال، یک "
+"اپلیکیشن حساب کاربری ممکن است تنظیماتی مانند زیر داشته باشد: ‬"
+
+#: ../../configurations.rst:60 0bf1d27aa0ee4bfd8779e9d29adea4e7
+msgid ""
+"To protect sensitive information in the config file, such as passwords, "
+"private keys, etc., be sure to restrict access to this file. For example,"
+" set the permission to 600."
+msgstr ""
+"‫برای محافظت از اطلاعات حساس موجود در فایل تنظیمات مانند گذرواژه‌ها، "
+"کلیدهای خصوصی و غیره، حتما دسترسی به این فایل را محدود کنید. به عنوان "
+"مثال، مجوز آن را روی 600 قرار دهید.‬"
 

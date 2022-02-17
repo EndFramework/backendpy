@@ -14,10 +14,10 @@ Overview
 
    introduction
    installation
-.. projects
-   apps
-   deployment
+   projects
    api
+.. apps
+   deployment
    cli
 
 

@@ -1,12 +1,14 @@
+# Backendpy docs persian translations
 # Copyright (C) 2022, Savang Co.
 # This file is distributed under the same license as the Backendpy package.
 # Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-13 01:16+0330\n"
+"POT-Creation-Date: 2022-02-16 22:44+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,4 +19,12 @@ msgstr ""
 #: ../../apps.rst:2 5e6f26e2b9a749a2b5556014d81f3057
 msgid "Application Development"
 msgstr "‫توسعه‌ی اپلیکیشن‬"
+
+#: ../../apps.rst:4 095216cb2e284c04ab98506ac509f853
+msgid "Todo"
+msgstr ""
+
+#: ../../apps.rst:6 7a25c9a4445a4c45a681e9198a009925
+msgid "TODO"
+msgstr ""
 

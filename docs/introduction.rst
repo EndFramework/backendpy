@@ -1,10 +1,12 @@
 Introduction
 ============
-**Backendpy** is an open-source framework for building the back-end of web projects with the Python programming language.
+**Backendpy** is an open-source framework for building the back-end of web projects with the Python programming
+language.
 
 Why Backendpy?
 --------------
-This framework does not deprive developers of their freedom by restricting them to pre-defined structures, nor does it leave some repetitive and time-consuming tasks to the developer.
+This framework does not deprive developers of their freedom by restricting them to pre-defined structures, nor
+does it leave some repetitive and time-consuming tasks to the developer.
 
 Some of the features of Backendpy are:
 
@@ -18,7 +20,7 @@ Some of the features of Backendpy are:
 * Application-specific error codes
 * Optional default database layer by the Sqlalchemy async ORM with management of sessions for the scope of each request
 * Optional default templating layer by the Jinja template engine
-* …
+* ...
 
 License
 -------------

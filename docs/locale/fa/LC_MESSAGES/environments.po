@@ -1,14 +1,17 @@
+# Backendpy docs persian translations
 # Copyright (C) 2022, Savang Co.
 # This file is distributed under the same license as the Backendpy package.
 # Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-13 01:16+0330\n"
+"POT-Creation-Date: 2022-02-17 17:55+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,4 +20,60 @@ msgstr ""
 #: ../../environments.rst:2 2fa81538dbc043e2a7eb5f0306f98b94
 msgid "Environments"
 msgstr "‫محیط‌ها‬"
+
+#: ../../environments.rst:4 6ed94f5423cb4f8d970622860e3e9859
+msgid ""
+"In Backendpy framework, it is possible to use different environments for "
+"project execution (such as development, production, etc.)."
+msgstr ""
+"‫در چارچوب Backendpy امکان استفاده از محیط‌های متفاوت برای اجرای پروژه "
+"(مثل Development، Production و …) وجود دارد.‬"
+
+#: ../../environments.rst:7 3b84f949ce9e418da3579525ff37c4d9
+msgid ""
+"Each environment has a different config file and can have different "
+"database settings, media paths, and so on."
+msgstr ""
+"‫هرکدام از محیط‌ها دارای فایل تنظیمات متفاوتی است و می‌تواند دارای "
+"تنظیمات پایگاه داده‌ی متفاوت،‌ مسیر media متفاوت و … باشد.‬"
+
+#: ../../environments.rst:9 c021f29ebf3942bca82919c8259541a3
+msgid ""
+"In a development team, different parts of the team can use their own "
+"environments and settings to execute and work on the project. Also, if "
+"needed on the main server, the project can be executed with another "
+"configuration in parallel, on another host or port."
+msgstr ""
+"‫در یک تیم توسعه، بخش‌های مختلف تیم می‌توانند از محیط‌ها و تنظیمات "
+"اختصاصی خود برای اجرا و کار روی پروژه استفاده کنند. همچنین درصورت نیاز در"
+" سرور اصلی می‌توان پروژه را با تنظیمات دیگری و به‌طور موازی روی host یا "
+"port دیگری اجرا کرد.‬"
+
+#: ../../environments.rst:14 ffa96117775a4754a277b9d51131b9d4
+msgid ""
+"To do this, you need to define the ``BACKENDPY_ENV`` variable in the os "
+"with the desired name for the environment. For example, to define an "
+"environment called \"dev\", we use the following command:"
+msgstr ""
+"‫برای این منظور باید متغیر ``BACKENDPY_ENV`` را در سیستم‌عامل ،با نام "
+"دلخواه برای محیط، تعریف کرد. برای مثال برای تعریف محیطی با نام dev از "
+"دستور زیر استفاده می‌کنیم:‬"
+
+#: ../../environments.rst:21 06efb630294e40feb5cd0c5c9a3b25da
+msgid ""
+"You must also create and configure a separate configuration file named "
+"``config.dev.ini``."
+msgstr ""
+"‫همچنین باید فایل تنظیمات جداگانه‌ای با نام ``config.dev.ini`` را ایجاد و"
+" تنظیم کنیم.‬"
+
+#: ../../environments.rst:23 8ece0d7b73964e47852f2e085f402f66
+msgid ""
+"Now if the server runs (in the process that the environmental variable is"
+" exported) or when other backendpy management commands are executed, this"
+" configuration will be used instead of the original configuration."
+msgstr ""
+"‫اکنون با اجرای سرور (در processای که متغیر محیطی در آن تعریف شده باشد) و"
+" همچنین هنگام اجرای سایر دستورات مدیریتی خط‌فرمان backendpy، این تنظیمات "
+"به جای تنظیمات اصلی، مورد استفاده قرار خواهد گرفت.‬"
 

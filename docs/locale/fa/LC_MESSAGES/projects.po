@@ -1,7 +1,9 @@
+# Backendpy docs persian translations
 # Copyright (C) 2022, Savang Co.
 # This file is distributed under the same license as the Backendpy package.
 # Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"

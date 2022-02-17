@@ -1,0 +1,62 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-16 22:44+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../generated/backendpy.Backendpy.rst:2 6626a95eaf8a497c81581580a237e698
+msgid "backendpy.Backendpy"
+msgstr ""
+
+#: 405e0463b1094303bca759baaa915788 backendpy.app.Backendpy:1 of
+msgid "The Backendpy ASGI application class"
+msgstr ""
+
+#: ../../generated/backendpy.Backendpy.rst:13 9507d9e72e3347f6a0e7bb604578e62d
+msgid "Methods"
+msgstr ""
+
+#: ../../generated/backendpy.Backendpy.rst:20:<autosummary>:1
+#: fd5f2a0e248d4450aec95fffa2878ec4
+msgid ":py:obj:`__init__ <backendpy.Backendpy.__init__>`\\ \\(\\)"
+msgstr ""
+
+#: ../../generated/backendpy.Backendpy.rst:20:<autosummary>:1
+#: 7f5a9856b949445bad1db396dda62df5
+msgid ""
+":py:obj:`event <backendpy.Backendpy.event>`\\ \\(\\*args\\, "
+"\\*\\*kwargs\\)"
+msgstr ""
+
+#: ../../generated/backendpy.Backendpy.rst:20:<autosummary>:1
+#: fac3ca81f5d14bb2b8ef17773e347d9f
+msgid ""
+":py:obj:`execute_event <backendpy.Backendpy.execute_event>`\\ "
+"\\(\\*args\\, \\*\\*kwargs\\)"
+msgstr ""
+
+#: ../../generated/backendpy.Backendpy.rst:20:<autosummary>:1
+#: 266c65f6f75c4116a46fa34e612833bd
+msgid ""
+":py:obj:`get_current_request <backendpy.Backendpy.get_current_request>`\\"
+" \\(\\)"
+msgstr ""
+
+#: ../../generated/backendpy.Backendpy.rst:20:<autosummary>:1
+#: 223ebb0ade274048b287733ca374202d
+msgid ":py:obj:`uri <backendpy.Backendpy.uri>`\\ \\(\\*args\\, \\*\\*kwargs\\)"
+msgstr ""
+

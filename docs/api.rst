@@ -1,10 +1,12 @@
 API References
 ==============
 
+.. py:currentmodule:: backendpy
+
 .. autosummary::
    :toctree: generated
 
-   backendpy
-
+   backendpy.Backendpy
+   backendpy.app.App
 
 

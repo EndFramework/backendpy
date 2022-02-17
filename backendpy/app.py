@@ -21,6 +21,7 @@ LOGGER = get_logger(__name__)
 
 
 class Backendpy:
+    """The Backendpy ASGI application class"""
 
     def __new__(cls, *args, **kwargs):
         config = get_config(project_path=cls._get_project_path())
@@ -279,6 +280,28 @@ class Backendpy:
 
 
 class App:
+    """A class used to define Backendpy internal application
+
+    :param routes: List of instances of the Routes class
+    :type routes: List[backendpy.router.Routes]
+
+    :param hooks: List of instances of the Hooks class (or None)
+    :type hooks: Optional[List[backendpy.hook.Hooks]]
+
+    :param models: List of module paths that contain database models (or None)
+    :type models: Optional[List[AnyStr]]
+
+    :param template_dirs: List of paths (within the application directory) from which templates will be searched (or None)
+    :type template_dirs: Optional[List[AnyStr]]
+
+    :param errors: List of instances of the ErrorList class (or None)
+    :type errors: Optional[List[backendpy.error.ErrorList]]
+
+    :param init_func: The initialization function of the application (or None)
+    :type init_func: Optional[Callable[[configparser.ConfigParser], Any]]
+
+    """
+
     def __init__(self,
                  routes: List[Routes],
                  hooks: List[Hooks] = None,

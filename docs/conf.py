@@ -34,6 +34,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
+    'sphinx.ext.todo',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -59,6 +60,8 @@ gettext_uuid = True
 # Epub
 epub_show_urls = 'footnote'
 
+#
+todo_include_todos = True
 
 # -- Options for HTML output -------------------------------------------------
 

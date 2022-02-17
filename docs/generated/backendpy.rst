@@ -1,4 +1,4 @@
-﻿backendpy
+backendpy
 =========
 
 .. automodule:: backendpy

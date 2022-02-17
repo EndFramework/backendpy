@@ -13,13 +13,15 @@ To install the Backendpy framework using pip:
 
    $ pip3 install backendpy
 
-If you also want to use the optional framework features (such as database, templating, etc.), you can use the following command to install the framework with additional dependencies:
+If you also want to use the optional framework features (such as database, templating, etc.), you can use the
+following command to install the framework with additional dependencies:
 
 .. code-block:: console
 
    $ pip3 install backendpy[full]
 
-If you only need one of these features, you can install the required dependencies separately. The list of these requirements is as follows:
+If you only need one of these features, you can install the required dependencies separately. The list of these
+requirements is as follows:
 
 .. list-table:: Optional requirements
     :widths: 15 15 70
