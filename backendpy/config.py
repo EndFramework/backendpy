@@ -1,21 +1,28 @@
 import configparser
 import os
+from typing import AnyStr, Tuple
 from .logging import get_logger
 
 LOGGER = get_logger(__name__)
 
 
-def get_config(project_path, error_logs=False):
+def get_config(project_path: AnyStr, error_logs: bool = False) -> configparser.ConfigParser:
+    """
+    Reads the project settings from the INI file, applies some defaults, and returns the config object.
+    :param project_path: Project root path where the config file is located
+    :param error_logs: Whether or not to log the config errors (default is False)
+    :return: An object that contains configs
+    """
+
     config = configparser.ConfigParser()
 
     # Set default sections
     config.add_section('environment')
     config.add_section('networking')
-    config.add_section('logs')
+    config.add_section('logging')
     config.add_section('database')
     config.add_section('apps')
     config.add_section('middlewares')
-    config.add_section('keys')
 
     # Set default configs
     config.set('apps', 'active', '')
@@ -42,5 +49,6 @@ def get_config(project_path, error_logs=False):
     return config
 
 
-def parse_list(string):
+def parse_list(string: AnyStr) -> Tuple:
+    """Parse the list from multi-line formatted string and convert it to a tuple type."""
     return tuple(i for i in string.split('\n') if i)
