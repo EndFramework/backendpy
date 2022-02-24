@@ -31,30 +31,19 @@ You also need to install an ASGI server such as Uvicorn, Hypercorn or Daphne:
 ```shell
 $ pip3 install uvicorn
 ```
-### Examples
-#### Basic usage
+### Quick Start
+#### Create Project
 
 *project/main.py*
 ```python
 from backendpy import Backendpy
-from backendpy.response import Text
 
-application = Backendpy()
-
-@application.uri(r'^/hello-world$', ['GET'])
-async def hello(request):
-    return Text('Hello, World!')
-```
-Run inside the project path:
-```shell
-$ uvicorn main:application
+bp = Backendpy()
 ```
 
-#### Backendpy app based usage
+#### Create Application
 
-Example app:
-
-*hello_app/main.py*
+*project/apps/hello/main.py*
 ```python
 from backendpy.app import App
 from .handlers import routes
@@ -62,32 +51,33 @@ from .handlers import routes
 app = App(
     routes=[routes])
 ```
-*hello_app/handlers.py*
+*project/apps/hello/handlers.py*
 ```python
 from backendpy.router import Routes
 from backendpy.response import Text
 
 routes = Routes()
 
-@routes.uri(r'^/hello-world$', ['GET'])
+@routes.get(r'^/hello-world$')
 async def hello(request):
     return Text('Hello World!')
 ```
-Example project:
 
-*project/main.py*
-```python
-from backendpy import Backendpy
+#### Activate Application
 
-application = Backendpy()
-```
 *project/config.ini*
 ```ini
 [apps]
 active =
-    app_path.hello_app
+    project.apps.hello
 ```
-Run project with `uvicorn main:application`
+
+#### Run Project
+
+Inside the project root path:
+```shell
+$ uvicorn main:bp
+```
 
 ### Command line
 #### Project creation
