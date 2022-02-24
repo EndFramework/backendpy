@@ -16,27 +16,13 @@ instance of ``Backendpy`` class (which is an ASGI application) inside it.
 
     bp = Backendpy()
 
-Also for project settings, the ``config.ini`` file can be created in the same path next to the module.
+Also for project settings, the ``config.ini`` file must be created in the same path next to the module.
 Check out the :doc:`configurations` section for more information.
-
-We can now add HTTP requests handlers to the project as follows:
-
-.. code-block:: python
-
-    from backendpy.response import Text
-
-    @bp.uri(r'^/hello-world$', ['GET'])
-    async def hello_world(request):
-        return Text('Hello World!')
-
-
-But it is recommended to use applications for this purpose.
 
 Applications
 ------------
-Backendpy projects can also be developed by components called Applications, which, although not mandatory, it
-is recommended that applications be used to better structure the projects. It is also possible to connect
-third-party apps to the project.
+Backendpy projects are developed by components called Applications.
+It is also possible to connect third-party apps to the project.
 
 To create an application, first create a package containing the ``main.py`` module in the desired path within
 the project (or any other path that can be imported).
@@ -68,11 +54,10 @@ For example, in the "/apps" path inside the project, we create a package called 
 
     routes = Routes()
 
-    @routes.uri(r'^/hello-world$', ['GET'])
+    @routes.get(r'^/hello-world$')
     async def hello_world(request):
         return Text('Hello World!')
 
-Now we have written the previous Hello project by applications.
 
 As you can see, we have created another optional module called handlers.py and then introduced the routes
 defined in it to the App class instance.
