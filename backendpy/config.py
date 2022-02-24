@@ -1,14 +1,17 @@
+from __future__ import annotations
+
 import configparser
 import os
-from typing import AnyStr, Tuple
+
 from .logging import get_logger
 
 LOGGER = get_logger(__name__)
 
 
-def get_config(project_path: AnyStr, error_logs: bool = False) -> configparser.ConfigParser:
+def get_config(project_path: str, error_logs: bool = False) -> configparser.ConfigParser:
     """
     Reads the project settings from the INI file, applies some defaults, and returns the config object.
+
     :param project_path: Project root path where the config file is located
     :param error_logs: Whether or not to log the config errors (default is False)
     :return: An object that contains configs
@@ -49,6 +52,6 @@ def get_config(project_path: AnyStr, error_logs: bool = False) -> configparser.C
     return config
 
 
-def parse_list(string: AnyStr) -> Tuple:
+def parse_list(string: str) -> tuple[str, ...]:
     """Parse the list from multi-line formatted string and convert it to a tuple type."""
     return tuple(i for i in string.split('\n') if i)
