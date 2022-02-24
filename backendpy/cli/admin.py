@@ -116,15 +116,15 @@ active =
                     '''from backendpy import Backendpy
 # from backendpy.db import set_database_hooks
 
-application = Backendpy()
+bp = Backendpy()
 # Uncomment this line to activate default database sessions
-# set_database_hooks(application)
+# set_database_hooks(bp)
 
 '''),
                 (os.path.join(project_module_path, 'backendpy.sh'), 0o744,
                     '''# Uncomment this line to use dev environment
 # export BACKENDPY_ENV=dev
-uvicorn main:application --host '127.0.0.1' --port 8000
+uvicorn main:bp --host '127.0.0.1' --port 8000
 
 '''),
                 (os.path.join(project_module_path, 'apps', '__init__.py'), 0o644, ''),
@@ -152,12 +152,12 @@ from backendpy.error import Error
 routes = Routes()
 
 
-@routes.uri(r'^/hello-world$', ['GET'])
+@routes.get(r'^/hello-world$')
 async def hello(request):
     return Success('Hello World!')
 
 
-@routes.uri(r'^/example-error$', ['GET'])
+@routes.get(r'^/example-error$')
 async def example_error(request):
     raise Error(2001)
 
@@ -170,7 +170,7 @@ from backendpy.templating import Template
 routes = Routes()
 
 
-@routes.uri(r'^/home$', ['GET'])
+@routes.get(r'^/home$')
 async def home(request):
     context = {'message': 'Hello World!'}
     return HTML(await Template('home.html').render(context))
@@ -267,13 +267,13 @@ active =
                 (os.path.join(project_module_path, 'main.py'), 0o644,
                     '''from backendpy import Backendpy
 
-application = Backendpy()
+bp = Backendpy()
 
 '''),
                 (os.path.join(project_module_path, 'backendpy.sh'), 0o744,
                     '''# Uncomment this line to use dev environment
 # export BACKENDPY_ENV=dev
-uvicorn main:application --host '127.0.0.1' --port 8000
+uvicorn main:bp --host '127.0.0.1' --port 8000
                  
 '''),
                 (os.path.join(project_module_path, 'apps', '__init__.py'), 0o644, ''),
@@ -290,14 +290,14 @@ app = App(
                 (os.path.join(project_module_path, 'apps', 'hello', 'controllers', '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'apps', 'hello', 'controllers', 'api.py'), 0o644,
                     '''from backendpy.router import Routes
-from backendpy import response
+from backendpy.response import Text
 
 routes = Routes()
 
 
-@routes.uri(r'^/hello-world$', ['GET'])
+@routes.get(r'^/hello-world$')
 async def hello(request):
-    return response.Text('Hello World!')
+    return Text('Hello World!')
 
 '''),
                 (os.path.join(project_path, '.gitignore'), 0o644,
@@ -363,12 +363,12 @@ from backendpy.error import Error
 routes = Routes()
 
 
-@routes.uri(r'^/hello-world$', ['GET'])
+@routes.get(r'^/hello-world$')
 async def hello(request):
     return Success('Hello World!')
 
 
-@routes.uri(r'^/example-error$', ['GET'])
+@routes.get(r'^/example-error$')
 async def example_error(request):
     raise Error(2001)
 
@@ -381,7 +381,7 @@ from backendpy.templating import Template
 routes = Routes()
 
 
-@routes.uri(r'^/home$', ['GET'])
+@routes.get(r'^/home$')
 async def home(request):
     context = {'message': 'Hello World!'}
     return HTML(await Template('home.html').render(context))
@@ -469,14 +469,14 @@ app = App(
                 (os.path.join(app_path, 'controllers', '__init__.py'), 0o644, ''),
                 (os.path.join(app_path, 'controllers', 'api.py'), 0o644,
                     '''from backendpy.router import Routes
-from backendpy import response
+from backendpy.response import Text
 
 routes = Routes()
 
 
-@routes.uri(r'^/hello-world$', ['GET'])
+@routes.get(r'^/hello-world$')
 async def hello(request):
-    return response.Text('Hello World!')
+    return Text('Hello World!')
 
 '''),
             )
