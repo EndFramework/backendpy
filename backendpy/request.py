@@ -4,6 +4,8 @@ from .utils.json import from_json
 
 
 class Request:
+    """The class that is used to store the information of a request and then sent to the handlers."""
+
     def __init__(self, app=None, scope=None, body=None, url_vars=None):
         self.app = app
         self.context = {}
