@@ -6,19 +6,24 @@ from typing import Optional, Any
 
 
 class Hooks:
+    """Hook registry class"""
+
     def __init__(self) -> None:
         self._items: dict[str, list[callable]] = dict()
 
     @property
     def items(self) -> dict[str, list[callable]]:
+        """Get registered event hooks."""
         return self._items
 
     def register(self, event_name: str, func: callable) -> None:
+        """Register an event hook."""
         if not iscoroutinefunction(func):
             raise TypeError('The "func" parameter must be an asynchronous function.')
         self._register(event_name, func)
 
     def register_batch(self, items: Mapping[str, Iterable[callable]]) -> None:
+        """Register multiple event hooks at once."""
         for event_name, funcs in items.items():
             for func in funcs:
                 self.register(event_name, func)
@@ -62,6 +67,8 @@ class Hooks:
 
 
 class HookRunner:
+    """Class for registering and triggering project hooks."""
+
     def __init__(self) -> None:
         self.hooks = Hooks()
 
