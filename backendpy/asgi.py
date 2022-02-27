@@ -72,17 +72,19 @@ class Backendpy:
                     self._lifespan_startup = True
 
             try:
-                request = self._get_request()
+                body: bytes = await self._get_request_body(receive)
             except Exception as e:
-                LOGGER.exception(e)
+                LOGGER.exception(f'Request data receive error: {e}')
                 response = Error(1000)
                 await self._send_response(send, *await response(None))
                 return
 
             try:
-                await self._receive_request_data(request, scope, receive)
-            except Error as e:
-                await self._send_response(send, *await e(request))
+                request = Request(app=self, scope=scope, body=body)
+            except Exception as e:
+                LOGGER.exception(f'Request instance creation error: {e}')
+                response = Error(1000)
+                await self._send_response(send, *await response(None))
                 return
 
             token = self._request_context_var.set(request)
@@ -141,17 +143,6 @@ class Backendpy:
                 else:
                     await send({'type': 'lifespan.shutdown.complete'})
                     return
-
-    def _get_request(self):
-        return Request(app=self)
-
-    async def _receive_request_data(self, request, scope, receive):
-        try:
-            request.apply_scope(scope)
-            request.apply_body(await self._get_request_body(receive))
-        except Exception as e:
-            LOGGER.exception(f'Request data receive error: {e}')
-            raise Error(1000)
 
     async def _get_response(self, request):
         try:
@@ -249,7 +240,7 @@ class Backendpy:
                 'body': to_bytes(body)})
 
     @staticmethod
-    async def _get_request_body(receive):
+    async def _get_request_body(receive) -> bytes:
         # Todo: Problem for a huge body ?
         body = b''
         more_body = True
@@ -268,7 +259,7 @@ class Backendpy:
             more_body = message.get('more_body', False)
 
     def _get_project_apps(self):
-        apps: List[Dict] = list()
+        apps: list[dict] = list()
         for package_name in parse_list(self.config['apps']['active']):
             try:
                 module = importlib.import_module(f'{package_name}.main')

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from collections.abc import Iterable
-from typing import Type, Optional
+from typing import Type, Optional, AnyStr
 
 from .data_handler.data import Data
 
@@ -168,7 +168,7 @@ class Router:
         self.routes = Routes()
 
     def match(self, path: str, method: str, scheme: str) \
-            -> tuple[Optional[callable], Optional[Type[Data]], Optional[dict]]:
+            -> tuple[Optional[callable], Optional[Type[Data]], Optional[dict[str, AnyStr]]]:
         """
         Match the request information with the corresponding Uri and return the Uri handlers.
 
