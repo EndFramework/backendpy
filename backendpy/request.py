@@ -25,7 +25,7 @@ class Request:
         self.context: dict[str, Any] = {}
         self.method: Optional[str] = None
         self.path: Optional[str] = None
-        self.scheme: str = None
+        self.scheme: Optional[str] = None
         self.headers: Optional[dict[str, str]] = None
         self.url_vars: Optional[dict[str, str]] = url_vars
         self.params: Optional[dict[str, str | list[str]]] = None
