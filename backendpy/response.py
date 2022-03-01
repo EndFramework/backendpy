@@ -1,87 +1,120 @@
-import os
+from __future__ import annotations
+
 import gzip
-import zlib
+import os
 import types
+import zlib
+from collections.abc import Iterable, AsyncGenerator
+from enum import IntEnum
 from mimetypes import guess_type
+from typing import Optional, Any
 from urllib.parse import unquote
+
 import aiofiles.os
+
+from .request import Request
 from .utils.bytes import to_bytes
-from .utils.json import to_json
 from .utils.file import read_file_chunks, read_file
+from .utils.json import to_json
 
 
-class Status:
-    CONTINUE = 100
-    SWITCHING_PROTOCOLS = 101
-    OK = 200
-    CREATED = 201
-    ACCEPTED = 202
-    NON_AUTHORITATIVE_INFORMATION = 203
-    NO_CONTENT = 204
-    RESET_CONTENT = 205
-    PARTIAL_CONTENT = 206
-    MULTIPLE_CHOICES = 300
-    MOVED_PERMANENTLY = 301
-    FOUND = 302
-    SEE_OTHER = 303
-    NOT_MODIFIED = 304
-    USE_PROXY = 305
-    TEMPORARY_REDIRECT = 307
-    PERMANENTLY_REDIRECT = 308
-    BAD_REQUEST = 400
-    UNAUTHORIZED = 401
-    PAYMENT_REQUIRED = 402
-    FORBIDDEN = 403
-    NOT_FOUND = 404
-    METHOD_NOT_ALLOWED = 405
-    NOT_ACCEPTABLE = 406
-    PROXY_AUTHENTICATION_REQUIRED = 407
-    REQUEST_TIME_OUT = 408
-    CONFLICT = 409
-    GONE = 410
-    LENGTH_REQUIRED = 411
-    PRECONDITION_FAILED = 412
-    REQUEST_ENTITY_TOO_LARGE = 413
-    REQUEST_URI_TOO_LARGE = 414
-    UNSUPPORTED_MEDIA_TYPE = 415
-    REQUESTED_RANGE_NOT_SATISFIABLE = 416
-    EXPECTATION_FAILED = 417
-    INTERNAL_SERVER_ERROR = 500
-    NOT_IMPLEMENTED = 501
-    BAD_GATEWAY = 502
-    SERVICE_UNAVAILABLE = 503
-    GATEWAY_TIME_OUT = 504
-    HTTP_VERSION_NOT_SUPPORTED = 505
+class Status(IntEnum):
+    """HTTP status codes"""
+
+    def __new__(cls, *args, **kwargs):
+        obj = int.__new__(cls, args[0])
+        obj._value_ = args[0]
+        return obj
+
+    def __init__(self, _: int, description: str = ''):
+        self._description_ = description
+
+    @property
+    def description(self):
+        return self._description_
+
+    CONTINUE = (100, 'Continue')
+    SWITCHING_PROTOCOLS = (101, 'Switching Protocols')
+    OK = (200, 'OK')
+    CREATED = (201, 'Created')
+    ACCEPTED = (202, 'Accepted')
+    NON_AUTHORITATIVE_INFORMATION = (203, 'Non Authoritative Information')
+    NO_CONTENT = (204, 'No Content')
+    RESET_CONTENT = (205, 'Reset Content')
+    PARTIAL_CONTENT = (206, 'Partial Content')
+    MULTIPLE_CHOICES = (300, 'Multiple CHOICES')
+    MOVED_PERMANENTLY = (301, 'Moved Permanently')
+    FOUND = (302, 'Found')
+    SEE_OTHER = (303, 'See Other')
+    NOT_MODIFIED = (304, 'Not Modified')
+    USE_PROXY = (305, 'Use Proxy')
+    TEMPORARY_REDIRECT = (307, 'Temporary Redirect')
+    PERMANENTLY_REDIRECT = (308, 'Permanently Redirect')
+    BAD_REQUEST = (400, 'Bad Request')
+    UNAUTHORIZED = (401, 'Unauthorized')
+    PAYMENT_REQUIRED = (402, 'Payment Required')
+    FORBIDDEN = (403, 'Forbidden')
+    NOT_FOUND = (404, 'Not Found')
+    METHOD_NOT_ALLOWED = (405, 'Method Not Allowed')
+    NOT_ACCEPTABLE = (406, 'Not Acceptable')
+    PROXY_AUTHENTICATION_REQUIRED = (407, 'Proxy Authentication Required')
+    REQUEST_TIME_OUT = (408, 'Request Time Out')
+    CONFLICT = (409, 'Conflict')
+    GONE = (410, 'Gone')
+    LENGTH_REQUIRED = (411, 'Length Required')
+    PRECONDITION_FAILED = (412, 'Precondition Failed')
+    REQUEST_ENTITY_TOO_LARGE = (413, 'Request Entity Too Large')
+    REQUEST_URI_TOO_LARGE = (414, 'Request URI Too Large')
+    UNSUPPORTED_MEDIA_TYPE = (415, 'Unsupported Media Type')
+    REQUESTED_RANGE_NOT_SATISFIABLE = (416, 'Requested Range Not Satisfiable')
+    EXPECTATION_FAILED = (417, 'Expectation Failed')
+    INTERNAL_SERVER_ERROR = (500, 'Internal Server Error')
+    NOT_IMPLEMENTED = (501, 'Not Implemented')
+    BAD_GATEWAY = (502, 'Bad Gateway')
+    SERVICE_UNAVAILABLE = (503, 'Service Unavailable')
+    GATEWAY_TIME_OUT = (504, 'Gateway Time Out')
+    HTTP_VERSION_NOT_SUPPORTED = (505, 'HTTP Version Not Supported')
 
 
 class Response:
-    def __init__(self, body, status=Status.OK, headers=None, content_type=b'text/plain', compress=False):
-        self.body = body
-        self.status = status
-        self.headers = headers
-        self.compress = compress
-        self.content_type = content_type
+    """Basic class for creating HTTP responses"""
 
-    async def __call__(self, request):
+    def __init__(
+            self,
+            body: Any,
+            status: Status = Status.OK,
+            headers: Optional[Iterable[[bytes, bytes]]] = None,
+            content_type: bytes = b'text/plain',
+            compress: bool = False) -> None:
+        self.body: Any = body
+        self.status: Status = status
+        self.headers: Optional[Iterable[[bytes, bytes]]] = headers
+        self.content_type: bytes = content_type
+        self.compress: bool = compress
+
+    async def __call__(self, request: Request) \
+            -> tuple[bytes | AsyncGenerator[bytes],
+                     int,
+                     list[[bytes, bytes]],
+                     bool]:
         stream = self._is_stream(self.body)
         if not stream:
             self.body = to_bytes(self.body)
-        if not self.headers:
-            self.headers = []
+        self.headers = list(self.headers) if self.headers else []
         if self.compress:
             self.body = self._gzip(self.body) if not stream else self._gzip_stream(self.body)
             self.headers += [[b'content-encoding', b'deflate' if stream else b'gzip']]
         self.headers += [[b'content-type', self.content_type]]
         if not stream:
             self.headers += [[b'content-length', to_bytes(len(self.body))]]
-        return self.body, self.status, self.headers, stream
+        return self.body, self.status.value, self.headers, stream
 
     @staticmethod
-    def _gzip(body):
+    def _gzip(body: Any) -> bytes:
         return gzip.compress(body)
 
     @staticmethod
-    async def _gzip_stream(body):
+    async def _gzip_stream(body: Any) -> AsyncGenerator[bytes]:
         c = zlib.compressobj()
         if isinstance(body, types.AsyncGeneratorType):
             async for chunk in body:
@@ -92,53 +125,108 @@ class Response:
         yield c.flush(zlib.Z_FINISH)
 
     @staticmethod
-    def _is_stream(body):
+    def _is_stream(body: Any) -> bool:
         return isinstance(body, types.AsyncGeneratorType) or \
                isinstance(body, types.GeneratorType)
 
 
 class Text(Response):
-    def __init__(self, body, status=Status.OK, headers=None, compress=False):
-        super().__init__(body=body, status=status, headers=headers, content_type=b'text/plain',
-                         compress=compress)
+    def __init__(
+            self,
+            body: Any,
+            status: Status = Status.OK,
+            headers: Optional[Iterable[[bytes, bytes]]] = None,
+            compress: bool = False) -> None:
+        super().__init__(
+            body=body,
+            status=status,
+            headers=headers,
+            content_type=b'text/plain',
+            compress=compress)
 
 
 class HTML(Response):
-    def __init__(self, body, status=Status.OK, headers=None, compress=False):
-        super().__init__(body=body, status=status, headers=headers, content_type=b'text/html',
-                         compress=compress)
+    def __init__(
+            self,
+            body: Any,
+            status: Status = Status.OK,
+            headers: Optional[Iterable[[bytes, bytes]]] = None,
+            compress: bool = False) -> None:
+        super().__init__(
+            body=body,
+            status=status,
+            headers=headers,
+            content_type=b'text/html',
+            compress=compress)
 
 
 class JSON(Response):
-    def __init__(self, body, status=Status.OK, headers=None, compress=False):
-        super().__init__(body=body, status=status, headers=headers, content_type=b'application/json',
-                         compress=compress)
+    def __init__(
+            self,
+            body: Any,
+            status: Status = Status.OK,
+            headers: Optional[Iterable[[bytes, bytes]]] = None,
+            compress: bool = False) -> None:
+        super().__init__(
+            body=body,
+            status=status,
+            headers=headers,
+            content_type=b'application/json',
+            compress=compress)
 
-    async def __call__(self, *args, **kwargs):
-        self.body = to_json(self.body)  # Todo: if body is generator
-        return await super().__call__(*args, **kwargs)
+    async def __call__(self, request: Request) \
+            -> tuple[bytes | AsyncGenerator[bytes],
+                     int,
+                     list[[bytes, bytes]],
+                     bool]:
+        self.body = to_json(self.body)
+        # TODO: Handle if body is a python generator.
+        return await super().__call__(request)
 
 
 class Binary(Response):
-    def __init__(self, body, status=Status.OK, headers=None, content_type=b'application/octet-stream',
-                 compress=False):
-        super().__init__(body=body, status=status, headers=headers, content_type=content_type, compress=compress)
+    def __init__(
+            self,
+            body: Any,
+            status: Status = Status.OK,
+            headers: Optional[Iterable[[bytes, bytes]]] = None,
+            content_type=b'application/octet-stream',
+            compress: bool = False):
+        super().__init__(
+            body=body,
+            status=status,
+            headers=headers,
+            content_type=content_type,
+            compress=compress)
 
 
 class File(Response):
-    def __init__(self, path, status=Status.OK, headers=None, stream=True, compress=False):
-        super().__init__(body=b'', status=status, headers=headers, content_type=b'application/octet-stream',
-                         compress=compress)
+    def __init__(
+            self,
+            path: str,
+            status: Status = Status.OK,
+            headers: Optional[Iterable[[bytes, bytes]]] = None,
+            stream: bool = True,
+            compress: bool = False):
+        super().__init__(
+            body=b'',
+            status=status,
+            headers=headers,
+            content_type=b'application/octet-stream',
+            compress=compress)
         self.path = path
         self.stream = stream
 
-    async def __call__(self, request):
+    async def __call__(self, request: Request) \
+            -> tuple[bytes | AsyncGenerator[bytes],
+                     int,
+                     list[[bytes, bytes]],
+                     bool]:
         self.path = os.path.join(request.app.config['environment']['media_path'], unquote(self.path))
         if not os.path.isfile(self.path):
             raise FileNotFoundError
 
-        if not self.headers:
-            self.headers = []
+        self.headers = list(self.headers) if self.headers else []
         content_type, encoding = guess_type(self.path)
         self.headers += [[b'content-type', to_bytes(content_type) if content_type else self.content_type]]
 
@@ -157,28 +245,46 @@ class File(Response):
                 self.headers += [[b'content-encoding', b'gzip']]
             self.headers += [[b'content-length', to_bytes(len(self.body))]]
 
-        return self.body, self.status, self.headers, self.stream
+        return self.body, self.status.value, self.headers, self.stream
 
 
 class Redirect(Response):
-    def __init__(self, url, permanent=False, method_unchange=True):
+    def __init__(
+            self,
+            url: str | bytes,
+            permanent: bool = False,
+            method_unchange: bool = True) -> None:
         url = to_bytes(url)
-        super().__init__(body=url,
-                         status=(Status.PERMANENTLY_REDIRECT if permanent else Status.TEMPORARY_REDIRECT) if
-                         method_unchange else (Status.MOVED_PERMANENTLY if permanent else Status.FOUND),
-                         headers=[[b'location', url],
-                                  [b'pragma', b'no-cache'],
-                                  [b'cache-control', b'no-cache']],
-                         content_type=b'application/octet-stream')
+        super().__init__(
+            body=url,
+            status=(Status.PERMANENTLY_REDIRECT if permanent else Status.TEMPORARY_REDIRECT) if
+            method_unchange else (Status.MOVED_PERMANENTLY if permanent else Status.FOUND),
+            headers=[[b'location', url],
+                     [b'pragma', b'no-cache'],
+                     [b'cache-control', b'no-cache']],
+            content_type=b'application/octet-stream')
 
 
 class Success(JSON):
-    def __init__(self, data=None, status=Status.OK, headers=None, compress=False):
-        super().__init__(body=None, status=status, headers=headers, compress=compress)
+    def __init__(
+            self,
+            data: Optional[Any] = None,
+            status: Status = Status.OK,
+            headers: Optional[Iterable[[bytes, bytes]]] = None,
+            compress: bool = False) -> None:
+        super().__init__(
+            body=None,
+            status=status,
+            headers=headers,
+            compress=compress)
         self.data = data
 
-    async def __call__(self, *args, **kwargs):
+    async def __call__(self, request: Request) \
+            -> tuple[bytes | AsyncGenerator[bytes],
+                     int,
+                     list[[bytes, bytes]],
+                     bool]:
         self.body = {'status': 'success'}
         if self.data is not None:
             self.body['data'] = self.data
-        return await super().__call__(*args, **kwargs)
+        return await super().__call__(request)
