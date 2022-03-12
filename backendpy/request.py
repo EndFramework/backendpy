@@ -12,8 +12,26 @@ if TYPE_CHECKING:
 
 
 class Request:
-    """A class whose instances are used to store the information of a request
-    and then these instances are sent to the request handlers."""
+    """
+    Base HTTP request class whose instances are used to store the information of a request
+    and then these instances are sent to the requests handlers.
+
+    :ivar app: :class:`~backendpy.asgi.Backendpy` class instance of the current
+               project (that is an ASGI application).
+    :ivar context: Dictionary of request context variables
+    :ivar method: Method of HTTP request
+    :ivar path: URL path of HTTP request
+    :ivar scheme: URL scheme of HTTP request
+    :ivar headers: Dictionary of HTTP request headers
+    :ivar url_vars: Dictionary of URL path variables
+    :ivar params: Dictionary of HTTP request query string values
+    :ivar form: Dictionary of HTTP request form data
+    :ivar json: Dictionary of HTTP request JSON data
+    :ivar files: Dictionary of multipart HTTP request files data
+    :ivar body: Raw body of HTTP request if it does not belong to any of the "form",
+                "json" and "file" fields
+    :ivar cleaned_data: Dictionary of data processed by request data handler
+    """
 
     def __init__(
             self,
@@ -21,6 +39,15 @@ class Request:
             scope: Mapping[str, Any],
             body: Optional[bytes] = None,
             url_vars: Optional[dict[str, str]] = None) -> None:
+        """
+        Initialize request instance.
+
+        :param app: :class:`~backendpy.asgi.Backendpy` class instance of the current
+                    project (that is an ASGI application)
+        :param scope: HTTP connection scope
+        :param body: Body of HTTP request
+        :param url_vars: URL path variables of HTTP request
+        """
         self.app: Backendpy = app
         self.context: dict[str, Any] = {}
         self.method: Optional[str] = None
@@ -39,7 +66,7 @@ class Request:
             self._apply_body(body)
 
     def _apply_scope(self, scope: Mapping[str, Any]) -> None:
-        """Set request information."""
+        """Set request information from HTTP connection scope."""
         self.method = scope['method']
         self.path = scope['path']
         self.scheme = scope['scheme']

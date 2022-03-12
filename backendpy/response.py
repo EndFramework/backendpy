@@ -77,7 +77,15 @@ class Status(IntEnum):
 
 
 class Response:
-    """Basic class for creating HTTP responses"""
+    """
+    Base HTTP response class whose instances are returned as HTTP responses by requests handlers.
+
+    :ivar body: The HTTP response body
+    :ivar status: The HTTP response status
+    :ivar headers: The HTTP response headers
+    :ivar content_type: The HTTP response content type
+    :ivar compress: Determines whether or not to compress (gzip) the response
+    """
 
     def __init__(
             self,
@@ -86,6 +94,15 @@ class Response:
             headers: Optional[Iterable[[bytes, bytes]]] = None,
             content_type: bytes = b'text/plain',
             compress: bool = False) -> None:
+        """
+        Initialize response instance.
+
+        :param body: The HTTP response body
+        :param status: The HTTP response status
+        :param headers: The HTTP response headers
+        :param content_type: The HTTP response content type
+        :param compress: Determines whether or not to compress (gzip) the response
+        """
         self.body: Any = body
         self.status: Status = status
         self.headers: Optional[Iterable[[bytes, bytes]]] = headers
@@ -97,6 +114,12 @@ class Response:
                      int,
                      list[[bytes, bytes]],
                      bool]:
+        """
+        Generate and return response data when the Response object is called.
+
+        :param request: :class:`~backendpy.request.Request` class instance
+        :return: Tuple of generated response info
+        """
         stream = self._is_stream(self.body)
         if not stream:
             self.body = to_bytes(self.body)
@@ -111,10 +134,12 @@ class Response:
 
     @staticmethod
     def _gzip(body: Any) -> bytes:
+        """Gzip the response body"""
         return gzip.compress(body)
 
     @staticmethod
     async def _gzip_stream(body: Any) -> AsyncGenerator[bytes]:
+        """Gzip the response body chunks"""
         c = zlib.compressobj()
         if isinstance(body, types.AsyncGeneratorType):
             async for chunk in body:
@@ -131,12 +156,22 @@ class Response:
 
 
 class Text(Response):
+    """Text response class inherited from :class:`~backendpy.response.Response` class."""
+
     def __init__(
             self,
             body: Any,
             status: Status = Status.OK,
             headers: Optional[Iterable[[bytes, bytes]]] = None,
             compress: bool = False) -> None:
+        """
+        Initialize response instance.
+
+        :param body: The HTTP response body
+        :param status: The HTTP response status
+        :param headers: The HTTP response headers
+        :param compress: Determines whether or not to compress (gzip) the response
+        """
         super().__init__(
             body=body,
             status=status,
@@ -146,12 +181,22 @@ class Text(Response):
 
 
 class HTML(Response):
+    """HTML response class inherited from :class:`~backendpy.response.Response` class."""
+
     def __init__(
             self,
             body: Any,
             status: Status = Status.OK,
             headers: Optional[Iterable[[bytes, bytes]]] = None,
             compress: bool = False) -> None:
+        """
+        Initialize response instance.
+
+        :param body: The HTTP response body
+        :param status: The HTTP response status
+        :param headers: The HTTP response headers
+        :param compress: Determines whether or not to compress (gzip) the response
+        """
         super().__init__(
             body=body,
             status=status,
@@ -161,12 +206,22 @@ class HTML(Response):
 
 
 class JSON(Response):
+    """JSON response class inherited from :class:`~backendpy.response.Response` class."""
+
     def __init__(
             self,
             body: Any,
             status: Status = Status.OK,
             headers: Optional[Iterable[[bytes, bytes]]] = None,
             compress: bool = False) -> None:
+        """
+        Initialize response instance.
+
+        :param body: The HTTP response body
+        :param status: The HTTP response status
+        :param headers: The HTTP response headers
+        :param compress: Determines whether or not to compress (gzip) the response
+        """
         super().__init__(
             body=body,
             status=status,
@@ -185,6 +240,8 @@ class JSON(Response):
 
 
 class Binary(Response):
+    """Binary object response class inherited from :class:`~backendpy.response.Response` class."""
+
     def __init__(
             self,
             body: Any,
@@ -192,6 +249,15 @@ class Binary(Response):
             headers: Optional[Iterable[[bytes, bytes]]] = None,
             content_type=b'application/octet-stream',
             compress: bool = False):
+        """
+        Initialize response instance.
+
+        :param body: The HTTP response body
+        :param status: The HTTP response status
+        :param headers: The HTTP response headers
+        :param content_type: The HTTP response content type
+        :param compress: Determines whether or not to compress (gzip) the response
+        """
         super().__init__(
             body=body,
             status=status,
@@ -201,6 +267,11 @@ class Binary(Response):
 
 
 class File(Response):
+    """
+    File response class inherited from :class:`~backendpy.response.Response` class
+    which reads and returns file from a given path.
+    """
+
     def __init__(
             self,
             path: str,
@@ -208,6 +279,15 @@ class File(Response):
             headers: Optional[Iterable[[bytes, bytes]]] = None,
             stream: bool = True,
             compress: bool = False):
+        """
+        Initialize response instance.
+
+        :param path: The file path
+        :param status: The HTTP response status
+        :param headers: The HTTP response headers
+        :param stream: Determines whether or not to stream the response
+        :param compress: Determines whether or not to compress (gzip) the response
+        """
         super().__init__(
             body=b'',
             status=status,
@@ -249,11 +329,20 @@ class File(Response):
 
 
 class Redirect(Response):
+    """Redirect response class inherited from :class:`~backendpy.response.Response` class."""
+
     def __init__(
             self,
             url: str | bytes,
             permanent: bool = False,
             method_unchange: bool = True) -> None:
+        """
+        Initialize response instance.
+
+        :param url: The URL to redirect
+        :param permanent: Determines whether the redirect is permanent or not
+        :param method_unchange: If true, status codes 307 and 308 will be used, otherwise 301 and 302 will be used
+        """
         url = to_bytes(url)
         super().__init__(
             body=url,
@@ -266,12 +355,22 @@ class Redirect(Response):
 
 
 class Success(JSON):
+    """JSON formatted success response class inherited from :class:`~backendpy.response.Response` class."""
+
     def __init__(
             self,
             data: Optional[Any] = None,
             status: Status = Status.OK,
             headers: Optional[Iterable[[bytes, bytes]]] = None,
             compress: bool = False) -> None:
+        """
+        Initialize response instance.
+
+        :param data: Data with a structure supported by JSON format
+        :param status: The HTTP response status
+        :param headers: The HTTP response headers
+        :param compress: Determines whether or not to compress (gzip) the response
+        """
         super().__init__(
             body=None,
             status=status,
