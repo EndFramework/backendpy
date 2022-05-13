@@ -1,9 +1,13 @@
+from __future__ import annotations
+
 import asyncio
 import base64
 import concurrent.futures.thread
+from functools import partial
 from html import escape, unescape
 from io import BytesIO
-from functools import partial
+from typing import Any
+
 try:
     from PIL import Image
 except ImportError:
@@ -11,7 +15,15 @@ except ImportError:
 
 
 class Filter:
-    async def __call__(self, value):
+    """The base class that will be inherited to create the data filter classes."""
+
+    async def __call__(self, value: Any) -> Any:
+        """
+        Perform data filtering operation.
+
+        :param value: The data to which the filter should be applied
+        :return: Filtered value
+        """
         return value
 
 

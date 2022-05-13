@@ -1,6 +1,8 @@
-import os
 import inspect
+import os
+
 import aiofiles
+
 try:
     import jinja2
 except ImportError:

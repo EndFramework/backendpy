@@ -1,6 +1,6 @@
-import unittest
 import asyncio
 import functools
+import unittest
 
 
 class AsyncTestCase(unittest.TestCase):

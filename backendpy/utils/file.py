@@ -1,13 +1,15 @@
-import os
-import io
-import mimetypes
-import types
+from __future__ import annotations
+
 import binascii
 import hashlib
+import io
+import mimetypes
+import os
+import types
+from typing import Literal, AnyStr
+
 import aiofiles
 import aiofiles.os
-from typing import Literal
-
 
 READ_MODES = Literal['r', 'rb', 'rt']
 WRITE_MODES = Literal['w', 'w+', 'wb', 'wb+', 'wt', 'wt+']
@@ -96,7 +98,7 @@ def get_human_readable_size(size, precision=1):
     return '%.*f%s' % (precision, size, 'TB')
 
 
-def get_extension(filename):
+def get_extension(filename: AnyStr) -> AnyStr:
     _, ext = os.path.splitext(filename)
     return ext[1:].lower()
 
@@ -106,7 +108,7 @@ def get_suffix_mimetype(filename):
     return type
 
 
-def get_type(value):
+def get_type(value) -> list[str] | None:
     if not value:
         raise Exception('file text content error')
     # Binery files signatures list

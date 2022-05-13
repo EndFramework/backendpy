@@ -1,10 +1,12 @@
-import os
-import sys
 import argparse
 import asyncio
+import os
+import sys
+
 from backendpy.config import get_config
-from backendpy.logging import get_logger
 from backendpy.initializer import Init
+from backendpy.logging import get_logger
+
 try:
     from backendpy.db import create_database
 except ImportError:

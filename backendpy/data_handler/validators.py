@@ -1,10 +1,16 @@
-import sys
+from __future__ import annotations
+
 import cgi
-import re
 import datetime
+import re
+import sys
 import uuid
+from collections.abc import Mapping, Sequence
+from typing import Any, Optional
 from urllib.parse import urlparse
+
 from ..utils.file import get_human_readable_size, get_extension, get_type
+
 try:
     from sqlalchemy import select, exists
 except ImportError:
@@ -12,15 +18,47 @@ except ImportError:
 
 
 class Validator:
-    def __init__(self, message):
+    """
+    The base class that will be inherited to create the data validator classes.
+
+    :ivar message: Error message that this validator will return if it receives invalid data
+    """
+
+    def __init__(self, message: str):
+        """
+        Initialize data validator instance.
+
+        :param message: Error message that this validator will return if it receives invalid data
+        """
         self.message = message
 
-    async def __call__(self, value, meta):
+    async def __call__(
+            self,
+            value: Any,
+            meta: Mapping[str, Any]) -> None | str:
+        """
+        Perform data validation operations.
+
+        :param value: Data to be validated
+        :param meta: Information beyond the value of this field that may be required
+                     during the validation process; Such as information of other received data
+                     fields, request information, etc.
+        :return: If there is no error or discrepancy in the data, the ``None`` will be
+                 returned, otherwise the error message will be returned
+        """
         return None
 
 
 class NotNull(Validator):
-    def __init__(self, message='Null value'):
+    """
+    Check that the value is not null.
+    (Note: NotNull validator is different from the ``required`` parameter of the
+    :class:`~backendpy.data_handler.fields.Field` and has a separate purpose.
+    Because sometimes we need to differentiate between not sending a value to
+    a field and sending a null value to it.)
+    """
+
+    def __init__(self, message: str = 'Null value'):
         super().__init__(message)
 
     async def __call__(self, value, meta):
@@ -28,7 +66,12 @@ class NotNull(Validator):
 
 
 class In(Validator):
-    def __init__(self, values, message='Value error'):
+    """Check if the value is present among the predefined values."""
+
+    def __init__(
+            self,
+            values: Sequence,
+            message: str = 'Value error'):
         super().__init__(message)
         self.values = values
 
@@ -41,7 +84,12 @@ class In(Validator):
 
 
 class NotIn(Validator):
-    def __init__(self, values, message='Value error'):
+    """Check if the value is not present among the predefined values."""
+
+    def __init__(
+            self,
+            values: Sequence,
+            message: str = 'Value error'):
         super().__init__(message)
         self.values = values
 
@@ -52,34 +100,46 @@ class NotIn(Validator):
 
 
 class Length(Validator):
-    def __init__(self, min=-1, max=-1, message='Length error'):
+    """Check if the data length is between min and max."""
+
+    def __init__(
+            self,
+            min: Optional[int] = None,
+            max: Optional[int] = None,
+            message: str = 'Length error'):
         super().__init__(message)
         self.min = min
         self.max = max
-        if self.min != -1:
+        if self.min is not None:
             self.message += ' min: %s' % self.min
-        if self.max != -1:
+        if self.max is not None:
             self.message += ' max: %s' % self.max
 
     async def __call__(self, value, meta):
         if value is None:
             return None
         value = str(value)
-        if self.max != -1 and len(value) > self.max:
+        if self.max is not None and len(value) > self.max:
             return self.message
-        elif self.min != -1 and len(value) < self.min:
+        elif self.min is not None and len(value) < self.min:
             return self.message
         return None
 
 
 class Limit(Validator):
-    def __init__(self, min=None, max=None, message='Value limit error'):
+    """Used for numerical data and checks whether the number is in the range of min and max."""
+
+    def __init__(
+            self,
+            min: Optional[float] = None,
+            max: Optional[float] = None,
+            message: str = 'Value limit error'):
         super().__init__(message)
         self.min = min
         self.max = max
-        if self.min:
+        if self.min is not None:
             self.message += ' min: %s' % self.min
-        if self.max:
+        if self.max is not None:
             self.message += ' max: %s' % self.max
             
     async def __call__(self, value, meta):
@@ -92,15 +152,17 @@ class Limit(Validator):
                 value = int(value)
             except:
                 return self.message
-        if self.max and value and value > self.max:
+        if self.max is not None and value > self.max:
             return self.message
-        elif self.min and value and value < self.min:
+        elif self.min is not None and value < self.min:
             return self.message
         return None
 
 
 class UUID(Validator):
-    def __init__(self, message='Invalid UUID'):
+    """Check that the submitted data has a valid UUID4 format."""
+
+    def __init__(self, message: str = 'Invalid UUID'):
         super().__init__(message)
 
     async def __call__(self, value, meta):
@@ -116,7 +178,9 @@ class UUID(Validator):
 
 
 class EmailAddress(Validator):
-    def __init__(self, message='Invalid email address'):
+    """Check if the data is a valid email address."""
+
+    def __init__(self, message: str = 'Invalid email address'):
         super().__init__(message)
 
     async def __call__(self, value, meta):
@@ -131,7 +195,9 @@ class EmailAddress(Validator):
 
 
 class Numeric(Validator):
-    def __init__(self, message='Must be numeric'):
+    """Check if the data is a numeric value."""
+
+    def __init__(self, message: str = 'Must be numeric'):
         super().__init__(message)
 
     async def __call__(self, value, meta):
@@ -148,7 +214,9 @@ class Numeric(Validator):
 
 
 class Boolean(Validator):
-    def __init__(self, message='Must be boolean'):
+    """Check if the data is a boolean value."""
+
+    def __init__(self, message: str = 'Must be boolean'):
         super().__init__(message)
 
     async def __call__(self, value, meta):
@@ -160,7 +228,9 @@ class Boolean(Validator):
 
 
 class Url(Validator):
-    def __init__(self, message='Invalid URL'):
+    """Check if the data is a valid URL."""
+
+    def __init__(self, message: str = 'Invalid URL'):
         super().__init__(message)
 
     async def __call__(self, value, meta):
@@ -176,7 +246,9 @@ class Url(Validator):
 
 
 class UrlPath(Validator):
-    def __init__(self, message='Invalid Path'):
+    """Check if the data is a valid URL path."""
+
+    def __init__(self, message: str = 'Invalid Path'):
         super().__init__(message)
 
     async def __call__(self, value, meta):
@@ -188,7 +260,9 @@ class UrlPath(Validator):
 
 
 class PasswordStrength(Validator):
-    def __init__(self, message='Weak password'):
+    """Checks the hardness of a password and returns an error if the password is weak."""
+
+    def __init__(self, message: str = 'Weak password'):
         super().__init__(message)
 
     async def __call__(self, value, meta):
@@ -236,7 +310,9 @@ class PasswordStrength(Validator):
 
 
 class Date(Validator):
-    def __init__(self, message='Invalid date format (YYYY-MM-DD)'):
+    """Verifies that the value is in the valid format of YYYY-MM-DD date."""
+
+    def __init__(self, message: str = 'Invalid date format (YYYY-MM-DD)'):
         super().__init__(message)
 
     async def __call__(self, value, meta):
@@ -250,31 +326,47 @@ class Date(Validator):
 
 
 class MatchRegex(Validator):
-    def __init__(self, regex, message='Invalid format'):
+    """Checks that the value matches a regular expression pattern."""
+
+    def __init__(self, pattern: str, message: str = 'Invalid format'):
         super().__init__(message)
-        self.regex = regex
+        self.pattern = pattern
         
     async def __call__(self, value, meta):
         if value in (None, '', b''):
             return None
-        if not self.regex:
+        if not self.pattern:
             return None
-        if re.match(self.regex, value):
+        if re.match(self.pattern, value):
             return None
         else:
             return self.message
 
 
 class RestrictedFile(Validator):
-    def __init__(self, extensions=None, max_size=-1, min_size=-1, message='File error'):
+    """
+    Used for file fields and validates file type and size according to predefined
+    valid extensions and size range.
+    """
+
+    def __init__(
+            self,
+            extensions: Optional[Sequence[str]] = None,
+            max_size: Optional[float] = None,
+            min_size: Optional[float] = None,
+            message: str = 'File error'):
+        """
+        Initialize file validator instance.
+
+        :param extensions: List of allowed file extensions
+        :param max_size: Maximum file size in bytes
+        :param min_size: Minimum file size in bytes
+        :param message: Error message that will be returned if the file is invalid
+        """
         super().__init__(message)
         self.extensions = extensions if extensions else tuple()
-        self.max_size = -1
-        self.min_size = -1
-        if max_size != -1:
-            self.max_size = float(max_size) * 1024.0
-        if min_size != -1:
-            self.min_size = float(min_size) * 1024.0
+        self.max_size = (float(max_size) * 1024.0) if max_size is not None else None
+        self.min_size = (float(min_size) * 1024.0) if min_size is not None else None
 
     async def __call__(self, value, meta):
         if value in (None, '', b''):
@@ -284,7 +376,7 @@ class RestrictedFile(Validator):
         if isinstance(f, cgi.FieldStorage):
             if f.file:
                 filename = f.filename
-                if self.max_size != -1:
+                if self.max_size is not None:
                     try:
                         value = f.value[:int(self.max_size)+1]
                     except IndexError:
@@ -301,9 +393,9 @@ class RestrictedFile(Validator):
         if value:
             # check size
             size = sys.getsizeof(value)
-            if self.max_size != -1 and size > self.max_size:
+            if self.max_size is not None and size > self.max_size:
                 return '%s: %s %s' % (self.message, 'max size:', str(get_human_readable_size(self.max_size)))
-            elif self.min_size != -1 and size < self.min_size:
+            elif self.min_size is not None and size < self.min_size:
                 return '%s: %s %s' % (self.message, 'min size', str(get_human_readable_size(self.min_size)))
             # check extension
             if self.extensions:
@@ -325,8 +417,34 @@ class RestrictedFile(Validator):
 
 
 class Unique(Validator):
-    def __init__(self, model, model_field_name=None, except_self=None, except_default=False, case_sensitive=False,
-                 message='Unique value error'):
+    """
+    This validator is used to check the uniqueness of the data in the database table and can
+    be used when using the default database helpers of the framework.
+    """
+
+    def __init__(
+            self,
+            model: object,
+            model_field_name: Optional[str] = None,
+            except_self: Optional[str] = None,
+            except_default: bool = False,
+            case_sensitive: bool = False,
+            message: str = 'Unique value error'):
+        """
+        Initialize validator instance.
+
+        :param model: Object of database model to check for uniqueness
+        :param model_field_name: The name of the database table field that must be checked for uniqueness.
+                                 This parameter only needs to be set if the name of the database table field
+                                 to be checked is different from the name of the data handler class field.
+        :param except_self: The name of identifier field of database table (This ID field value must also be set
+                            in input data). We only need to set this parameter when we are editing a row from
+                            the database table (not adding a new row) and we do not want to return the non-unique
+                            value error if the previous value of the unique field for this row is retrieved.
+        :param except_default: Specifies whether to return a non-unique value error if the value is equal to
+                               the default value defined for data handler class field.
+        :param message: Error message that will be returned if the value is not unique
+        """
         super().__init__(message)
         self.model = model
         self.model_field_name = model_field_name
@@ -335,6 +453,7 @@ class Unique(Validator):
         self.case_sensitive = case_sensitive
 
     async def __call__(self, value, meta):
+        # Todo: Support for case sensitive uniqueness check
         if value in (None, '', b''):
             return None
         if not self.model:
@@ -361,7 +480,8 @@ class Unique(Validator):
 
 
 '''class List(Validator):
-    def __init__(self, inner_processors=None, message='Must be list'):
+    
+    def __init__(self, inner_processors=None, message: str = 'Must be list'):
         super().__init__(message)
         self.inner_processors = inner_processors
 

@@ -1,4 +1,5 @@
 import importlib
+
 from .request import Request
 from .response import Response
 
@@ -19,8 +20,8 @@ class Middleware:
         """
         Capture request and return modified version of the request
         or raise the Response exception to end request evaluation queue.
-        :param request: the Request class instance in queue
-        :return: Request class instance
+        :param request: the :class:`~backendpy.request.Request` class instance in queue
+        :return: :class:`~backendpy.request.Request` class instance
         """
         return request
 
@@ -29,7 +30,7 @@ class Middleware:
         """
         Capture handler and return modified version of the handler
         or raise the Response exception to end request evaluation queue.
-        :param request: the Request class modified instance in queue
+        :param request: the :class:`~backendpy.request.Request` class modified instance in queue
         :param handler: the handler function in queue
         :return: Handler function
         """
@@ -40,7 +41,7 @@ class Middleware:
         """
         Capture response and return modified version of the response
         or raise the Response exception to end response evaluation queue.
-        :param request: the Request class modified instance in queue
+        :param request: the :class:`~backendpy.request.Request` class modified instance in queue
         :param response: the Response class instance in queue
         :return: Response class instance
         """

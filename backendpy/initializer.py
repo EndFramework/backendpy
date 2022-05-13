@@ -1,7 +1,8 @@
+import importlib
 import os
 import sys
-import importlib
 from inspect import iscoroutinefunction
+
 from .app import App
 from .config import get_config, parse_list
 from .logging import get_logger
