@@ -28,14 +28,18 @@ class Filter:
 
 
 class Escape(Filter):
-    async def __call__(self, value):
-        if type(value) in (str, bytes):
-            value = escape(unescape(value), quote=True)
-        return value
+    """Replace special characters "&", "<", ">", (') and (") to HTML-safe sequences."""
+
+    async def __call__(self, value: str) -> str:
+        if type(value) is not str:
+            raise TypeError('Escape filter only supports string type.')
+        return escape(unescape(value), quote=True)
 
 
 class Cut(Filter):
-    def __init__(self, length):
+    """Cut the sequence to desired length."""
+
+    def __init__(self, length: int):
         self.length = length
 
     async def __call__(self, value):
@@ -43,21 +47,25 @@ class Cut(Filter):
 
 
 class DecodeBase64(Filter):
-    async def __call__(self, value):
-        return base64.b64decode(value)
+    """Decode the Base64 encoded bytes-like object or ASCII string."""
+
+    async def __call__(self, value: bytes | str) -> bytes:
+        return base64.b64decode(value, validate=True)
 
 
 class ModifyImage(Filter):
-    def __init__(self, format='JPEG', mode='RGB'):
+    """Change the image format."""
+
+    def __init__(self, format: str = 'JPEG', mode: str = 'RGB'):
         self.format = format
         self.mode = mode
 
-    async def __call__(self, value):
+    async def __call__(self, value: bytes) -> bytes:
         with concurrent.futures.ThreadPoolExecutor() as pool:
             return await asyncio.get_running_loop().run_in_executor(
                 pool, partial(self._modify, value))
 
-    def _modify(self, value):
+    def _modify(self, value: bytes) -> bytes:
         # Todo: (read from / write to) buffer ?
         with BytesIO(value) as f_in:
             im = Image.open(f_in)
@@ -68,6 +76,7 @@ class ModifyImage(Filter):
                 return f_out.getvalue()
 
 
+"""
 class ModifyVideo(Filter):
     def __init__(self, format='MP4'):
         self.format = format
@@ -94,3 +103,4 @@ class ModifyAudio(Filter):
     def _modify(self, value):
         # Todo
         return value
+"""
