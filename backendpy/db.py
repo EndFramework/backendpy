@@ -1,8 +1,11 @@
+from __future__ import annotations
+
 import asyncio
 import importlib
+from collections.abc import Mapping
 
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession, AsyncEngine
 from sqlalchemy.ext.asyncio import async_scoped_session
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import declarative_base
@@ -17,6 +20,7 @@ Base = declarative_base()
 
 
 def set_database_hooks(app):
+    """Attach Sqlalchemy engine and session to the project with hooks."""
 
     @app.event('startup')
     async def on_startup():
@@ -32,24 +36,30 @@ def set_database_hooks(app):
         await app.context['db_session'].remove()
 
 
-def get_db_engine(config, echo=False):
+def get_db_engine(config: Mapping, echo: bool = False):
+    """Create a new Sqlalchemy async engine instance."""
+
     return create_async_engine(
         'postgresql+asyncpg://{username}:{password}@{host}:{port}/{name}'.format(**config),
         echo=echo, future=True, isolation_level='SERIALIZABLE')
 
 
-def get_db_session(engine, scope_func):
+def get_db_session(engine: AsyncEngine, scope_func: callable):
+    """Construct a new Sqlalchemy async scoped session."""
+
     async_session_factory = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
     return async_scoped_session(async_session_factory, scopefunc=scope_func)
 
 
-def create_database(app_config):
+def create_database(app_config: Mapping):
+    """Create Backendpy project database and tables based on applications models."""
+
     loop = asyncio.get_event_loop()
     loop.run_until_complete(_create_database(app_config))
     loop.run_until_complete(_create_tables(app_config))
 
 
-async def _create_database(app_config):
+async def _create_database(app_config: Mapping):
     try:
         LOGGER.info('Start creating database …')
         engine = create_async_engine(
@@ -64,7 +74,7 @@ async def _create_database(app_config):
         LOGGER.warning('Database creation excepted')
 
 
-async def _create_tables(app_config):
+async def _create_tables(app_config: Mapping):
     try:
         LOGGER.info('Start creating tables …')
         engine = create_async_engine(
@@ -79,7 +89,7 @@ async def _create_tables(app_config):
         LOGGER.error(e)
 
 
-def _import_models(app_config):
+def _import_models(app_config: Mapping):
     try:
         for package_name in parse_list(app_config['apps']['active']):
             try:
