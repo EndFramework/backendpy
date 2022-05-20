@@ -4,7 +4,9 @@ import unittest
 
 
 class AsyncTestCase(unittest.TestCase):
-    def __init__(self, methodName='runTest'):
+    """Subclass of :class:`unittest.TestCase` with added async functionality."""
+
+    def __init__(self, methodName: str = 'runTest'):
         self._event_loop = asyncio.get_event_loop()
         super().__init__(methodName=methodName)
 
@@ -22,5 +24,8 @@ class AsyncTestCase(unittest.TestCase):
 
 
 class TestCase(unittest.TestCase):
-    def __init__(self, methodName='runTest'):
+    """Subclass of :class:`unittest.TestCase`."""
+
+    def __init__(self, methodName: str = 'runTest'):
         super().__init__(methodName=methodName)
+

@@ -11,7 +11,7 @@ CRITICAL = _logging.CRITICAL
 
 
 class Logger(_logging.Logger):
-    """Wrapper for the :class:`logging.Logger` class that produces colored logs."""
+    """Subclass of :class:`logging.Logger` that produces colored logs."""
 
     PINK = '\033[95m'
     BLUE = '\033[94m'
