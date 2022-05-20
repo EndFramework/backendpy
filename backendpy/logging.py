@@ -1,4 +1,6 @@
+from __future__ import annotations
 import logging as _logging
+from typing import Optional
 
 NOTSET = _logging.NOTSET
 DEBUG = _logging.DEBUG
@@ -9,6 +11,7 @@ CRITICAL = _logging.CRITICAL
 
 
 class Logger(_logging.Logger):
+    """Wrapper for the :class:`logging.Logger` class that produces colored logs."""
 
     PINK = '\033[95m'
     BLUE = '\033[94m'
@@ -36,7 +39,15 @@ class Logger(_logging.Logger):
         super().critical(f"{self.RED}{msg}{self.ENDC}", *args, **kwargs)
 
 
-def get_logger(name, level=DEBUG):
+def get_logger(
+        name: str,
+        level: Optional[int | str] = None) -> Logger:
+    """
+    Return a logger using :class:`backendpy.logging.Logger` class.
+
+    :param name: Logger name
+    :param level: Logging level
+    """
     _logging.setLoggerClass(Logger)
-    _logging.basicConfig(level=level)
+    _logging.basicConfig(level=level if level is not None else DEBUG)
     return _logging.getLogger(name)
