@@ -2,11 +2,11 @@ Installation
 ============
 
 Requirements
---------------
+------------
 Python 3.8+
 
 Using pip
---------------
+---------
 To install the Backendpy framework using pip:
 
 .. code-block:: console

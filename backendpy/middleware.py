@@ -9,41 +9,42 @@ class Middleware:
     @staticmethod
     def process_application(application):
         """
-        Capture application and return modified version of it.
-        :param application: the Backendpy class instance in queue
-        :return: Backendpy class instance
+        Take instance of :class:`~backendpy.Backendpy` class and return modified version of it.
+        :param application: :class:`~backendpy.Backendpy` class instance (Received from the middlewares queue)
+        :return: Modified :class:`~backendpy.Backendpy` class instance
         """
         return application
 
     @staticmethod
     async def process_request(request: Request):
         """
-        Capture request and return modified version of the request
-        or raise the Response exception to end request evaluation queue.
-        :param request: the :class:`~backendpy.request.Request` class instance in queue
-        :return: :class:`~backendpy.request.Request` class instance
+        Take a :class:`~backendpy.request.Request` object before it reaches the handler layer and return a processed
+        or modified version of it or interrupt the execution of the request with raise an exception response.
+        :param request: :class:`~backendpy.request.Request` class instance (Received from the middlewares queue)
+        :return: Modified :class:`~backendpy.request.Request` class instance
         """
         return request
 
     @staticmethod
     async def process_handler(request: Request, handler):
         """
-        Capture handler and return modified version of the handler
-        or raise the Response exception to end request evaluation queue.
-        :param request: the :class:`~backendpy.request.Request` class modified instance in queue
-        :param handler: the handler function in queue
-        :return: Handler function
+        Take a request handler (which is an async function) before executing it and return a modified version of it
+        or interrupt the execution of the request with raise an exception response.
+        :param request: :class:`~backendpy.request.Request` class instance (Received from the middlewares queue)
+        :param handler: Async handler function (Received from the middlewares queue)
+        :return: Modified handler function
         """
         return handler
 
     @staticmethod
     async def process_response(request: Request, response: Response):
         """
-        Capture response and return modified version of the response
-        or raise the Response exception to end response evaluation queue.
-        :param request: the :class:`~backendpy.request.Request` class modified instance in queue
-        :param response: the Response class instance in queue
-        :return: Response class instance
+        Capture the :class:`~backendpy.response.Response` object before sending it to the client and return a
+        processed, modified, or replaced Response object or interrupt the execution of the request with raise an
+        exception response.
+        :param request: :class:`~backendpy.request.Request` class instance (Received from the middlewares queue)
+        :param response: :class:`~backendpy.response.Response` class instance (Received from the middlewares queue)
+        :return: Modified :class:`~backendpy.response.Response` class instance
         """
         return response
 

@@ -1,4 +1,4 @@
-Start a Project
+Start a project
 ===============
 
 .. toctree::

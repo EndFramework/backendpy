@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-16 22:44+0330\n"
+"POT-Creation-Date: 2022-06-04 17:59+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,42 +21,72 @@ msgstr ""
 msgid "backendpy.Backendpy"
 msgstr ""
 
-#: 405e0463b1094303bca759baaa915788 backendpy.app.Backendpy:1 of
-msgid "The Backendpy ASGI application class"
+#: 879225692050417da47872dc939f7734 backendpy.asgi.Backendpy:1 of
+msgid "The Backendpy ASGI handler"
 msgstr ""
 
-#: ../../generated/backendpy.Backendpy.rst:13 9507d9e72e3347f6a0e7bb604578e62d
+#: ../../generated/backendpy.Backendpy.rst:19:<autosummary>:1
+#: 43d76b11cea94dea9562890961409b12 a0f17386b53f49179f6618b3d28e331c
+#: backendpy.asgi.Backendpy.__init__:1 of
+msgid "Initialize Backendpy class instance."
+msgstr ""
+
+#: ../../generated/backendpy.Backendpy.rst:13 f69fd860899e462ea5816d7ec37b40cd
 msgid "Methods"
 msgstr ""
 
-#: ../../generated/backendpy.Backendpy.rst:20:<autosummary>:1
-#: fd5f2a0e248d4450aec95fffa2878ec4
+#: ../../generated/backendpy.Backendpy.rst:19:<autosummary>:1
+#: a008de2a333c443cae697be65e172247
 msgid ":py:obj:`__init__ <backendpy.Backendpy.__init__>`\\ \\(\\)"
 msgstr ""
 
-#: ../../generated/backendpy.Backendpy.rst:20:<autosummary>:1
-#: 7f5a9856b949445bad1db396dda62df5
-msgid ""
-":py:obj:`event <backendpy.Backendpy.event>`\\ \\(\\*args\\, "
-"\\*\\*kwargs\\)"
+#: ../../generated/backendpy.Backendpy.rst:19:<autosummary>:1
+#: 3f8a4042f88b481fa73174d8df31f76f
+msgid ":py:obj:`event <backendpy.Backendpy.event>`\\ \\(name\\)"
 msgstr ""
 
-#: ../../generated/backendpy.Backendpy.rst:20:<autosummary>:1
-#: fac3ca81f5d14bb2b8ef17773e347d9f
+#: ../../generated/backendpy.Backendpy.rst:19:<autosummary>:1
+#: 6449b58fdd62439cab718d88c07a19d5
+msgid "Register an event hook with python decorator."
+msgstr ""
+
+#: ../../generated/backendpy.Backendpy.rst:19:<autosummary>:1
+#: 5d0725df415b4e57bab249f74d394736
 msgid ""
 ":py:obj:`execute_event <backendpy.Backendpy.execute_event>`\\ "
-"\\(\\*args\\, \\*\\*kwargs\\)"
+"\\(name\\[\\, args\\]\\)"
 msgstr ""
 
-#: ../../generated/backendpy.Backendpy.rst:20:<autosummary>:1
-#: 266c65f6f75c4116a46fa34e612833bd
+#: ../../generated/backendpy.Backendpy.rst:19:<autosummary>:1
+#: 0e0c2be52aa44ccd93b66ae213e832a3
+msgid "Trigger all hooks related to the event."
+msgstr ""
+
+#: ../../generated/backendpy.Backendpy.rst:19:<autosummary>:1
+#: 029a1bcc91b8426b8d0ee6b6d28a3999
 msgid ""
 ":py:obj:`get_current_request <backendpy.Backendpy.get_current_request>`\\"
 " \\(\\)"
 msgstr ""
 
-#: ../../generated/backendpy.Backendpy.rst:20:<autosummary>:1
-#: 223ebb0ade274048b287733ca374202d
-msgid ":py:obj:`uri <backendpy.Backendpy.uri>`\\ \\(\\*args\\, \\*\\*kwargs\\)"
+#: ../../generated/backendpy.Backendpy.rst:19:<autosummary>:1
+#: 7bd62a7b1f2f45c1bf4bb0cd628e2a72
+msgid "Return the current request object."
 msgstr ""
+
+#~ msgid "The Backendpy ASGI application class"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":py:obj:`event <backendpy.Backendpy.event>`\\ "
+#~ "\\(\\*args\\, \\*\\*kwargs\\)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":py:obj:`execute_event <backendpy.Backendpy.execute_event>`\\"
+#~ " \\(\\*args\\, \\*\\*kwargs\\)"
+#~ msgstr ""
+
+#~ msgid ":py:obj:`uri <backendpy.Backendpy.uri>`\\ \\(\\*args\\, \\*\\*kwargs\\)"
+#~ msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-16 22:44+0330\n"
+"POT-Creation-Date: 2022-06-04 17:49+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,48 +21,85 @@ msgstr ""
 msgid "backendpy.app.App"
 msgstr ""
 
-#: backendpy.app.App:1 dead6d6dcf4c4444826fc1d98229c1a2 of
-msgid "A class used to represent Backendpy internal application"
+#: 4f25c9347cb9463bbdcff3a58036b910 backendpy.app.App:1 of
+msgid "A class used to define Backendpy internal application."
 msgstr ""
 
-#: backendpy.app.App fb4429faed3f4f798181480d51ef5db8 of
-msgid "Parameters"
+#: backendpy.app.App f1307d6ceae346ea929f1402c73ea56b of
+msgid "Variables"
 msgstr ""
 
-#: 064338e1a6dc412f9493669ebe2bb60c backendpy.app.App:3 of
-msgid "List of instances of the Routes class"
+#: 99edb44c69f24ba9ba89f60769ba130b backendpy.app.App:3
+#: backendpy.app.App.__init__:3 c1adcd8dbe7b452996b12b5c891e7232 of
+msgid "Iterable of instances of the Routes class"
 msgstr ""
 
-#: 7e38b848f9f44969a4fe821bf9875c82 backendpy.app.App:6 of
-msgid "List of instances of the Hooks class (or None)"
+#: backendpy.app.App:4 backendpy.app.App.__init__:4
+#: c4a88bd54c394cf89a7175f100ff35ef d333637d5919439eb82b27d598f7c099 of
+msgid "Iterable of instances of the Hooks class (or None)"
 msgstr ""
 
-#: 72d4ab76c3f44622988815e6d559597a backendpy.app.App:9 of
-msgid "List of module paths that contain database models (or None)"
+#: 36baf0b6b40d435789e13ce384daf955 8f50728e1bac4c10a5a0563ecd4bc177
+#: backendpy.app.App:5 backendpy.app.App.__init__:5 of
+msgid "Iterable of module paths that contain database models (or None)"
 msgstr ""
 
-#: 5fd770909170451e822527d7a6b77e8d backendpy.app.App:12 of
+#: 90eb0b638223478b86fec13f9d72aa69 backendpy.app.App:6
+#: backendpy.app.App.__init__:6 ca248d88e03041d2b366698f823f78f3 of
 msgid ""
-"List of paths (within the application directory) from which templates "
-"will be searched (or None)"
+"Iterable of paths (within the application directory) from which templates"
+" will be searched (or None)"
 msgstr ""
 
-#: b038892ffb3347169be9b43767df48f8 backendpy.app.App:15 of
-msgid "List of instances of the ErrorList class (or None)"
+#: 039e450fb5fb4d0eb0324e1e4c35944d 7dc4d458b18744ff80f6eefe665daf8f
+#: backendpy.app.App:8 backendpy.app.App.__init__:8 of
+msgid "Iterable of instances of the ErrorList class (or None)"
 msgstr ""
 
-#: b128a26defdf4102ba738b7f0d2bfc3e backendpy.app.App:18 of
+#: 88bb24c157b7434dbe904f070afd84ca backendpy.app.App:9
+#: backendpy.app.App.__init__:9 d2de78d3ff45487fab9f057720174e10 of
 msgid "The initialization function of the application (or None)"
 msgstr ""
 
-#: ../../generated/backendpy.app.App.rst:13 0822ba1424304d29a351b92107fe70c1
+#: ../../generated/backendpy.app.App.rst:16:<autosummary>:1
+#: 650efeba43e94f1fa3bb610f760b269d backendpy.app.App.__init__:1
+#: e700d41e6a274611bfe1f1ca47c73422 of
+msgid "Initialize application instance"
+msgstr ""
+
+#: backendpy.app.App.__init__ bd319da3b7a94ff9b0eef47ea9ac3a9f of
+msgid "Parameters"
+msgstr ""
+
+#: ../../generated/backendpy.app.App.rst:13 eaf3318bbe774aac92e95e53f20e8d9c
 msgid "Methods"
 msgstr ""
 
 #: ../../generated/backendpy.app.App.rst:16:<autosummary>:1
-#: 1cb209d34e574c4f8ab9c6eedfb93ea5
+#: 8a843fbbbbb249ea8f981d9a32b3fc19
 msgid ""
 ":py:obj:`__init__ <backendpy.app.App.__init__>`\\ \\(routes\\[\\, "
 "hooks\\, models\\, ...\\]\\)"
 msgstr ""
+
+#~ msgid "A class used to represent Backendpy internal application"
+#~ msgstr ""
+
+#~ msgid "List of instances of the Routes class"
+#~ msgstr ""
+
+#~ msgid "List of instances of the Hooks class (or None)"
+#~ msgstr ""
+
+#~ msgid "List of module paths that contain database models (or None)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "List of paths (within the application"
+#~ " directory) from which templates will "
+#~ "be searched (or None)"
+#~ msgstr ""
+
+#~ msgid "List of instances of the ErrorList class (or None)"
+#~ msgstr ""
 

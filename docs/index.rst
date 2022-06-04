@@ -15,11 +15,10 @@ Overview
    introduction
    installation
    projects
-   api
-.. apps
+   apps
    deployment
-   cli
-
+.. cli
+.. api
 
 
 Indices and tables

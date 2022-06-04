@@ -269,7 +269,8 @@ class Binary(Response):
 class File(Response):
     """
     File response class inherited from :class:`~backendpy.response.Response` class
-    which reads and returns file from a given path.
+    which reads and returns file from the given path (which should be a path inside
+    the project configured media path)
     """
 
     def __init__(
@@ -282,7 +283,7 @@ class File(Response):
         """
         Initialize response instance.
 
-        :param path: The file path
+        :param path: The file path inside the project media path
         :param status: The HTTP response status
         :param headers: The HTTP response headers
         :param stream: Determines whether or not to stream the response
@@ -302,24 +303,24 @@ class File(Response):
                      int,
                      list[[bytes, bytes]],
                      bool]:
-        self.path = os.path.join(request.app.config['environment']['media_path'], unquote(self.path))
-        if not os.path.isfile(self.path):
+        path = os.path.join(request.app.config['environment']['media_path'], unquote(self.path))
+        if not os.path.isfile(path):
             raise FileNotFoundError
 
         self.headers = list(self.headers) if self.headers else []
-        content_type, encoding = guess_type(self.path)
+        content_type, encoding = guess_type(path)
         self.headers += [[b'content-type', to_bytes(content_type) if content_type else self.content_type]]
 
         if self.stream:
-            self.body = read_file_chunks(self.path, int(request.app.config['networking']['stream_size']))
+            self.body = read_file_chunks(path, int(request.app.config['networking']['stream_size']))
             if self.compress:
                 self.body = self._gzip_stream(self.body)
                 self.headers += [[b'content-encoding', b'deflate']]
             else:
-                file_stat = await aiofiles.os.stat(self.path)
+                file_stat = await aiofiles.os.stat(path)
                 self.headers += [[b'content-length', to_bytes(file_stat.st_size)]]
         else:
-            self.body = await read_file(self.path)
+            self.body = await read_file(path)
             if self.compress:
                 self.body = self._gzip(self.body)
                 self.headers += [[b'content-encoding', b'gzip']]

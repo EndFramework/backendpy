@@ -1,0 +1,129 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-04 18:44+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../routes.rst:2 bcb4001293704c0cbcd49d6e808abc00
+msgid "Routes"
+msgstr "‫Route‌ها‬"
+
+#: ../../routes.rst:3 65d63f6efa0a4f7f9dcf03d3279d1a30
+msgid ""
+"Routes in an application are the accessible URLs defined for that "
+"application. The routes of an application are defined according to a "
+"specific format, and for each route, a handler function is assigned. When"
+" each request reaches the server, if the request url matches with a "
+"route, the request will be delivered to the handler of that route."
+msgstr ""
+
+#: ../../routes.rst:8 f2e03d459c8340339c743a2988089fbf
+msgid ""
+"Generally, there are two ways to define routes, one is to use Python "
+"decorators on top of handler functions, and the other is to use a "
+"separate section like urls.py file containing a list of all the routes "
+"and linking them to the handlers. For different developers and depending "
+"on the architecture of the application, each of these methods can take "
+"precedence over the other. One of the features of the Backendpy framework"
+" is the possibility of defining routes in both methods."
+msgstr ""
+
+#: ../../routes.rst:15 ece6779a48b24f0bbd534da57f038c60
+msgid "Consider the following examples:"
+msgstr ""
+
+#: ../../routes.rst:18 a673d7d5d7014281b156d21e98dbef08
+msgid "Decorator based routes"
+msgstr ""
+
+#: ../../routes.rst:19 044bdeeb8345478abab5e08de30e8e32
+msgid ""
+"To define :class:`~backendpy.router.Uri` we can use "
+":func:`~backendpy.router.Routes.get`, "
+":func:`~backendpy.router.Routes.post`, "
+":func:`~backendpy.router.Routes.path`, "
+":func:`~backendpy.router.Routes.put` and "
+":func:`~backendpy.router.Routes.delete` decorators as follows:"
+msgstr ""
+
+#: ../../routes.rst:24 ../../routes.rst:43 ../../routes.rst:59
+#: 139bb2c16396423996b462bff47dc667 7bb1873655094518b8839ae401fd6025
+#: dfd67114ef4e443a9bd5177ccb070463
+msgid "project/apps/hello/handlers.py"
+msgstr ""
+
+#: ../../routes.rst:40 ec4291b8c47943e38eea21e0319828e8
+msgid ""
+"Also, if we need to access a handler with different http methods, we can "
+"use :func:`~backendpy.router.Routes.uri` decorator as follows:"
+msgstr ""
+
+#: ../../routes.rst:56 34d66442b3934e20832f2cead4990054
+msgid "Separate routes"
+msgstr ""
+
+#: ../../routes.rst:57 390ad500a2b7498ab44d74dcdc991583
+msgid ""
+"We can define the list of :class:`~backendpy.router.Uri` separately from "
+"the handlers as follows:"
+msgstr ""
+
+#: ../../routes.rst:70 f1e9d1411e0340a698dcf1e5699417ff
+msgid "project/apps/hello/urls.py"
+msgstr ""
+
+#: ../../routes.rst:81 f87fecc6a1d441b89864d88f4c7ae460
+msgid ""
+"As can be seen in the examples, in both cases, the "
+":class:`~backendpy.router.Routes` object is defined, which is used to "
+"hold the list of :class:`~backendpy.router.Uri`."
+msgstr ""
+
+#: ../../routes.rst:84 e8cb8f748e5941809b4a0761c06e53c3
+msgid ""
+"The complete list of parameters of a :class:`~backendpy.router.Uri` is as"
+" follows:"
+msgstr ""
+
+#: 23fbdc538b7547d793a069e73120a559 backendpy.router.Uri:1 of
+msgid "A class to define the specifications of a route."
+msgstr ""
+
+#: ../../routes.rst:89 fb6b61733b144a939e4d751040a13230
+msgid ""
+"Note that in ``@uri`` decorator, which is defined on the handler function"
+" itself, the ``handler`` parameter does not exist. and in "
+"``@get``,``@post`` and ... decorators, the ``method`` parameter also does"
+" not exist."
+msgstr ""
+
+#: ../../routes.rst:93 b0c72933494e494d86e68c3c378f5180
+msgid ""
+"After defining the routes, the Routes object can then be assigned to the "
+"application via the :class:`~backendpy.app.App` class ``routes``parameter"
+" in the ``main.py`` module of the application:"
+msgstr ""
+
+#: ../../routes.rst:97 ../../routes.rst:110 6832f212bf374df1acaf8c6c617796ae
+msgid "project/apps/hello/main.py"
+msgstr ""
+
+#: ../../routes.rst:106 8cb8560e1bf648bc9e415f8dafcb979b
+msgid ""
+"In an application, more than one object of the Routes class can be "
+"defined. Each of which can be used to define the Uri of separate parts of"
+" the application or even different versions of the API and the like. For "
+"example:"
+msgstr ""
+

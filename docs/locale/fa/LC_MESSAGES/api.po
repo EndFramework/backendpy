@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the Backendpy package.
 # Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-16 22:44+0330\n"
+"POT-Creation-Date: 2022-06-04 17:23+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,26 +16,9 @@ msgstr ""
 "Generated-By: Babel 2.9.1\n"
 
 #: ../../api.rst:2 7058543441e4404397a077c6c14bfbd2
-msgid "API References"
+msgid "API references"
 msgstr "‫مرجع API‬"
 
-#: ../../api.rst:12:<autosummary>:1 09073747fe254e1787d833cc4ec25d9f
-msgid ""
-":py:obj:`backendpy.Backendpy <backendpy.Backendpy>`\\ \\(\\*args\\, "
-"\\*\\*kwargs\\)"
-msgstr ""
 
-#: ../../api.rst:12:<autosummary>:1 1e68d8c9a2644fc4b521310591d4dbd4
-msgid "The Backendpy ASGI application class"
-msgstr ""
 
-#: ../../api.rst:12:<autosummary>:1 2d92464a77e64e9b8b8378fee9f1ae60
-msgid ""
-":py:obj:`backendpy.app.App <backendpy.app.App>`\\ \\(routes\\[\\, "
-"hooks\\, models\\, ...\\]\\)"
-msgstr ""
-
-#: ../../api.rst:12:<autosummary>:1 e1d965d18f92429f8495aae7e6da98f2
-msgid "A class used to represent Backendpy internal application"
-msgstr ""
 

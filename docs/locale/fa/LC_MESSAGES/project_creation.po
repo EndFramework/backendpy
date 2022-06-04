@@ -3,26 +3,24 @@
 # This file is distributed under the same license as the Backendpy package.
 # Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-17 17:07+0330\n"
+"POT-Creation-Date: 2022-06-04 17:23+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: ../../project_creation.rst:2 eee3f15f60b942e9aad46df5dc95d588
-msgid "Create a Project"
+msgid "Create a project"
 msgstr "‫ایجاد پروژه‬"
 
 #: ../../project_creation.rst:5 3180592743cd4bb594e45677eb0e59f9
-msgid "Basic Structure"
+msgid "Basic structure"
 msgstr "‫ساختار پایه‬"
 
 #: ../../project_creation.rst:6 0089a86833e9469f9b8d2c574989021d
@@ -35,57 +33,44 @@ msgstr ""
 "و این برنامه‌نویس است که تصمیم می‌گیرد برحسب سلیقه و نیازهایش، پروژه‌ی "
 "خود را به چه نحوی ساختاربندی کند.‬"
 
-#: ../../project_creation.rst:8 2504dd1343d14ac9873e7645ef9fad4e
+#: ../../project_creation.rst:9 2504dd1343d14ac9873e7645ef9fad4e
 msgid ""
 "The programmer only needs to create a Python module with a custom name "
-"(for example \"main.py\") and set the instance of ``Backendpy`` class "
-"(which is an ASGI application) inside it."
+"(for example \"main.py\") and set the instance of "
+":class:`~backendpy.Backendpy` class (which is an ASGI application) inside"
+" it."
 msgstr ""
 "‫برنامه‌نویس نیاز است یک ماژول پایتون با نام دلخواه (برای مثال main.py) "
-"ایجاد و نمونه‌ی کلاس Backendpy (که یک اپلیکیشن ASGI است) را داخل آن "
+"ایجاد و نمونه‌ی کلاس :class:`~backendpy.Backendpy` (که یک اپلیکیشن ASGI است) را داخل آن "
 "مقداردهی کند.‬"
 
-#: ../../project_creation.rst:10 435079627d8540a095ddcd84d4cab49d
+#: ../../project_creation.rst:12 435079627d8540a095ddcd84d4cab49d
 msgid "project/main.py"
 msgstr ""
 
-#: ../../project_creation.rst:17 19a9185481bc4d90aae371aaf9b1aa9b
+#: ../../project_creation.rst:19 19a9185481bc4d90aae371aaf9b1aa9b
 msgid ""
-"Also for project settings, the ``config.ini`` file can be created in the "
-"same path next to the module. Check out the :doc:`configurations` section"
-" for more information."
+"Also for project settings, the ``config.ini`` file must be created in the"
+" same path next to the module. Check out the :doc:`configurations` "
+"section for more information."
 msgstr ""
-"‫همچنین برای تنظیمات پروژه، فایل config.ini می‌تواند در همان مسیر در کنار"
+"‫همچنین برای تنظیمات پروژه، فایل ``config.ini`` می‌تواند در همان مسیر در کنار"
 " ماژول ایجاد شود. برای اطلاعات بیشتر بخش :doc:`configurations` را "
 "ببینید.‬"
 
-#: ../../project_creation.rst:20 1b4916d64dac47c48021b2fb9e33650b
-msgid "We can now add HTTP requests handlers to the project as follows:"
-msgstr ""
-"‫اکنون می‌توانیم کنترل‌کننده‌های درخواست‌های HTTP را به‌صورت زیر به پروزه"
-" اضافه کنیم:‬"
-
-#: ../../project_creation.rst:31 59c4ad3ad89643b78c5daa67f9c1dc86
-msgid "But it is recommended to use applications for this purpose."
-msgstr "‫اما توصیه می شود از اپلیکیشن‌ها برای این منظور استفاده شود.‬"
-
-#: ../../project_creation.rst:34 7736feb7209f4b60ba1eaac33b456148
+#: ../../project_creation.rst:23 7736feb7209f4b60ba1eaac33b456148
 msgid "Applications"
 msgstr "‫اپلیکیشن‌ها‬"
 
-#: ../../project_creation.rst:35 e0be77f8ec474bec84843c3ff8967e3b
+#: ../../project_creation.rst:24 e0be77f8ec474bec84843c3ff8967e3b
 msgid ""
-"Backendpy projects can also be developed by components called "
-"Applications, which, although not mandatory, it is recommended that "
-"applications be used to better structure the projects. It is also "
-"possible to connect third-party apps to the project."
+"Backendpy projects are developed by components called Applications. It is"
+" also possible to connect third-party apps to the project."
 msgstr ""
-"‫پروژه‌‌هایBackendpy می‌توانند توسط اجزایی به‌نام Applicationها نیز توسعه"
-" داده شوند، که اگرچه استفاده از آن‌ها اجباری نیست اما توصیه می‌شود که "
-"به‌منظور ساختاربندی بهتر پروژه‌ها از Applicationها استفاده شود. همچنین "
-"امکان اتصال اپ‌های ثالث به پروژه وجود دارد.‬"
+"‫پروژه‌‌های Backendpy توسط اجزایی به‌نام Applicationها توسعه"
+" داده می‌شوند. همچنین امکان اتصال اپ‌های ثالث به پروژه وجود دارد.‬"
 
-#: ../../project_creation.rst:37 6b3c0a5bc4d242018f095fd3bfa7829c
+#: ../../project_creation.rst:27 6b3c0a5bc4d242018f095fd3bfa7829c
 msgid ""
 "To create an application, first create a package containing the "
 "``main.py`` module in the desired path within the project (or any other "
@@ -95,56 +80,17 @@ msgstr ""
 "دلخواه در داخل پروژه (یا هر مسیر دیگری که قابلیت import داشته باشد) ایجاد"
 " کنید.‬"
 
-#: ../../project_creation.rst:39 8389fe3a2078430bb4b58fd8e8829337
+#: ../../project_creation.rst:30 8389fe3a2078430bb4b58fd8e8829337
 msgid ""
 "Then inside the main.py module of an application we need to set an "
-"instance of the ``App`` class. All parts and settings of an application "
-"are assigned by the parameters of the App class, which are listed below. "
-"Each of these parameters and classes will be described in detail in the "
-"following sections."
+"instance of the :class:`~backendpy.app.App` class. All parts and settings"
+" of an application are assigned by the parameters of the App class."
 msgstr ""
-"‫سپس در ماژول main.py یک اپلیکیشن باید نمونه‌ای از کلاس ``App`` را "
+"‫سپس در ماژول main.py یک اپلیکیشن باید نمونه‌ای از کلاس :class:`~backendpy.app.App` را "
 "مقداردهی کنیم. تمام قسمت‌ها و تنظیمات یک اپلیکیشن توسط پارامترهای کلاس "
-"App تخصیص داده می‌شوند که در زیر فهرست شده‌اند. هر یک از این پارامترها و "
-"کلاس‌ها در بخش‌های بعدی به تفصیل توضیح داده خواهند شد. ‬"
+"App تخصیص داده می‌شوند.‬"
 
-#: a24753ff72c64333bec55525e968e6d0 backendpy.app.App:1 of
-msgid "A class used to represent Backendpy internal application"
-msgstr "‫کلاسی که برای تعریف اپلیکیشن داخلی Backendpy استفاده می شود‬"
-
-#: backendpy.app.App f1da510069b2413f8d69c3df6fe1dd5e of
-msgid "Parameters"
-msgstr "‫پارامترها‬"
-
-#: 113364b7febb41f68f9d181202b3ed92 backendpy.app.App:3 of
-msgid "List of instances of the Routes class"
-msgstr "‫لیستی از نمونه‌های کلاس Routes‬"
-
-#: 55cc19e019ee443494575097be761a71 backendpy.app.App:6 of
-msgid "List of instances of the Hooks class (or None)"
-msgstr "‫لیستی از نمونه‌های کلاس Hooks (یا None)‬"
-
-#: 3af249b03c174792aa48b4a7ecaa6df4 backendpy.app.App:9 of
-msgid "List of module paths that contain database models (or None)"
-msgstr "‫لیستی از مسیر‌های ماژول‌هایی که حاوی مدل‌های دیتابیس‌اند (یا None)‬"
-
-#: backendpy.app.App:12 f306e9f38c4c479f93e6ae2d5b9ad354 of
-msgid ""
-"List of paths (within the application directory) from which templates "
-"will be searched (or None)"
-msgstr ""
-"‫لیستی از مسیر‌ها (در داخل مسیر اپلیکیشن) که قالب‌ها از آن‌ها جستجو "
-"خواهند شد (یا None)‬"
-
-#: backendpy.app.App:15 f91e32721f564e1bac0a8e58a2c86371 of
-msgid "List of instances of the ErrorList class (or None)"
-msgstr "‫لیستی از نمونه‌های کلاس ErrorList (یا None)‬"
-
-#: 95492592a7e44c9384dc06b5ef7c6275 backendpy.app.App:18 of
-msgid "The initialization function of the application (or None)"
-msgstr "‫تابع مقداردهی اولیه‌ی اپلیکیشن (یا None)‬"
-
-#: ../../project_creation.rst:47 915e0ae2953c454193cb529f99caf3bb
+#: ../../project_creation.rst:33 915e0ae2953c454193cb529f99caf3bb
 msgid ""
 "For example, in the \"/apps\" path inside the project, we create a "
 "package called \"hello\" and main.py file as follows:"
@@ -152,33 +98,35 @@ msgstr ""
 "‫به عنوان مثال در مسیر /apps در داخل پروژه، بسته‌ای به نام hello و فایل "
 "main.py را به صورت زیر ایجاد می‌کنیم:‬"
 
-#: ../../project_creation.rst:49 2c6997562ee744e98c448877445d6d4c
+#: ../../project_creation.rst:35 2c6997562ee744e98c448877445d6d4c
 msgid "project/apps/hello/main.py"
 msgstr ""
 
-#: ../../project_creation.rst:58 14e4627c7ccd407ca70c49b5432b693d
+#: ../../project_creation.rst:44 14e4627c7ccd407ca70c49b5432b693d
 msgid "project/apps/hello/handlers.py"
 msgstr ""
 
-#: ../../project_creation.rst:70 36b65737f4884113b8912efda64576b4
-msgid "Now we have written the previous Hello project by applications."
-msgstr "‫اکنون ما پروژه‌ی Hello قبلی را به‌کمک اپلیکیشن‌ها نوشتیم.‬"
-
-#: ../../project_creation.rst:72 fdd2223143124a90865591c7e5fbf3dc
+#: ../../project_creation.rst:56 fdd2223143124a90865591c7e5fbf3dc
 msgid ""
 "As you can see, we have created another optional module called "
 "handlers.py and then introduced the routes defined in it to the App class"
-" instance. Only the items that are introduced to the App class are "
-"important to the framework, and the internal structuring of the "
-"applications is completely optional."
+" instance. The complete list of App class parameters is described in "
+"section :doc:`application_structure`."
 msgstr ""
-"‫همانطور که مشاهده می‌کنید در اینجا ماژول اختیاری دیگری به نام "
-"handlers.py را ایجاد کرده‌ایم و سپس Routeهای تعریف‌شده در آن را به "
-"نمونه‌ی کلاس App معرفی کرده‌ایم. قابل ذکر است که فقط مواردی که به کلاس "
-"App معرفی می‌شوند برای چارچوب مهم‌اند و ساختار داخلی اپلیکیشن‌ها کاملا "
-"اختیاری است.‬"
+"‫همانطور که مشاهده می کنید ماژول اختیاری دیگری به نام handlers.py ایجاد کرده‌ایم"
+" و سپس Routeهای تعریف شده در آن را به پارامتر ``routes`` کلاس App ارسال کرده‌ایم. لیست"
+" کامل پارامترهای کلاس App در بخش :doc:`application_structure` توضیح داده شده است.‬"
 
-#: ../../project_creation.rst:75 18a7217263614aa88b88ce0a72dd58c3
+#: ../../project_creation.rst:60 fdd2223143124a90865591c7e5fbf3dc
+msgid ""
+"Only the items that are introduced to the App class are important to the "
+"framework, and the internal structuring of the applications is completely"
+" optional."
+msgstr ""
+"‫فقط مواردی که به کلاس App معرفی می‌شوند برای چارچوب مهم‌اند و ساختار داخلی"
+" اپلیکیشن‌ها کاملا اختیاری است.‬"
+
+#: ../../project_creation.rst:63 18a7217263614aa88b88ce0a72dd58c3
 msgid ""
 "Our application is now ready and you just need to enable it in the "
 "project config.ini file as follows:"
@@ -186,19 +134,23 @@ msgstr ""
 "‫اکنون اپلیکیشن ما آماده است و تنها نیاز است که آن را در فایل config.ini "
 "پروژه به‌صورت زیر فعال‌سازی کنیم:‬"
 
-#: ../../project_creation.rst:77 42b1ad072322451db023ae210db04006
+#: ../../project_creation.rst:65 42b1ad072322451db023ae210db04006
 msgid "project/config.ini"
 msgstr ""
 
-#: ../../project_creation.rst:84 9d7f23677b374dcfbafc65aba47d341a
+#: ../../project_creation.rst:72 9d7f23677b374dcfbafc65aba47d341a
 msgid "To run the project, see the :doc:`run` section."
 msgstr "‫برای اجرای پروژه، بخش :doc:`run` را ببینید.‬"
 
-#: ../../project_creation.rst:88 a40de8be422f4427943599da01065dda
+#: ../../project_creation.rst:74 b8abb6532a174cb0a1f7208493574f05
+msgid "Refer to the :doc:`apps` section to learn how to develop applications."
+msgstr "‫برای یادگیری نحوه‌ی توسعه‌ی اپلیکیشن‌ها به بخش :doc:`apps` مراجعه کنید.‬"
+
+#: ../../project_creation.rst:77 a40de8be422f4427943599da01065dda
 msgid "Command line"
 msgstr "‫خط‌فرمان‬"
 
-#: ../../project_creation.rst:89 b724f91bd87c4609ab9a5707d0ee6c22
+#: ../../project_creation.rst:78 b724f91bd87c4609ab9a5707d0ee6c22
 msgid ""
 "The ``backendpy`` command can also be used to create projects and apps. "
 "To do this, first enter the desired path and then use the following "
@@ -208,15 +160,14 @@ msgstr ""
 "اپلیکیشن‌ها استفاده شود. برای این کار ابتدا وارد مسیر موردنظر شده و سپس "
 "از دستورات زیر استفاده کنید:‬"
 
-#: ../../project_creation.rst:93 435079627d8540a095ddcd84d4cab49d
-msgid "Project Creation"
+#: ../../project_creation.rst:82 435079627d8540a095ddcd84d4cab49d
+msgid "Project creation"
 msgstr "‫ایجاد پروژه‬"
 
-#: ../../project_creation.rst:99 d32d10afec564f80ba23b8c1d8d0ed10
+#: ../../project_creation.rst:88 d32d10afec564f80ba23b8c1d8d0ed10
 msgid "To create a project with more complete sample components:"
 msgstr "‫برای ایجاد یک پروژه با اجزای نمونه‌ی کامل‌تر:‬"
 
-#: ../../project_creation.rst:106 435079627d8540a095ddcd84d4cab49d
-msgid "App Creation"
+#: ../../project_creation.rst:95 435079627d8540a095ddcd84d4cab49d
+msgid "App creation"
 msgstr "‫ایجاد اپلیکیشن‬"
-

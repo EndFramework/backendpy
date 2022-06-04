@@ -1,0 +1,69 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-04 17:23+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../initialization_scripts.rst:2 6b7203d632134c86a70c831cff3179a2
+msgid "Initialization scripts"
+msgstr "‫اسکریپت‌های مقداردهی اولیه‬"
+
+#: ../../initialization_scripts.rst:3 0bbdc05928b7443c8aadd655ff90601e
+msgid ""
+"Some applications require basic data in order to run. For example, the "
+"users application, after installation, also needs to enter the "
+"administrator account information to be able to manage other accounts and"
+" the entire system. To record this raw data, we can use initialization "
+"scripts that are executable at the command line when a project is "
+"deployed."
+msgstr ""
+
+#: ../../initialization_scripts.rst:8 a7d289e3fd594b439e7240cddccdb166
+msgid ""
+"From the ``init_func`` parameter of any application we can assign an "
+"initialization function to it:"
+msgstr ""
+
+#: ../../initialization_scripts.rst:10 4f2a7bc06c624406a6268f3ec8a61444
+msgid "project/apps/hello/main.py"
+msgstr ""
+
+#: ../../initialization_scripts.rst:21 866128c56a724b52bc523a4e107fc475
+msgid "And an init function could be like this:"
+msgstr ""
+
+#: ../../initialization_scripts.rst:23 0e7f0304f236478d854b604a30f8f36c
+msgid "project/apps/hello/controllers/init.py"
+msgstr ""
+
+#: ../../initialization_scripts.rst:61 02e9735e918d42bc8991cbe8001c5da7
+msgid ""
+"As can be seen, the init functions receive ``config`` parameter, which "
+"can be used to access project configurations such as database information"
+" and so on."
+msgstr ""
+
+#: ../../initialization_scripts.rst:64 9c587dc531d0487dbab5df55ce6afb81
+msgid ""
+"The project manager can perform the initialization by executing the "
+"following command on the command line in the project dir:"
+msgstr ""
+
+#: ../../initialization_scripts.rst:71 db7e35d85e2b43c8a829f50e5677f119
+msgid ""
+"By executing this command, the Backendpy framework executes the "
+"initialization scripts of all applications activated in the project "
+"configuration sequentially."
+msgstr ""
+

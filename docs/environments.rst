@@ -1,6 +1,5 @@
 Environments
 ============
-
 In Backendpy framework, it is possible to use different environments for project execution (such as development,
 production, etc.).
 

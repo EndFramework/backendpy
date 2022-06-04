@@ -1,0 +1,184 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-04 17:23+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../middlewares.rst:2 c84f4e7bd2d94f74b0e90184926f3064
+msgid "Middlewares"
+msgstr "‫میان‌افزارها‬"
+
+#: ../../middlewares.rst:3 da2d3464514c4d979ef66b4abd3ca230
+msgid ""
+"An ASGI application based on the Backendpy framework (instance of "
+":class:`~backendpy.Backendpy` class) can be used with a variety of "
+"external ASGI middlewares. In addition to external middlewares, in the "
+"Backendpy framework itself, the ability to create middleware for the "
+"internal components and layers of the system is also available. These "
+"types of internal middlewares are discussed below:"
+msgstr ""
+
+#: ../../middlewares.rst:10 c0e8518a1c06439ea6d80b033eb4d784
+msgid "Types of middleware"
+msgstr ""
+
+#: ../../middlewares.rst:11 ffa22c9fbf6049a0a796bda7b2c9acc5
+msgid ""
+"The types of Backendpy internal middlewares depending on the layer they "
+"are processing are as follows:"
+msgstr ""
+
+#: ../../middlewares.rst:14 ca7f34c256d54faa82656bf928e59390
+msgid "Backendpy instance middleware"
+msgstr ""
+
+#: ../../middlewares.rst:15 417f3bb6165a49969b8121a12baf8c05
+msgid ""
+"This type of middleware, like the external middleware mentioned earlier, "
+"processes an ASGI application (instance of :class:`~backendpy.Backendpy` "
+"class) and adds to or modifies its functionality."
+msgstr ""
+
+#: ../../middlewares.rst:18 10f262196c6f4ab09d7c798859f15e1b
+msgid ""
+"The difference between this type of middleware and external middleware is"
+" the easier way to create and attach it to the project, which instead of "
+"changing the code, we set it in the project config file."
+msgstr ""
+
+#: ../../middlewares.rst:22 6aefb0354b524640a311a31cbe44cf23
+msgid "Request middleware"
+msgstr ""
+
+#: ../../middlewares.rst:23 6d97ec3a98964a02af35b4a9695f4344
+msgid ""
+"This middleware takes a :class:`~backendpy.request.Request` object before"
+" it reaches the handler layer and delivers a processed or modified "
+"Request object to the handler layer."
+msgstr ""
+
+#: ../../middlewares.rst:26 0ad10e0c27b84ff092c1a424d54467bb
+msgid ""
+"Also, depending on the type of processing in this middleware, the "
+"middleware can prevent the request process from continuing and interrupt "
+"it with an error response and prevent it from reaching the handler layer."
+msgstr ""
+
+#: ../../middlewares.rst:30 888fddeea1c944f6a2fd8a5029f983fa
+msgid "Handler middleware"
+msgstr ""
+
+#: ../../middlewares.rst:31 12a43c9d1c5044fd82ea6e9b9dc869d7
+msgid ""
+"This middleware takes a request handler (which is an async function) "
+"before executing it and returns a processed or modified handler. As a "
+"result, this new handler will be used instead of the original handler to "
+"return the response to this request."
+msgstr ""
+
+#: ../../middlewares.rst:35 9eb7bd7606f844c4aff081f2ab811f18
+msgid ""
+"In this middleware, it is also possible to interrupt the process and "
+"return the error response."
+msgstr ""
+
+#: ../../middlewares.rst:38 b6be5b4bc00e4deda23e8480a9ac7497
+msgid "Response middleware"
+msgstr ""
+
+#: ../../middlewares.rst:39 d0e37b85c29449eb88c1eb4eee1688f8
+msgid ""
+"This middleware captures the final :class:`~backendpy.response.Response` "
+"object before sending it to the client and returns a processed, modified,"
+" or replaced Response object."
+msgstr ""
+
+#: ../../middlewares.rst:43 38736da21095425e8a75cd5ac54e932a
+msgid "Creating middleware"
+msgstr ""
+
+#: ../../middlewares.rst:44 f1c36c5d5adb4d7aa9844971858cc4a2
+msgid ""
+"To create a middleware, use :class:`~backendpy.middleware.Middleware` "
+"class and implement its methods. Each of these methods is specific to "
+"implementing different types of middleware mentioned in the previous "
+"section."
+msgstr ""
+
+#: ../../middlewares.rst:47 fc1f91e0732c429b926174571680cfb5
+msgid "How to define these methods is as follows:"
+msgstr ""
+
+#: ../../middlewares.rst:49 52f95c38e7ac4e8ab5823c954611208e
+msgid "project/apps/hello/middlewares/example.py"
+msgstr ""
+
+#: ../../middlewares.rst:79 0d99cf7b7da743ff8c64f999e39ab75b
+msgid ""
+"As can be seen, all methods are static and also except for "
+"``process_application`` which is a simple function, all other methods "
+"(which are in the path of handling a request) must be defined as an "
+"``async`` function."
+msgstr ""
+
+#: ../../middlewares.rst:82 d38ef1cafbd647abb2b0131975ab6b17
+msgid ""
+"As an example of a request middleware, it can be used to authenticate the"
+" user before executing the request handler:"
+msgstr ""
+
+#: ../../middlewares.rst:84 f275e5b1f6df45a3aa1fbf2d53cd74be
+msgid "project/apps/hello/middlewares/auth.py"
+msgstr ""
+
+#: ../../middlewares.rst:108 3c2184fedb484641ac20a1b9d46f605b
+msgid ""
+"In this example, after receiving a request, first the user identity is "
+"checked inside the middleware and if there is an error, the error "
+"response is returned and if successful, the user information is added to "
+"the request context and we can access this information inside the request"
+" handler."
+msgstr ""
+
+#: ../../middlewares.rst:113 90e61a02cb0944e3936c1da03cd7f187
+msgid "Activation of middleware"
+msgstr ""
+
+#: ../../middlewares.rst:114 29569dde6bcf4bb2a4f1f12507369555
+msgid ""
+"In order to activate a middleware in a project, we need to define them in"
+" the project ``config.ini`` file as follows:"
+msgstr ""
+
+#: ../../middlewares.rst:116 9685ab56732047ef97523fccc3ab1c91
+msgid "project/config.ini"
+msgstr ""
+
+#: ../../middlewares.rst:124 9d69b0520ce146828eedfaf98b13b5af
+msgid ""
+"The middlewares are independent classes and can be written as part of an "
+"application or as a standalone module. In both cases, to enable them, "
+"their class must be added to the project config. This means that by "
+"activating an application, its internal middlewares will not be enabled "
+"by default."
+msgstr ""
+
+#: ../../middlewares.rst:129 d80c022625874f72903506093aa00304
+msgid ""
+"Note that in a project you can define an unlimited number of middlewares "
+"of one type or in different types. Middlewares of the same type will be "
+"queued and executed in the order in which they are defined, and the "
+"output of each middleware will be passed to the next middleware."
+msgstr ""
+

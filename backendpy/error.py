@@ -104,7 +104,7 @@ class ErrorCode:
 
 
 class ErrorList:
-    """Container class to define list of the :class:`~backendpy.error.ErrorCode`s."""
+    """Container class to define list of the :class:`~backendpy.error.ErrorCode`."""
 
     def __init__(self, *codes: ErrorCode) -> None:
         """

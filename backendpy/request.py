@@ -16,9 +16,19 @@ class Request:
     Base HTTP request class whose instances are used to store the information of a request
     and then these instances are sent to the requests handlers.
 
-    :ivar app: :class:`~backendpy.asgi.Backendpy` class instance of the current
-               project (that is an ASGI application).
-    :ivar context: Dictionary of request context variables
+    :ivar app: :class:`~backendpy.Backendpy` class instance of the current project (that is an ASGI application).
+               The information that is defined in the general scope of the project can be accessed through the
+               app field of each request. For example ``request.app.config`` contains project config information.
+               Also, if we want to put information in the App context, this information can be saved or read from
+               ``request.app.context``. The data stored in the App context is valid until the service is stopped.
+               For example, you can put a database connection in it to be used in the scope of all requests and until
+               the service is turned off.
+    :ivar context: Dictionary of request context variables. Applications and middlewares can store their
+                   own data in the request context for other components to use until the end of the request.
+                   For example, auth middleware can set a user's information into request context after
+                   authentication process in the start of the request, so that other sections in the path of
+                   handling the request, can use the authenticated user information for their operations.
+                   The scope of the data stored in the request context is the request itself and until it responds.
     :ivar method: Method of HTTP request
     :ivar path: URL path of HTTP request
     :ivar scheme: URL scheme of HTTP request
@@ -42,7 +52,7 @@ class Request:
         """
         Initialize request instance.
 
-        :param app: :class:`~backendpy.asgi.Backendpy` class instance of the current
+        :param app: :class:`~backendpy.Backendpy` class instance of the current
                     project (that is an ASGI application)
         :param scope: HTTP connection scope
         :param body: Body of HTTP request

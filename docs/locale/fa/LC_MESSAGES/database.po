@@ -1,0 +1,216 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-04 17:23+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../database.rst:2 851f4da35be048c881cf27b7f31aa5c7
+msgid "Database"
+msgstr "‫پایگاه داده‬"
+
+#: ../../database.rst:3 985e6706e6c34761a82211e07313d92c
+msgid ""
+"In Backendpy, developers can use any database system of their choice, "
+"depending on the needs of the project, using any type of engine layer "
+"that supports async requests, so there is no mandatory structure for "
+"this. However, this framework will provide helpers to speed up work with "
+"various database systems. Helpers are currently available for Sqlalchemy."
+msgstr ""
+
+#: ../../database.rst:9 5c16163b48e941509c12bfa1c19b6232
+msgid "Use custom database"
+msgstr ""
+
+#: ../../database.rst:10 9a548b53361c49739ced94871b76cb91
+msgid ""
+"With the :doc:`hooks` feature described in the previous sections, you can"
+" easily configure your connections, sessions, and database system "
+"according to different system events."
+msgstr ""
+
+#: ../../database.rst:13 5de7a2eabba14d23bac6dccafa8c3300
+msgid "For example:"
+msgstr ""
+
+#: ../../database.rst:15 ../../database.rst:76 174c0c4917c64600b55824afa0d91ee0
+#: c9c419d2f2224aba84101e2596c142f2
+msgid "project/main.py"
+msgstr ""
+
+#: ../../database.rst:36 97cdf0c3660c46d685bd29a5d8bb1559
+msgid "And then we use these resources inside the project:"
+msgstr ""
+
+#: ../../database.rst:45 35e9ad1201834b098b8f2ecbe6466bd8
+msgid ""
+"In this example, we used the ``startup`` event to initialize the engine "
+"and connect to the database at the start of the service, the "
+"``request_end`` event to remove the dedicated database session of each "
+"request at the end of it, and the ``shutdown`` event to close the "
+"database connection when the service shuts down."
+msgstr ""
+
+#: ../../database.rst:49 819305729ccc4ba88e04c2e223d587ac
+msgid ""
+"Depending on your architecture for managing database connections and "
+"sessions, you may want to make the scope of each database session "
+"dependent on anything like threads and so on. In this example, the "
+"database sessions are set based on the scope of each request, which means"
+" that when a request starts, a database session starts (if requested "
+"inside the handler by calling db_session) and closes at the end of the "
+"request. The Backendpy framework provides the ``get_current_request`` as "
+"a callable for specifying session scope, which can be set in your engine "
+"or ORM settings."
+msgstr ""
+
+#: ../../database.rst:57 521cc373f224463284513a40765afe0c
+msgid ""
+"Note that in the example above, the names of some functions such as "
+"get_db_engine, etc. are used, which have only the aspect of an example "
+"and must be implemented by the developer according to the database system"
+" used. For more information, you can refer to the specific engine, "
+"database or ORM guides you use."
+msgstr ""
+
+#: ../../database.rst:62 0f05a09944f740c2bb45d619947e67f2
+msgid "Use Sqlalchemy helper layer"
+msgstr ""
+
+#: ../../database.rst:63 57e15812cb044bb3ac9a9b47df7d38a1
+msgid ""
+"When using Sqlalchemy ORM, Backendpy provides default helpers for this "
+"package, which makes it easier to work with."
+msgstr ""
+
+#: ../../database.rst:66 52d0882030af4ae4af19c214baeb1d33
+msgid ""
+"Async capability has been added from Sqlalchemy version 1.4.27, so lower "
+"versions are not compatible with Backendpy framework. Also, among the "
+"available engines, only those that support async are usable, such as "
+"``asyncpg`` package, which can be used based on the ``Postgresql`` "
+"database system."
+msgstr ""
+
+#: ../../database.rst:71 697c82eea4b54ef6a4576b15bf6dff20
+msgid "To use Sqlalchemy in Backendpy projects, do the following:"
+msgstr ""
+
+#: ../../database.rst:73 ed5f5144a3c64d8aab997f78e7e9569d
+msgid ""
+"First, in order to set the database engine and session settings into the "
+"project, we use the helper function ``set_database_hooks()`` as follows:"
+msgstr ""
+
+#: ../../database.rst:85 a2afeecf9e934b50aadca19c54a4a6c3
+msgid ""
+"In addition to setting up the engine and creating and deleting the "
+"database connection at the start and shutdown of the service, this "
+"function also sets database sessions for the scope of each request, which"
+" can be used by calling ``request.app.context['db_session']`` inside the "
+"request handler:"
+msgstr ""
+
+#: ../../database.rst:96 27433ae9d5d44b2d91e896f6776f07f0
+msgid ""
+"The database settings should also be stored in the config.ini file as "
+"follows, and the framework will use these settings to connect to the "
+"database:"
+msgstr ""
+
+#: ../../database.rst:99 8387736a1bcf4a8bb643f32a93fb0888
+msgid "project/config.ini"
+msgstr ""
+
+#: ../../database.rst:109 479f8a9da2014191bc2503f6a303a920
+msgid ""
+"After setting up the project, here's how to use Sqlalchemy ORM in "
+"applications:"
+msgstr ""
+
+#: ../../database.rst:111 cc8de495dcdd4fb7b0dc58242a3ea372
+msgid ""
+"To create models of an application, inside the desired module of the "
+"application, we use the :class:`~backendpy.db.Base` class as follows:"
+msgstr ""
+
+#: ../../database.rst:114 7ef1b88f1c7042a6a59f41f8566d78d0
+msgid "project/apps/hello/db/models.py"
+msgstr ""
+
+#: ../../database.rst:126 cc9fc5d40a554b748c2eb05ce7502b14
+msgid ""
+"If you use this Base class, it is possible to connect between models of "
+"different applications, and also the CLI commands of the framework "
+"related to the database can be used."
+msgstr ""
+
+#: ../../database.rst:129 ac509404d55849378913b645a229dea6
+msgid ""
+"After defining the data models, these models should also be introduced to"
+" the application (so that they can be imported when needed for the "
+"framework). For this purpose, according to the procedure of other "
+"sections, we will use ``main.py`` module of the application:"
+msgstr ""
+
+#: ../../database.rst:133 b77f9fa9314646af920d7ba0624fa5ba
+msgid "project/apps/hello/main.py"
+msgstr ""
+
+#: ../../database.rst:143 34dad70ad3114f74b926e9ef34e26d2f
+msgid ""
+"As shown in the example, to introduce the models, we set their module "
+"path as a string to the application ``models`` parameter. This parameter "
+"is of iterable type and several model modules can be assigned to it. "
+"These module paths must also be within valid Python path. In this "
+"example, it is inside the project path that has already been added to the"
+" Python path by default."
+msgstr ""
+
+#: ../../database.rst:148 33d86f27676e4bccb65583eff15b1871
+msgid "We can now use database queries in any part of the application:"
+msgstr ""
+
+#: ../../database.rst:150 68962bd9d78f4cff8bab25d946882fa6
+msgid "project/apps/hello/db/queries.py"
+msgstr ""
+
+#: ../../database.rst:158 dbaa7ae5bbee4ae2bef54364fd67f2ea
+msgid "project/apps/hello/controllers/handlers.py"
+msgstr ""
+
+#: ../../database.rst:171 ccceb936aac64299ac71b260bd0f7b7c
+msgid ""
+"Note that in the sample code above, some functions such as to_dict or "
+"UserFilterData, etc. are used, which have an example aspect and must be "
+"created by the developer."
+msgstr ""
+
+#: ../../database.rst:174 903c0f525cfd4cc38008553d4159a03d
+msgid ""
+"For more information about Sqlalchemy and how to use it, you can refer to"
+" its specific documentation."
+msgstr ""
+
+#: ../../database.rst:177 c5b0a1fd669247628a824b4fbae288bf
+msgid "Create database and models with command line"
+msgstr ""
+
+#: ../../database.rst:178 478a75e356b34f8c844b5e84e707eb67
+msgid ""
+"If you use the default Sqlalchemy layer as described above, you can "
+"automatically create the database and all data models within the project "
+"after entering the project path in the command line and using the "
+"following command:"
+msgstr ""
+

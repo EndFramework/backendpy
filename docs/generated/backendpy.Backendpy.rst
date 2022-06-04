@@ -1,4 +1,4 @@
-backendpy.Backendpy
+﻿backendpy.Backendpy
 ===================
 
 .. currentmodule:: backendpy
@@ -17,7 +17,6 @@ backendpy.Backendpy
       ~Backendpy.event
       ~Backendpy.execute_event
       ~Backendpy.get_current_request
-      ~Backendpy.uri
    
    
 

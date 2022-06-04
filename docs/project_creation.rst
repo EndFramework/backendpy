@@ -1,13 +1,13 @@
-Create a Project
+Create a project
 ================
 
-Basic Structure
+Basic structure
 ---------------
 A Backendpy-based project does not have a mandatory, predetermined structure, and it is the programmer who
 decides how to structure his project according to his needs.
 
 The programmer only needs to create a Python module with a custom name (for example "main.py") and set the
-instance of ``Backendpy`` class (which is an ASGI application) inside it.
+instance of :class:`~backendpy.Backendpy` class (which is an ASGI application) inside it.
 
 .. code-block:: python
     :caption: project/main.py
@@ -27,13 +27,8 @@ It is also possible to connect third-party apps to the project.
 To create an application, first create a package containing the ``main.py`` module in the desired path within
 the project (or any other path that can be imported).
 
-Then inside the main.py module of an application we need to set an instance of the ``App`` class.
-All parts and settings of an application are assigned by the parameters of the App class, which are listed below.
-Each of these parameters and classes will be described in detail in the following sections.
-
-
-.. autoclass:: backendpy.app.App
-    :noindex:
+Then inside the main.py module of an application we need to set an instance of the :class:`~backendpy.app.App` class.
+All parts and settings of an application are assigned by the parameters of the App class.
 
 For example, in the "/apps" path inside the project, we create a package called "hello" and main.py file as follows:
 
@@ -58,9 +53,10 @@ For example, in the "/apps" path inside the project, we create a package called 
     async def hello_world(request):
         return Text('Hello World!')
 
-
 As you can see, we have created another optional module called handlers.py and then introduced the routes
 defined in it to the App class instance.
+The complete list of App class parameters is described in section :doc:`application_structure`.
+
 Only the items that are introduced to the App class are important to the framework, and the internal structuring
 of the applications is completely optional.
 
@@ -75,13 +71,14 @@ Our application is now ready and you just need to enable it in the project confi
 
 To run the project, see the :doc:`run` section.
 
+Refer to the :doc:`apps` section to learn how to develop applications.
 
 Command line
 ------------
 The ``backendpy`` command can also be used to create projects and apps.
 To do this, first enter the desired path and then use the following commands:
 
-Project Creation
+Project creation
 ````````````````
 
 .. code-block:: console
@@ -94,7 +91,7 @@ To create a project with more complete sample components:
 
     $ backendpy create_project --name myproject --full
 
-App Creation
+App creation
 ````````````
 
 .. code-block:: console

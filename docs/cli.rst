@@ -1,4 +1,4 @@
-CLI Commands References
+CLI commands references
 =======================
 
 .. todo::

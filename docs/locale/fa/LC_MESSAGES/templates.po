@@ -1,0 +1,96 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-04 17:59+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../templates.rst:2 47ca62915bb14e10a27b8517851f9272
+msgid "Templates"
+msgstr "‫قالب‌ها‬"
+
+#: ../../templates.rst:3 15ccd62cca2844c1b1b73a87ce8fd4bc
+msgid ""
+"The need to render templates on the server side is used in some projects."
+" External template engines that support async can be used for this "
+"purpose. You can also use the framework helper layer for this, which is a"
+" layer for using the Jinja2 template engine package. The Backendpy "
+"framework facilitates the use of templates with this template engine and "
+"adapts it to its architecture with things like template files async "
+"reading from predefined application template paths."
+msgstr ""
+
+#: ../../templates.rst:9 8b582f83951b4aa48e66ace09f7d5bf2
+msgid ""
+"An example of rendering a web page template and returning it as a "
+"response is as follows."
+msgstr ""
+
+#: ../../templates.rst:11 2b4d2fc78fca470693ef2630edf8afdf
+msgid ""
+"First we need to specify the application template dirs inside the "
+"application ``main.py`` module with the ``template_dirs`` parameter of "
+"the App class:"
+msgstr ""
+
+#: ../../templates.rst:14 145c33b63f1743d8a2f79751f8ae6dd6
+msgid "project/apps/hello/main.py"
+msgstr ""
+
+#: ../../templates.rst:24 fe2179bd3f7842a3a6e7fd3fd02a57b0
+msgid "Then we create the desired templates in the defined path:"
+msgstr ""
+
+#: ../../templates.rst:26 4c956b1563e54f6ab1295ba47389c8ed
+msgid "project/apps/hello/templates/home.html"
+msgstr ""
+
+#: ../../templates.rst:39 dde32cdde7b04ca7848d163ef66f4e2b
+msgid "Refer to the Jinja2 package documentation to learn the templates syntax."
+msgstr ""
+
+#: ../../templates.rst:41 194964d88ae346e2a18ccd8a1f57936e
+msgid "Finally, we use these template inside a handler:"
+msgstr ""
+
+#: ../../templates.rst:43 4ae8ce640d0c419ca3d6a13a67706e5e
+msgid "project/apps/hello/controllers/handlers.py"
+msgstr ""
+
+#: ../../templates.rst:57 bfef38d1ad4b4921b200053e35a97b86
+msgid ""
+"In this example code, we first initialize "
+":class:`~backendpy.templating.Template` class with the template name and "
+"then with the ``render`` method we render the context values in it (note "
+"that this method must also be called async) and then we return the final "
+"content with :class:`~backendpy.response.HTML` response."
+msgstr ""
+
+#: ../../templates.rst:61 c891fde0b3da44e79c188b415dd0d90a
+msgid ""
+"Also here you just need to enter the template name and the framework will"
+" automatically search for this name in the application template dirs."
+msgstr ""
+
+#: ../../templates.rst:64 3e57b03be2e8498aaa0d80cea37efb99
+msgid ""
+"Details of the :class:`~backendpy.templating.Template` class are as "
+"follows:"
+msgstr ""
+
+#: b07cbf9b1097478bac20bca122c6e877 backendpy.templating.Template:1 of
+msgid ""
+"A class for reading and rendering templates (requires jinja2 package to "
+"be installed)."
+msgstr ""
+

@@ -1,0 +1,122 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-04 17:56+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../predefined_errors.rst:2 7f8e4d4d35614b92a478252636afac82
+msgid "Predefined errors"
+msgstr "‫خطاهای از پیش تعریف شده‬"
+
+#: ../../predefined_errors.rst:3 68895c41a55842fd9c31a51fe2251926
+msgid ""
+"To return a response with error content, you can manually return the "
+"content of that error with :doc:`exceptions` or create helper classes and"
+" assign specific templates to them. But if the number and variety of "
+"these errors is large, it is better to assign a code to each error in "
+"addition to a fixed format for errors."
+msgstr ""
+
+#: ../../predefined_errors.rst:8 8e3f2430cb234262ad59b21999d027d5
+msgid ""
+"In the Backendpy framework, a special class for managing error responses "
+"is provided to help better and easier manage errors and their code and to"
+" prevent the error code of one application from interfering with other "
+"applications:"
+msgstr ""
+
+#: 68d8cc95792543eb8a6d97343971cdcb backendpy.error.Error:1 of
+msgid "Predefined error response class."
+msgstr ""
+
+#: 504dab9e2674460f822ad8b28eb377f0 backendpy.error.Error of
+msgid "Variables"
+msgstr ""
+
+#: backendpy.error.Error:3 e9d6f7890aba48d1b5f070957ce1e152 of
+msgid "Predefined error code number"
+msgstr ""
+
+#: 1a736242437c435c92fedbb822f62e38 backendpy.error.Error:4 of
+msgid "Values used for error message formatting"
+msgstr ""
+
+#: backendpy.error.Error:5 f0455728a37f478c813db53dbf900ca4 of
+msgid "Error related data with a structure supported by JSON format"
+msgstr ""
+
+#: 262d87c944a54a34b77d2f1d902a9364 backendpy.error.Error:6 of
+msgid "The HTTP response headers"
+msgstr ""
+
+#: 4ec6b2ecad3540e6ac35ee520a9beb86 backendpy.error.Error:7 of
+msgid "Determines whether or not to compress (gzip) the response"
+msgstr ""
+
+#: ../../predefined_errors.rst:14 087149615ea044a5849f610c208bbe6f
+msgid ""
+"In order to use :class:`~backendpy.error.Error` response class, you must "
+"first define a list of errors for the application, including codes and "
+"their corresponding messages. The list of errors in an application is "
+"defined by an instance of the :class:`~backendpy.error.ErrorList` class, "
+"which itself contains instances of the "
+":class:`~backendpy.error.ErrorCode` class."
+msgstr ""
+
+#: a47c76f496f84840a621521877300768 backendpy.error.ErrorList:1 of
+msgid "Container class to define list of the :class:`~backendpy.error.ErrorCode`."
+msgstr ""
+
+#: aa99ecf91afc482fbc92dd4faf48e814 backendpy.error.ErrorCode:1 of
+msgid "A class to define error response item."
+msgstr ""
+
+#: ../../predefined_errors.rst:25 501a0d17dcfa439d963377824d579bbe
+msgid "For example, inside a custom module:"
+msgstr ""
+
+#: ../../predefined_errors.rst:27 fbbeceda028f4df48aaff6a9f3ec8a08
+msgid "project/apps/hello/controllers/errors.py"
+msgstr ""
+
+#: ../../predefined_errors.rst:38 2e361c8623dd46eb87648f9f3536442d
+msgid ""
+"After defining the list of errors, we must add this list to the "
+"application. For this purpose, as mentioned before, inside the "
+"``main.py`` module of the application, we set the ``errors`` parameter "
+"with our own error list (instance of :class:`~backendpy.error.ErrorList` "
+"class)."
+msgstr ""
+
+#: ../../predefined_errors.rst:42 089c47e3150d4c5680afd47adc98a4da
+msgid ""
+"Also note that the errors parameter is a list type, and more than one "
+"ErrorList can be assigned to each app, each list being specific to a "
+"different part of the app."
+msgstr ""
+
+#: ../../predefined_errors.rst:45 fab6507fb0b94a18bb0511e08d3b7464
+msgid "project/apps/hello/main.py"
+msgstr ""
+
+#: ../../predefined_errors.rst:56 a47c76f496f84840a621521877300768
+msgid ""
+"And finally, examples of returning the :class:`~backendpy.error.Error` "
+"response:"
+msgstr ""
+
+#: ../../predefined_errors.rst:58 0a10df53b3cb40d4bc62f8f7ddbf9c99
+msgid "project/apps/hello/controllers/handlers.py"
+msgstr ""
+

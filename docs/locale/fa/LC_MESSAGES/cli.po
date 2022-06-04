@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the Backendpy package.
 # Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-16 22:44+0330\n"
+"POT-Creation-Date: 2022-06-04 17:23+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +16,7 @@ msgstr ""
 "Generated-By: Babel 2.9.1\n"
 
 #: ../../cli.rst:2 cab6ff1cc2a44ba28339ea6bd5b436ba
-msgid "CLI Commands References"
+msgid "CLI commands references"
 msgstr "‫مرجع دستورات CLI‬"
 
 #: ../../cli.rst:4 4b380c87c7fc4b698fb2fc06728d4d21

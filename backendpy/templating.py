@@ -7,7 +7,7 @@ from typing import Optional, Any
 
 import aiofiles
 
-from utils.bytes import to_bytes
+from .utils.bytes import to_bytes
 
 try:
     import jinja2

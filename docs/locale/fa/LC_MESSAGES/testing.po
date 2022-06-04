@@ -1,0 +1,46 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-04 17:23+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../testing.rst:2 e8d8a64837994b6db33ef3c54236d397
+msgid "Testing"
+msgstr "‫تست کردن‌‬"
+
+#: ../../testing.rst:3 d4ef7a40abc74a6e80d48b2c0ae5aadb
+msgid ""
+"Because of the use of the async architecture in the Backendpy framework, "
+"we will need to run the tests as async for most sections in our "
+"applications. Hence, the Backendpy framework provides the "
+":class:`~backendpy.unittest.AsyncTestCase` class, which is the subclass "
+"of :class:`unittest.TestCase`, to which async execution has been added."
+msgstr ""
+
+#: ../../testing.rst:7 7e33965339714375b8791570695707ee
+msgid "Example of testing a database query:"
+msgstr ""
+
+#: ../../testing.rst:9 cfea334b62b048638f19877b0ccbde4e
+msgid "project/apps/hello/tests/test_db.py"
+msgstr ""
+
+#: ../../testing.rst:40 c24fda825a524ad0b849c9f23ec86d05
+msgid "API test example:"
+msgstr ""
+
+#: ../../testing.rst:42 85a760865de747e28123b8578556e4a3
+msgid "project/apps/hello/tests/test_api.py"
+msgstr ""
+

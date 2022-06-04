@@ -1,6 +1,5 @@
 Configurations
 ==============
-
 In Backendpy projects, all the settings of a project are defined in the ``config.ini`` file, which is located in the
 root path of each project and next to the main module of the project.
 This config file is defined in INI format, which includes sections and options.

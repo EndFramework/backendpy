@@ -23,10 +23,9 @@ Some of the features of Backendpy are:
 * ...
 
 License
--------------
+-------
 The Backendpy framework licensed under the BSD 3-Clause terms.
 The source code is available at https://github.com/savangco/backendpy.
-
 
 .. note::
    This project is under active development.

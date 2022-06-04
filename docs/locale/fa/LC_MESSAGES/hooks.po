@@ -1,0 +1,159 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-04 17:23+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../hooks.rst:2 0ebd909583dc47c096e66d9dfd3f62e2
+msgid "Hooks"
+msgstr "‫Hookها‬"
+
+#: ../../hooks.rst:3 c2399f2f600e4ab294719a17c04b5b5a
+msgid ""
+"Sometimes it is necessary to perform a specific operation following an "
+"event. For these types of needs, we can use Backendpy hooks feature. For "
+"example, when we want to write an email management application that sends"
+" an email after certain events in other applications, such as the "
+"registration or login of users."
+msgstr ""
+
+#: ../../hooks.rst:8 77f072dca8124610bd5bc3316e6b7ea0
+msgid ""
+"With this feature, we can both define new events with special labels "
+"within our application as points so that others can write their own code "
+"for these events to run, or we can assign codes to execute when "
+"triggering other events on the system."
+msgstr ""
+
+#: ../../hooks.rst:13 b6c87aa92e444df1a35962df8d006598
+msgid "Event Definition"
+msgstr ""
+
+#: ../../hooks.rst:14 e93f1503b4cb4d2d991b1309829f642d
+msgid ""
+"To define event points, we use the ``execute_event`` method of the "
+":class:`~backendpy.Backendpy` class instance inside any space we have "
+"access to this instance. (For example, inside the handler of a request, "
+"we access the project :class:`~backendpy.Backendpy` instance via "
+"``request.app``)."
+msgstr ""
+
+#: ../../hooks.rst:18 bc6083fef5af45a482363221295612d0
+msgid "Example of defining user creation event:"
+msgstr ""
+
+#: ../../hooks.rst:28 376edb820fb14e358aba56462fb1a17e
+msgid ""
+"If the event also contains arguments, we send them in the second "
+"parameter in the form of a dictionary:"
+msgstr ""
+
+#: ../../hooks.rst:40 5aadb70fbc9744dabc09b97702ea6d27
+msgid "Default Events"
+msgstr ""
+
+#: ../../hooks.rst:41 018225c609b34934a825762eaab6b4f0
+msgid ""
+"In addition to the events that developers can add to the project, the "
+"default events are also provided in the framework as follows:"
+msgstr ""
+
+#: ../../hooks.rst:44 7e3d5b7d954c41639e5b7a5d104b3ea2
+msgid "Framework Default Events"
+msgstr ""
+
+#: ../../hooks.rst:48 45551a9f8c6e420481416120591fe391
+msgid "Label"
+msgstr ""
+
+#: ../../hooks.rst:49 279df7e2acad41b485524a1a763b08d3
+msgid "Description"
+msgstr ""
+
+#: ../../hooks.rst:50 b94bdffb30024e9c81d8677855432bd1
+msgid "``startup``"
+msgstr ""
+
+#: ../../hooks.rst:51 324a2bf03f1e4ada80476ef81d1469cd
+msgid "After successfully starting the ASGI server"
+msgstr ""
+
+#: ../../hooks.rst:52 fe2f9cb96e2b403494118955a294351a
+msgid "``shutdown``"
+msgstr ""
+
+#: ../../hooks.rst:53 de6e2ef4186447bdae4bf841da8932e2
+msgid "After the ASGI server shuts down"
+msgstr ""
+
+#: ../../hooks.rst:54 e3735759e3444d9a9966af92e68fc792
+msgid "``request_start``"
+msgstr ""
+
+#: ../../hooks.rst:55 7a4bcb0660e34fa9b78da3c7c7f0fa4d
+msgid "At the start of a request"
+msgstr ""
+
+#: ../../hooks.rst:56 4fbc0f33e6fc42efbda80982a27d93e3
+msgid "``request_end``"
+msgstr ""
+
+#: ../../hooks.rst:57 85fa96774c9649c683a445d359a2ee99
+msgid "After the response to a request is returned"
+msgstr ""
+
+#: ../../hooks.rst:61 298b4e64d4b840b6864fed5747bb3f25
+msgid "Hook Definition"
+msgstr ""
+
+#: ../../hooks.rst:62 dbe1fb67d819485aad3183ccae443a52
+msgid ""
+"To define the code that is executed in events, we use the "
+":class:`~backendpy.hook.Hooks` class and its ``event`` decorator:"
+msgstr ""
+
+#: ../../hooks.rst:65 d533bdc7bc8b4c9199a81466d6537d67
+msgid "project/apps/hello/controllers/hooks.py"
+msgstr ""
+
+#: ../../hooks.rst:82 c2f2fab847794585820571696f381cc3
+msgid ""
+"As can be seen, if an argument is sent to a hook, these arguments are "
+"received in the parameters of the hook functions, otherwise they have no "
+"parameter."
+msgstr ""
+
+#: ../../hooks.rst:85 3fc6213bf57847ec80f88d35c3e61891
+msgid ""
+"Here we have written the hooks inside a custom module. To connect these "
+"hooks to the application, like the other components, we use the "
+"``main.py`` module of the application:"
+msgstr ""
+
+#: ../../hooks.rst:88 15eacd94209b4b0b89dd6961cdeb58be
+msgid "project/apps/hello/main.py"
+msgstr ""
+
+#: ../../hooks.rst:99 3ab74551ddac4d95b9fa069f3c1a4277
+msgid ""
+"Another way to use hooks is to attach them directly to a project (instead"
+" of an application), which can be used for special purposes such as "
+"managing database connections, which are part of the project-level "
+"settings:"
+msgstr ""
+
+#: ../../hooks.rst:102 37aae2fdf5fe4e7591779b859b44fc85
+msgid "project/main.py"
+msgstr ""
+

@@ -3,29 +3,49 @@
 # This file is distributed under the same license as the Backendpy package.
 # Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-16 22:44+0330\n"
+"POT-Creation-Date: 2022-06-04 17:23+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: ../../deployment.rst:2 1d6b5689dd8744a49eb3017c43f30c9d
-msgid "Deployment"
-msgstr "‫به‌کاراندازی‬"
+#: ../../deployment.rst:2 803c34e9019047b7b7f41b2e6eb90961
+msgid "Project deployment"
+msgstr "‫به‌کاراندازی پروژه‬"
 
-#: ../../deployment.rst:4 a43a76fba21d40ffad70157e3a7bf072
-msgid "Todo"
+#: ../../deployment.rst:3 194bcd8d9f924316a61e69cd6801afbf
+msgid ""
+"A project based on the Backendpy framework is a standard ASGI application"
+" and can use a variety of methods and tools to deploy and operate these "
+"types of applications."
 msgstr ""
 
-#: ../../deployment.rst:6 4d3d4bc8c07d49afbc4cf221a8e59eed
-msgid "TODO"
+#: ../../deployment.rst:6 26bd44f7b025436596ba5e79880006ac
+msgid ""
+"Web servers such as Uvicorn, Hypercorn and Daphne can be used for this "
+"purpose. Also, the features of a web server such as Gunicorn can be used "
+"in combination with previous web servers. Or even use them behind the "
+"Nginx web server (as a proxy layer) and take advantage of all the "
+"features of this web server. To use each of these web servers, refer to "
+"their documentation."
 msgstr ""
 
+#: ../../deployment.rst:11 4f13322a4601420d88d9938f83da1b43
+msgid "Example of using Uvicorn:"
+msgstr ""
+
+#: ../../deployment.rst:17 2b50f084c359490484852fd12a075a43
+msgid "Example of using Uvicorn with Gunicorn:"
+msgstr ""
+
+#: ../../deployment.rst:23 e12946db6f8e413f802afe940f45f204
+msgid ""
+"These commands can be defined and managed as a service in the operating "
+"system."
+msgstr ""

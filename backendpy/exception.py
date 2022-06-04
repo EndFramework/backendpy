@@ -10,7 +10,8 @@ from .utils.json import to_json
 
 class ExceptionResponse(BaseException, Response):
     """
-    Base exception response class
+    Base exception response class that its status code and other parameters must be set manually.
+    Also, by expanding this class, you can create all kinds of error responses.
 
     :ivar body: The HTTP response body
     :ivar status: The HTTP response status

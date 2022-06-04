@@ -1,0 +1,385 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-04 19:09+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../data_handlers.rst:2 3c2e7a177a374bd495a18695923f908d
+msgid "Data handlers"
+msgstr "‫کنترل‌کننده‌های داده‬"
+
+#: ../../data_handlers.rst:3 78ae6b70e49648c1bbe4a1b06d6652de
+msgid ""
+"One of the capabilities of Backendpy framework is the input data "
+"handlers, which includes default or user-defined validators and filters. "
+"With this feature, the main handlers of the requests and the handlers of "
+"their input data are separated, and in this case, instead of the raw "
+"data, the validated and filtered data are received inside the main "
+"handlers."
+msgstr ""
+
+#: ../../data_handlers.rst:8 69be17f95d874dfebecf5a0616c79865
+msgid ""
+"With the regular and reusable structure of Data Handlers, much of the "
+"need for duplicate coding as well as unrelated to the main logic within "
+"the code is eliminated and speeds up project implementation."
+msgstr ""
+
+#: ../../data_handlers.rst:11 7071f80b449b4e08a27b7f2cf933167a
+msgid ""
+"Data handlers are defined as classes that inherit from the "
+":class:`~backendpy.data_handler.data.Data` class."
+msgstr ""
+
+#: ../../data_handlers.rst:13 9c8606e7502f43e79ab114b683927456
+msgid "For example:"
+msgstr ""
+
+#: ../../data_handlers.rst:15 6da2d28cafef407ea45c4fe84ed9db35
+msgid "project/apps/hello/controllers/data_handlers.py"
+msgstr ""
+
+#: ../../data_handlers.rst:33 c9b07953fdc84d518cff3d2c56904a2f
+msgid "each of the items in the example is described below."
+msgstr ""
+
+#: ../../data_handlers.rst:35 aeca503b401e4d9db917027132bfd2fa
+msgid ""
+"After defining a data handler, we must assign it to a request. This "
+"allocation is done in the routes definition section with the "
+"``data_handler`` parameter:"
+msgstr ""
+
+#: ../../data_handlers.rst:38 7703b0bed3d84878a63ab3b5626f757f
+msgid "project/apps/hello/controllers/handlers.py"
+msgstr ""
+
+#: ../../data_handlers.rst:51 cac0ec458dee417c97491b025a40551b
+msgid ""
+"To get the final validated and filtered data inside the request main "
+"handler, we use ``request.cleaned_data``, which will be a dictionary of "
+"data with defined fields in our data handler class."
+msgstr ""
+
+#: ../../data_handlers.rst:55 d526bfcf83594a6d8f9e7f36878cfb4c
+msgid "Data fields"
+msgstr ""
+
+#: ../../data_handlers.rst:56 83f6fbf02ff64337aa717c6ab1fb3407
+msgid ""
+"As shown in the previous example, data fields are defined inside the data"
+" handler class. Each field can be an instance of "
+":class:`~backendpy.data_handler.fields.Field` class or other data classes"
+" inherited from this base class."
+msgstr ""
+
+#: ../../data_handlers.rst:60 a6b6da681f4547618dc791ef61b78caa
+msgid ""
+"In the example, :class:`~backendpy.data_handler.fields.String` field is "
+"used. Developers can also create and use their own custom data fields as "
+"needed."
+msgstr ""
+
+#: ../../data_handlers.rst:63 f632e67053124677918402a8e3ee080a
+msgid "The parameters of the base field class are as follows:"
+msgstr ""
+
+#: 104ab6a1a0da4b7998148362f7bc64d9 backendpy.data_handler.fields.Field:1 of
+msgid "Basic class for defining a data field."
+msgstr ""
+
+#: backendpy.data_handler.fields.Field
+#: backendpy.data_handler.validators.Validator c7a9231823a24e1482a543946d928a6c
+#: of
+msgid "Variables"
+msgstr ""
+
+#: backendpy.data_handler.fields.Field:3 e971eefc91c64423bc319135e60504dc of
+msgid ""
+"The name of the received data field (Note: The name of the received data "
+"field can be defined differently from the name of the Python field inside"
+" the data handler class)"
+msgstr ""
+
+#: backendpy.data_handler.fields.Field:6 d9a590c12e6d4ed1b9885d3b801e7367 of
+msgid ""
+"It is possible to get different fields from different locations in a "
+"request. For example, take one field from the URL and another field from "
+"the form, where all of these values are passed to the handler in a single"
+" format. The type can take the following values which are available from "
+"the :class:`~backendpy.data_handler.fields` module: ``TYPE_JSON``, "
+"``TYPE_FORM``, ``TYPE_PARAMS``, ``TYPE_URL_VARS``, ``TYPE_FILES``, "
+"``TYPE_HEADER``"
+msgstr ""
+
+#: 997733cb21e74808ba76c788f5365abf backendpy.data_handler.fields.Field:12 of
+msgid "Field value"
+msgstr ""
+
+#: backendpy.data_handler.fields.Field:13 f5cd98ca66b044c8a9557e7a65af08ff of
+msgid "Specifies whether the field is required or optional"
+msgstr ""
+
+#: 1c903bdcf0434ddc8df4ac7db89bb86d backendpy.data_handler.fields.Field:14 of
+msgid "List of error messages related to the data in this field"
+msgstr ""
+
+#: ../../data_handlers.rst:69 00341cd902474a6e9ca30ddf46ebbf1d
+msgid "Data processors"
+msgstr ""
+
+#: ../../data_handlers.rst:70 d4e0fdad554b481daa5cfd1b39a9fa18
+msgid ""
+"Processors are classes for processing data field values that include "
+"validators and filters."
+msgstr ""
+
+#: ../../data_handlers.rst:72 56fba101d27c4a03bb91f90eee727a26
+msgid ""
+"A list of processors is assigned to a data field via the ``processors`` "
+"parameter and will run in sequence as specified. Also in this list, "
+"validators and filters can be used with any combination."
+msgstr ""
+
+#: ../../data_handlers.rst:76 c7a9231823a24e1482a543946d928a6c
+msgid "Validators"
+msgstr ""
+
+#: ../../data_handlers.rst:77 567f9c43bfe046c48bc87c68dd46ffe6
+msgid ""
+"Validators are responsible for reviewing and validating data, and a data "
+"is either passed over or, if there is a discrepancy, the defined error is"
+" returned."
+msgstr ""
+
+#: ../../data_handlers.rst:80 54a2ad7e302a4e13951b4143bba50237
+msgid ""
+"Developers can create and use the various validators they need by "
+"inheriting from the base "
+":class:`~backendpy.data_handler.validators.Validator` class."
+msgstr ""
+
+#: 164a306d781f484eaf830a94192ca7b9
+#: backendpy.data_handler.validators.Validator:1 of
+msgid ""
+"The base class that will be inherited to create the data validator "
+"classes."
+msgstr ""
+
+#: 0c51f829b05a4b218548c18652279c39
+#: backendpy.data_handler.validators.Validator:3 of
+msgid "Error message that this validator will return if it receives invalid data"
+msgstr ""
+
+#: ../../data_handlers.rst:86 e54a0a9ee64d459b991b746b33621d87
+msgid ""
+"Ready-made validators are also provided in the framework that can be "
+"used. The following is a list of them:"
+msgstr ""
+
+#: ../../data_handlers.rst:89 d708592c37d749d899398faa35e63332
+msgid "Default validators"
+msgstr ""
+
+#: backendpy.data_handler.validators.NotNull:1 cad8d86bc4634e919f68ede4f551e119
+#: of
+msgid ""
+"Check that the value is not null. (Note: NotNull validator is different "
+"from the ``required`` parameter of the "
+":class:`~backendpy.data_handler.fields.Field` and has a separate purpose."
+" Because sometimes we need to differentiate between not sending a value "
+"to a field and sending a null value to it.)"
+msgstr ""
+
+#: 4ddf0c3b908b4cd7996ceb469de2fb0c backendpy.data_handler.validators.In:1 of
+msgid "Check if the value is present among the predefined values."
+msgstr ""
+
+#: ../../data_handlers.rst:96 ../../data_handlers.rst:141
+#: ../../data_handlers.rst:157 ../../data_handlers.rst:211
+#: 0ddc505bc6f54ab796a694dbd4278c4c
+msgid "Example:"
+msgstr ""
+
+#: 147c0da884be490aaa4191fcdf746c75 backendpy.data_handler.validators.NotIn:1
+#: of
+msgid "Check if the value is not present among the predefined values."
+msgstr ""
+
+#: a9e9ff1d4e2f4bbfae20607b6bdad214 backendpy.data_handler.validators.Length:1
+#: of
+msgid "Check if the data length is between min and max."
+msgstr ""
+
+#: 96d75bccc34648dd8549066d5e550e63 backendpy.data_handler.validators.Limit:1
+#: of
+msgid ""
+"Used for numerical data and checks whether the number is in the range of "
+"min and max."
+msgstr ""
+
+#: backendpy.data_handler.validators.Numeric:1 d2c87989361c4795bb281d3cdcbe6976
+#: of
+msgid "Check if the data is a numeric value."
+msgstr ""
+
+#: backendpy.data_handler.validators.Boolean:1 eadfceddd1174861a0752f5eba32bdcb
+#: of
+msgid "Check if the data is a boolean value."
+msgstr ""
+
+#: b405822b57e54889ba8f479a4c56f369 backendpy.data_handler.validators.Url:1 of
+msgid "Check if the data is a valid URL."
+msgstr ""
+
+#: 69b42cbf66d54a29915d70c2111027c9 backendpy.data_handler.validators.UrlPath:1
+#: of
+msgid "Check if the data is a valid URL path."
+msgstr ""
+
+#: 8a617b8b2f8445feae2cecf188846807
+#: backendpy.data_handler.validators.EmailAddress:1 of
+msgid "Check if the data is a valid email address."
+msgstr ""
+
+#: ba2d7e8cc72a4610bcfa94509a6a2931 backendpy.data_handler.validators.Date:1 of
+msgid "Verifies that the value is in the valid format of YYYY-MM-DD date."
+msgstr ""
+
+#: b38ea12f7a1844ca9d4dd080033a9c21 backendpy.data_handler.validators.UUID:1 of
+msgid "Check that the submitted data has a valid UUID4 format."
+msgstr ""
+
+#: b979ffb7aa534350bd22b8d7faa9d67a
+#: backendpy.data_handler.validators.MatchRegex:1 of
+msgid "Checks that the value matches a regular expression pattern."
+msgstr ""
+
+#: 74aa360eebc24c1c8ba2e2cfe75e3e84
+#: backendpy.data_handler.validators.PasswordStrength:1 of
+msgid ""
+"Checks the hardness of a password and returns an error if the password is"
+" weak."
+msgstr ""
+
+#: backendpy.data_handler.validators.RestrictedFile:1
+#: c87550669156492e86ee71de7251fffa of
+msgid ""
+"Used for file fields and validates file type and size according to "
+"predefined valid extensions and size range."
+msgstr ""
+
+#: ../../data_handlers.rst:147 243fe832dc314a5eb7af65a9c00988da
+msgid ""
+"In this example, if the data we receive is a list of images instead of an"
+" image file, and we want these processors to be applied to all of those "
+"images, we can nest the list of processors inside another list as "
+"follows:"
+msgstr ""
+
+#: aaa4db8c19db424db06ab88aa2d13cff backendpy.data_handler.validators.Unique:1
+#: of
+msgid ""
+"This validator is used to check the uniqueness of the data in the "
+"database table and can be used when using the default database helpers of"
+" the framework."
+msgstr ""
+
+#: ../../data_handlers.rst:163 c622c8c79f7b4e2a9125a38d2d34b2e9
+msgid ""
+"In this example, the value sent to the \"username\" field is queried "
+"directly to the \"username\" column from the \"Users\" model and checked "
+"for its uniqueness, and returns an error if it is exists."
+msgstr ""
+
+#: ../../data_handlers.rst:166 ef80f6cf78e3489fbb712d60cc3d62a3
+msgid ""
+"In the previous example, if the name of the model table field is "
+"\"user_id\" instead of \"username\", we should change it as follows:"
+msgstr ""
+
+#: ../../data_handlers.rst:173 fde7543fda474090955d64b6cb8c6ad2
+msgid ""
+"The previous example was for adding a new user with a unique username to "
+"the database; However, if our request is to edit a user, the previous "
+"example should change as follows to prevent the error from being "
+"displayed when the user's current username is resubmitted:"
+msgstr ""
+
+#: ../../data_handlers.rst:181 f17cf39dc95a411c8c9c9462eceeb292
+msgid ""
+"Note that in this example the \"id\" column of the model is used to "
+"identify each row of data. It is also necessary to send a field named "
+"\"id\" with the value of the current row id of this user in the database "
+"in the submitted data in order to exclude this row when checking the "
+"uniqueness of the username."
+msgstr ""
+
+#: ../../data_handlers.rst:186 024e627802424f34911c553bcd2f45d0
+msgid "Filters"
+msgstr ""
+
+#: ../../data_handlers.rst:187 25891c9fa9c6487083d740b2b1e9824b
+msgid ""
+"Filters are responsible for modifying data as needed, and changes are "
+"made when data passes through it."
+msgstr ""
+
+#: ../../data_handlers.rst:189 8d30acdc72d842338bf06fbf4c2d7a62
+msgid ""
+"Developers can create and use the various filters they need by inheriting"
+" from the base :class:`~backendpy.data_handler.filters.Filter` class."
+msgstr ""
+
+#: 6f4ffeb9ca534145a72788e333214021 backendpy.data_handler.filters.Filter:1 of
+msgid "The base class that will be inherited to create the data filter classes."
+msgstr ""
+
+#: ../../data_handlers.rst:195 540c8fd044a44146b3a73fcd721bb6ea
+msgid "Default filters are also can be used:"
+msgstr ""
+
+#: ../../data_handlers.rst:198 a827d0fddd9c4f8eb7fa7383b5ebd1ce
+msgid "Default filters"
+msgstr ""
+
+#: 91f78f16b01c4d429ef1a462a1f64806 backendpy.data_handler.filters.Escape:1 of
+msgid ""
+"Replace special characters \"&\", \"<\", \">\", (') and (\") to HTML-safe"
+" sequences."
+msgstr ""
+
+#: 802b3313ed294252a2c22407e323bd93 backendpy.data_handler.filters.Cut:1 of
+msgid "Cut the sequence to desired length."
+msgstr ""
+
+#: backendpy.data_handler.filters.DecodeBase64:1
+#: e47db2817bc34a03ac7946c1991f44ff of
+msgid "Decode the Base64 encoded bytes-like object or ASCII string."
+msgstr ""
+
+#: 04f8b9e5a5af4ff79b8c4d2ae591092b
+#: backendpy.data_handler.filters.ModifyImage:1 of
+msgid "Change the image format."
+msgstr ""
+
+#: ../../data_handlers.rst:221 09100572598c46ff9bb3f6abb07eb7da
+msgid ""
+"In this example, a combination of validators and filters is used. First "
+"it checks that the value is not null, then it applies a filter to the "
+"received data and decodes it from base64 format, then it checks the "
+"allowed extensions for the received file with validator, and if it "
+"passes, it converts the file to jpeg format with another filter."
+msgstr ""
+

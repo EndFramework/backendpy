@@ -1,6 +1,5 @@
 Run
 ===
-
 You can use different ASGI servers such as Uvicorn, Hypercorn and Daphne to run the project.
 For this purpose, you must first install your desired server (see the :doc:`installation` section).
 

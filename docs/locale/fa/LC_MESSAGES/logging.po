@@ -1,0 +1,55 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-04 17:49+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../logging.rst:2 7dee54268aef42a59b4c0e5cbcd1f028
+msgid "Logging"
+msgstr "‫Logها‬"
+
+#: ../../logging.rst:3 5e9fe01a79a043c8a7171d00ec0eade8
+msgid ""
+"The Backendpy framework provides a logging class that uses Python "
+"standard logging module and differs in the color display of the logs in "
+"the command line, which increases the readability of the logs in this "
+"environment."
+msgstr ""
+
+#: ../../logging.rst:6 3d94a6f107a14e889300963b85c26571
+msgid ""
+"This module has ``get_logger()`` function with the following "
+"specifications:"
+msgstr ""
+
+#: 8dece1ec68664a408b13c5c6d605ec83 backendpy.logging.get_logger:1 of
+msgid "Return a logger using :class:`backendpy.logging.Logger` class."
+msgstr ""
+
+#: 357cc9db4e06403b9a6b801a4760691f backendpy.logging.get_logger of
+msgid "Parameters"
+msgstr ""
+
+#: backendpy.logging.get_logger:3 f57bd9bd563949fc87b763f559d6f56e of
+msgid "Logger name"
+msgstr ""
+
+#: backendpy.logging.get_logger:4 ec9d6ad0ae594dff853ae0367aa4231d of
+msgid "Logging level"
+msgstr ""
+
+#: ../../logging.rst:11 cd2ad6a5f49d46ddb81c559fd8b4b6a6
+msgid "Example:"
+msgstr ""
+

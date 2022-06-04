@@ -1,0 +1,113 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-04 17:49+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../exceptions.rst:2 a6b5edf9fd284534b847d87bbc181458
+msgid "Exceptions"
+msgstr "‫Exceptionها‬"
+
+#: ../../exceptions.rst:3 05976afa856b43b1b853bb87f37f0591
+msgid ""
+"Backendpy exceptions are the type of responses used to return HTTP errors"
+" and can also be raised."
+msgstr ""
+
+#: ../../exceptions.rst:6 3497de16591f409f816a1136bea59d67
+msgid ""
+"As mentioned, Backendpy exceptions are the type of "
+":class:`~backendpy.response.Response` and their content is returned as a "
+"response and displayed to the user. Therefore, these exceptions should be"
+" used only for errors that must be displayed to users, and any kind of "
+"internal system error should be created with normal Python exceptions, in"
+" which case, the :class:`~backendpy.exception.ServerError` response is "
+"displayed to the user with a public message and does not contain "
+"sensitive system information that may be contained in the internal "
+"exception message."
+msgstr ""
+
+#: ../../exceptions.rst:13 31544bfe4147415f8528fd60ece4bd38
+msgid "The list of default exception response classes are as follows:"
+msgstr ""
+
+#: b96dc35fe2cb494b9c707317f025b0fc backendpy.exception.ExceptionResponse:1 of
+msgid ""
+"Base exception response class that its status code and other parameters "
+"must be set manually. Also, by expanding this class, you can create all "
+"kinds of error responses."
+msgstr ""
+
+#: ad50f8049b354befab024f7654dc6173 backendpy.exception.ExceptionResponse of
+msgid "Variables"
+msgstr ""
+
+#: 37af197eb2244028906660bb40b42de0 backendpy.exception.ExceptionResponse:4 of
+msgid "The HTTP response body"
+msgstr ""
+
+#: 04386075a1f44ddea31e02c83bc97663 backendpy.exception.ExceptionResponse:5 of
+msgid "The HTTP response status"
+msgstr ""
+
+#: 526ecbfb0a174e8799b176734d4bdc80 backendpy.exception.ExceptionResponse:6 of
+msgid "The HTTP response headers"
+msgstr ""
+
+#: backendpy.exception.ExceptionResponse:7 f5def77c2b8247669b7bf22ec6284c20 of
+msgid "The HTTP response content type"
+msgstr ""
+
+#: backendpy.exception.ExceptionResponse:8 f0ffb6f601de479fa48ab145e3d745af of
+msgid "Determines whether or not to compress (gzip) the response"
+msgstr ""
+
+#: 435ec779bd994e609d5f62811393e6f2 backendpy.exception.BadRequest:1 of
+msgid ""
+"Bad request error response class inherited from "
+":class:`~backendpy.exception.ExceptionResponse` class."
+msgstr ""
+
+#: ../../exceptions.rst:21 c2af2101098d4f6297c544685f4c32db
+msgid "Example usage:"
+msgstr ""
+
+#: ../../exceptions.rst:23 fc6d795b35a14a5e9af87394fc6adc15
+msgid "project/apps/hello/handlers.py"
+msgstr ""
+
+#: aa576e135fd9458fb79b12c077108329 backendpy.exception.Unauthorized:1 of
+msgid ""
+"Unauthorized request error response class inherited from "
+":class:`~backendpy.exception.ExceptionResponse` class."
+msgstr ""
+
+#: backendpy.exception.Forbidden:1 bdb790de398845dc8f91b489caf57f4f of
+msgid ""
+"Forbidden request error response class inherited from "
+":class:`~backendpy.exception.ExceptionResponse` class."
+msgstr ""
+
+#: 4a993ca1018f452d87b9ea994e03d611 backendpy.exception.NotFound:1 of
+msgid ""
+"Resource not found error response class inherited from "
+":class:`~backendpy.exception.ExceptionResponse` class."
+msgstr ""
+
+#: 94db790171f4404a945e6659c2ca1dcc backendpy.exception.ServerError:1 of
+msgid ""
+"Server error response class inherited from "
+":class:`~backendpy.exception.ExceptionResponse` class."
+msgstr ""
+

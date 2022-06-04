@@ -1,0 +1,138 @@
+# Backendpy docs persian translations
+# Copyright (C) 2022, Savang Co.
+# This file is distributed under the same license as the Backendpy package.
+# Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Backendpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-04 17:49+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../responses.rst:2 654b87e637744d61b2c9f4a8da31875f
+msgid "Responses"
+msgstr "‫پاسخ‌ها‬"
+
+#: ../../responses.rst:3 499112bffc854da0b53ae8abfb6e3b62
+msgid ""
+"To respond to a request, we use instances of the "
+":class:`~backendpy.response.Response` class or its subclasses inside the "
+"handler function. Default Backendpy responses include "
+":class:`~backendpy.response.Text`, :class:`~backendpy.response.HTML`, "
+":class:`~backendpy.response.JSON`, :class:`~backendpy.response.Binary`, "
+":class:`~backendpy.response.File`, and "
+":class:`~backendpy.response.Redirect`, but you can also create your own "
+"custom response types by extending the "
+":class:`~backendpy.response.Response` class."
+msgstr ""
+
+#: ../../responses.rst:10 7969b5ff7c054d2e82347998d144380a
+msgid "The details of each of the default response classes are as follows:"
+msgstr ""
+
+#: 05200ca245f843bda0be754ce5654e9a backendpy.response.Response:1 of
+msgid ""
+"Base HTTP response class whose instances are returned as HTTP responses "
+"by requests handlers."
+msgstr ""
+
+#: 9e319f08e9284038af224923fe0c9de6 backendpy.response.Response of
+msgid "Variables"
+msgstr ""
+
+#: 23013564f7f0401eaf35b727ad668551 backendpy.response.Response:3 of
+msgid "The HTTP response body"
+msgstr ""
+
+#: 48af557fd6584807810efda0fe08c8ed backendpy.response.Response:4 of
+msgid "The HTTP response status"
+msgstr ""
+
+#: aab3eab7f034481d864b8c21a5c45cec backendpy.response.Response:5 of
+msgid "The HTTP response headers"
+msgstr ""
+
+#: 16d9a7dee23a41a6b5232f9a2217d2a0 backendpy.response.Response:6 of
+msgid "The HTTP response content type"
+msgstr ""
+
+#: 23469bdd5dc74d3fbdf00fbaeb53505f backendpy.response.Response:7 of
+msgid "Determines whether or not to compress (gzip) the response"
+msgstr ""
+
+#: 0376507f1b1d497fb5266b0e77075a7b backendpy.response.Text:1 of
+msgid ""
+"Text response class inherited from :class:`~backendpy.response.Response` "
+"class."
+msgstr ""
+
+#: ../../responses.rst:18 ../../responses.rst:36 ../../responses.rst:54
+#: ../../responses.rst:75 ../../responses.rst:100
+#: 74c127aaae464072a1b602aeeb8d4085
+msgid "Example usage:"
+msgstr ""
+
+#: ../../responses.rst:20 ../../responses.rst:38 ../../responses.rst:56
+#: ../../responses.rst:77 ../../responses.rst:102
+#: 2db7cb3992e349a9ad5113ff52d217f8
+msgid "project/apps/hello/handlers.py"
+msgstr ""
+
+#: 768e7b64071640d4bcbeb90285f532fb backendpy.response.JSON:1 of
+msgid ""
+"JSON response class inherited from :class:`~backendpy.response.Response` "
+"class."
+msgstr ""
+
+#: 2ec4fd40637f45a4ac82657fd1534d58 backendpy.response.HTML:1 of
+msgid ""
+"HTML response class inherited from :class:`~backendpy.response.Response` "
+"class."
+msgstr ""
+
+#: backendpy.response.Binary:1 bd806421db2340b29acc4ceda7dc3ca8 of
+msgid ""
+"Binary object response class inherited from "
+":class:`~backendpy.response.Response` class."
+msgstr ""
+
+#: a4a8c3bdf7f8412199f734a61a6050de backendpy.response.File:1 of
+msgid ""
+"File response class inherited from :class:`~backendpy.response.Response` "
+"class which reads and returns file from the given path (which should be a"
+" path inside the project configured media path)"
+msgstr ""
+
+#: 8931ff96731840078085d787ca446084 backendpy.response.Redirect:1 of
+msgid ""
+"Redirect response class inherited from "
+":class:`~backendpy.response.Response` class."
+msgstr ""
+
+#: ../../responses.rst:94 1308a81540b648898c75ea3d24617b32
+msgid ""
+"There is another type of response to quickly return a success response in"
+" predefined json format, which is as follows:"
+msgstr ""
+
+#: 9b3c86c4c2d647be94fb1499373bc4ed backendpy.response.Success:1 of
+msgid ""
+"JSON formatted success response class inherited from "
+":class:`~backendpy.response.Response` class."
+msgstr ""
+
+#: ../../responses.rst:119 2eb2f895e86f4b099090ff996e9d6f2a
+msgid ""
+"The json format used in the :class:`~backendpy.response.Success` response"
+" is similar to the :class:`~backendpy.error.Error` response, and these "
+"two types of responses can be used together in a project. Refer to the "
+":doc:`predefined_errors` section for information on how to use the "
+":class:`~backendpy.error.Error` response."
+msgstr ""
+
