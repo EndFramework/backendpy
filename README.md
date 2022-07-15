@@ -19,7 +19,13 @@ Some features:
 ### Requirements
 Python 3.8+
 
-### Installation
+### Documentation
+Documentation is available at https://backendpy.readthedocs.io.
+
+
+### Quick Start
+
+#### Installation
 ```shell
 $ pip3 install backendpy
 ```
@@ -31,7 +37,7 @@ You also need to install an ASGI server such as Uvicorn, Hypercorn or Daphne:
 ```shell
 $ pip3 install uvicorn
 ```
-### Quick Start
+
 #### Create Project
 
 *project/main.py*
@@ -79,8 +85,8 @@ Inside the project root path:
 $ uvicorn main:bp
 ```
 
-### Command line
-#### Project creation
+#### Command line
+The basic structure of a project mentioned above can also be created by commands:
 ```shell
 $ backendpy create_project --name myproject
 ```
@@ -88,7 +94,7 @@ To create a project with more complete sample components:
 ```shell
 $ backendpy create_project --name myproject --full
 ```
-#### App creation
+Or to create an application:
 ```shell
 $ backendpy create_app --name myapp
 ```
