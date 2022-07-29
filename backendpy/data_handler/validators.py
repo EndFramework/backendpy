@@ -100,29 +100,37 @@ class NotIn(Validator):
 
 
 class Length(Validator):
-    """Check if the data length is between min and max."""
+    """Check data string length."""
 
     def __init__(
             self,
+            equal: Optional[int] = None,
             min: Optional[int] = None,
             max: Optional[int] = None,
             message: str = 'Length error'):
         super().__init__(message)
+        self.equal = equal
         self.min = min
         self.max = max
-        if self.min is not None:
-            self.message += ' min: %s' % self.min
-        if self.max is not None:
-            self.message += ' max: %s' % self.max
+        if self.equal is not None:
+            self.message += ' acceptable: %s' % self.equal
+        else:
+            if self.min is not None:
+                self.message += ' min: %s' % self.min
+            if self.max is not None:
+                self.message += ' max: %s' % self.max
 
     async def __call__(self, value, meta):
         if value is None:
             return None
         value = str(value)
-        if self.max is not None and len(value) > self.max:
+        if self.equal is not None and len(value) != self.equal:
             return self.message
-        elif self.min is not None and len(value) < self.min:
-            return self.message
+        else:
+            if self.max is not None and len(value) > self.max:
+                return self.message
+            elif self.min is not None and len(value) < self.min:
+                return self.message
         return None
 
 
