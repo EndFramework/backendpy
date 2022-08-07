@@ -32,6 +32,7 @@ class Request:
     :ivar method: Method of HTTP request
     :ivar path: URL path of HTTP request
     :ivar scheme: URL scheme of HTTP request
+    :ivar client: A two-item tuple of remote host and port
     :ivar headers: Dictionary of HTTP request headers
     :ivar url_vars: Dictionary of URL path variables
     :ivar params: Dictionary of HTTP request query string values
@@ -63,6 +64,7 @@ class Request:
         self.method: Optional[str] = None
         self.path: Optional[str] = None
         self.scheme: Optional[str] = None
+        self.client: Optional[tuple[str, int]] = None
         self.headers: Optional[dict[str, str]] = None
         self.url_vars: Optional[dict[str, str]] = url_vars
         self.params: Optional[dict[str, str | list[str]]] = None
@@ -80,6 +82,7 @@ class Request:
         self.method = scope['method']
         self.path = scope['path']
         self.scheme = scope['scheme']
+        self.client = tuple(scope['client']) if scope.get('client') else None
         self.headers = {k.decode(): v.decode() for k, v in scope['headers']}
         if scope.get('query_string'):
             self.params = {k: (v[0] if len(v) == 1 else v)
