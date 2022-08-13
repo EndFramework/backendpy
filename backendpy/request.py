@@ -23,7 +23,7 @@ class Request:
                ``request.app.context``. The data stored in the App context is valid until the service is stopped.
                For example, you can put a database connection in it to be used in the scope of all requests and until
                the service is turned off.
-    :ivar context: Dictionary of request context variables. Applications and middlewares can store their
+    :ivar context: A dictionary of request context variables. Applications and middlewares can store their
                    own data in the request context for other components to use until the end of the request.
                    For example, auth middleware can set a user's information into request context after
                    authentication process in the start of the request, so that other sections in the path of
@@ -32,16 +32,16 @@ class Request:
     :ivar method: Method of HTTP request
     :ivar path: URL path of HTTP request
     :ivar scheme: URL scheme of HTTP request
-    :ivar client: A two-item tuple of remote host and port
-    :ivar headers: Dictionary of HTTP request headers
-    :ivar url_vars: Dictionary of URL path variables
-    :ivar params: Dictionary of HTTP request query string values
-    :ivar form: Dictionary of HTTP request form data
-    :ivar json: Dictionary of HTTP request JSON data
-    :ivar files: Dictionary of multipart HTTP request files data
+    :ivar client: A dictionary of client information (including remote host and port)
+    :ivar headers: A dictionary of HTTP request headers
+    :ivar url_vars: A dictionary of URL path variables
+    :ivar params: A dictionary of HTTP request query string values
+    :ivar form: A dictionary of HTTP request form data
+    :ivar json: A dictionary of HTTP request JSON data
+    :ivar files: A dictionary of multipart HTTP request files data
     :ivar body: Raw body of HTTP request if it does not belong to any of the "form",
                 "json" and "file" fields
-    :ivar cleaned_data: Dictionary of data processed by request data handler
+    :ivar cleaned_data: A dictionary of data processed by request data handler
     """
 
     def __init__(
@@ -64,7 +64,7 @@ class Request:
         self.method: Optional[str] = None
         self.path: Optional[str] = None
         self.scheme: Optional[str] = None
-        self.client: Optional[tuple[str, int]] = None
+        self.client: Optional[dict[str, Any]] = None
         self.headers: Optional[dict[str, str]] = None
         self.url_vars: Optional[dict[str, str]] = url_vars
         self.params: Optional[dict[str, str | list[str]]] = None
@@ -82,7 +82,8 @@ class Request:
         self.method = scope['method']
         self.path = scope['path']
         self.scheme = scope['scheme']
-        self.client = tuple(scope['client']) if scope.get('client') else None
+        self.client = {'ip': scope['client'][0],
+                       'port': scope['client'][1]} if scope.get('client') else None
         self.headers = {k.decode(): v.decode() for k, v in scope['headers']}
         if scope.get('query_string'):
             self.params = {k: (v[0] if len(v) == 1 else v)
