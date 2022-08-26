@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Optional, Any
 
 from .app import App
-from .config import get_config, parse_list
+from .config import get_config
 from .error import Error, base_errors
 from .exception import ExceptionResponse
 from .hook import HookRunner
@@ -31,7 +31,7 @@ class Backendpy:
         """Process Backendpy class instance."""
         config = get_config(project_path=cls._get_project_path())
         cls._add_project_sys_path(config['environment']['project_path'])
-        return MiddlewareProcessor(paths=parse_list(config['middlewares']['active'])) \
+        return MiddlewareProcessor(paths=config['middlewares']['active']) \
             .run_process_application(application=super().__new__(cls))
 
     def __init__(self):
@@ -42,7 +42,7 @@ class Backendpy:
         self._hook_runner = HookRunner()
         self._router = Router()
         self._middleware_processor = MiddlewareProcessor(
-            paths=parse_list(self.config['middlewares']['active']))
+            paths=self.config['middlewares']['active'])
         self.errors = base_errors
         self._project_apps = self._get_project_apps()
         for app_data in self._project_apps:
@@ -260,7 +260,7 @@ class Backendpy:
 
     def _get_project_apps(self):
         apps: list[dict] = list()
-        for package_name in parse_list(self.config['apps']['active']):
+        for package_name in self.config['apps']['active']:
             try:
                 module = importlib.import_module(f'{package_name}.main')
                 app = getattr(module, 'app')

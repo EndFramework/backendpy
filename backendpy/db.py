@@ -12,7 +12,6 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 from .app import App
-from .config import parse_list
 from .logging import get_logger
 
 LOGGER = get_logger(__name__)
@@ -91,7 +90,7 @@ async def _create_tables(app_config: Mapping):
 
 def _import_models(app_config: Mapping):
     try:
-        for package_name in parse_list(app_config['apps']['active']):
+        for package_name in app_config['apps']['active']:
             try:
                 app = getattr(importlib.import_module(f'{package_name}.main'), 'app')
                 if isinstance(app, App):

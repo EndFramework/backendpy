@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Iterable
-from configparser import ConfigParser
+from collections.abc import Iterable, Mapping
 from typing import Any, Optional
 
 from .error import ErrorList
@@ -29,7 +28,7 @@ class App:
             models: Optional[Iterable[str]] = None,
             template_dirs: Optional[Iterable[str]] = None,
             errors: Optional[Iterable[ErrorList]] = None,
-            init_func: Optional[callable[[ConfigParser], Any]] = None):
+            init_func: Optional[callable[[Mapping], Any]] = None):
         """
         Initialize application instance
 

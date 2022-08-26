@@ -4,7 +4,7 @@ import sys
 from inspect import iscoroutinefunction
 
 from .app import App
-from .config import get_config, parse_list
+from .config import get_config
 from .logging import get_logger
 
 LOGGER = get_logger(__name__)
@@ -17,7 +17,7 @@ class Init:
 
     async def __call__(self):
         try:
-            for package_name in parse_list(self.config['apps']['active']):
+            for package_name in self.config['apps']['active']:
                 try:
                     app = getattr(importlib.import_module(f'{package_name}.main'), 'app')
                     if isinstance(app, App):
