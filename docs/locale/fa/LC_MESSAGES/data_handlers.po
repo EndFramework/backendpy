@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-04 19:09+0430\n"
+"POT-Creation-Date: 2022-08-27 04:04+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -217,9 +217,9 @@ msgstr ""
 msgid "Check if the value is not present among the predefined values."
 msgstr ""
 
-#: a9e9ff1d4e2f4bbfae20607b6bdad214 backendpy.data_handler.validators.Length:1
+#: backendpy.data_handler.validators.Length:1 fcba75a9a6b5402e9acba6e97d55a49e
 #: of
-msgid "Check if the data length is between min and max."
+msgid "Check data string length."
 msgstr ""
 
 #: 96d75bccc34648dd8549066d5e550e63 backendpy.data_handler.validators.Limit:1
@@ -382,4 +382,5 @@ msgid ""
 "allowed extensions for the received file with validator, and if it "
 "passes, it converts the file to jpeg format with another filter."
 msgstr ""
+
 

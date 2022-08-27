@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-16 22:44+0330\n"
+"POT-Creation-Date: 2022-08-27 04:04+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Configurations"
 msgstr "‫تنظیمات‬"
 
-#: ../../configurations.rst:4 3a70eb8cda0a40289c1a146f6558a0c8
+#: ../../configurations.rst:3 3a70eb8cda0a40289c1a146f6558a0c8
 msgid ""
 "In Backendpy projects, all the settings of a project are defined in the "
 "``config.ini`` file, which is located in the root path of each project "
@@ -33,11 +33,11 @@ msgstr ""
 "optionها است. فهرست پایه‌ی تنظیمات چارچوب و مثالی از نحوه‌ی تعریف آن‌ها "
 "به شرح زیر است:‬"
 
-#: ../../configurations.rst:9 fea48306db1b4064b036878c37f9d37e
+#: ../../configurations.rst:8 fea48306db1b4064b036878c37f9d37e
 msgid "project/config.ini"
 msgstr ""
 
-#: ../../configurations.rst:36 9601d8b07dd4447a87c4cd08be6d3c31
+#: ../../configurations.rst:38 9601d8b07dd4447a87c4cd08be6d3c31
 msgid ""
 "In ini format, ``;`` is used for comments, ``[]`` is used to define "
 "sections, ``key = value`` is used to define values and the lines are used"
@@ -47,27 +47,27 @@ msgstr ""
 "تعریف مقادیر از ``key = value`` و برای مقادیر لیست هم از خطوط زیرهم "
 "استفاده می‌شود.‬"
 
-#: ../../configurations.rst:39 dfdb7330d72f47e3b8a352925f6c7778
+#: ../../configurations.rst:41 dfdb7330d72f47e3b8a352925f6c7778
 msgid ""
 "**networking** section contains values related to the server and the "
 "network."
 msgstr "‫بخش **networking** شامل مقادیر مرتبط با سرور و شبکه است.‬"
 
-#: ../../configurations.rst:41 84c5a929127b47e09ed2696a7622eb45
+#: ../../configurations.rst:43 84c5a929127b47e09ed2696a7622eb45
 msgid ""
 "**environment** section contains values such as the path to the media "
 "files and etc."
 msgstr "‫بخش **environment** شامل مقادیری از قبیل مسیر فایل‌های media و … است.‬"
 
-#: ../../configurations.rst:43 9e5c726b276640aa9f548de9440e576f
+#: ../../configurations.rst:45 9e5c726b276640aa9f548de9440e576f
 msgid "**apps** section contains a list of the project active applications."
 msgstr "‫بخش **apps** شامل لیست اپلیکیشن‌های فعال پروژه است.‬"
 
-#: ../../configurations.rst:45 421e71ad9e5840038e1fb10c1ddf195e
+#: ../../configurations.rst:47 421e71ad9e5840038e1fb10c1ddf195e
 msgid "**middlewares** section contains a list of the project active middlewares."
 msgstr "‫بخش **middlewares** شامل لیست middlewareهای فعال پروژه است.‬"
 
-#: ../../configurations.rst:47 123ba88dbfe3461d87daf461f66deaf9
+#: ../../configurations.rst:49 123ba88dbfe3461d87daf461f66deaf9
 msgid ""
 "**database** section, if using the default ORM, will include the settings"
 " related to it."
@@ -75,7 +75,7 @@ msgstr ""
 "‫بخش **database** هم در صورت استفاده از ORM پیش‌فرض، شامل تنظیمات مرتبط "
 "با آن خواهد بود.‬"
 
-#: ../../configurations.rst:49 eba93d41041741d29a93540861dce056
+#: ../../configurations.rst:51 eba93d41041741d29a93540861dce056
 msgid ""
 "Also other custom settings may be required by any of the active apps, "
 "which must also be specified in this file. For example, an account "
@@ -85,7 +85,7 @@ msgstr ""
 "موردنیاز باشد که آن‌ها نیز باید در این فایل مشخص شوند. برای مثال، یک "
 "اپلیکیشن حساب کاربری ممکن است تنظیماتی مانند زیر داشته باشد: ‬"
 
-#: ../../configurations.rst:60 0bf1d27aa0ee4bfd8779e9d29adea4e7
+#: ../../configurations.rst:62 0bf1d27aa0ee4bfd8779e9d29adea4e7
 msgid ""
 "To protect sensitive information in the config file, such as passwords, "
 "private keys, etc., be sure to restrict access to this file. For example,"
@@ -94,4 +94,27 @@ msgstr ""
 "‫برای محافظت از اطلاعات حساس موجود در فایل تنظیمات مانند گذرواژه‌ها، "
 "کلیدهای خصوصی و غیره، حتما دسترسی به این فایل را محدود کنید. به عنوان "
 "مثال، مجوز آن را روی 600 قرار دهید.‬"
+
+#: ../../configurations.rst:66 f0c82097447d4a05a3ea39d4823909cd
+msgid ""
+"In order to access the project configs inside the code, you can use the "
+"``config`` attribute of the project :class:`~backendpy.Backendpy` class "
+"instance which contains this configs in dictionary format:"
+msgstr ""
+"‫به منظور دسترسی به تنظیمات پروژه در داخل کد، می‌توانبد از فیلد ``config`` "
+"نمونه‌ی کلاس :class:`~backendpy.Backendpy` پروژه استفاده کنید که حاوی این "
+"تنظیمات در قالب دیکشنری است:‬"
+
+
+#: ../../configurations.rst:69 757008becc3c47898ea7df92c612938b
+msgid "project/main.py"
+msgstr ""
+
+#: ../../configurations.rst:78 8f3e5cf2bb8e4738a765ddd9fca6b151
+msgid "And similarly inside the request handlers:"
+msgstr "‫و به‌طور مشابه در داخل توابع پردازش‌کننده‌ی درخواست‌ها:‬"
+
+#: ../../configurations.rst:80 5d6c209d1fa249f7a7e0aca4e8e7d378
+msgid "project/apps/hello/handlers.py"
+msgstr ""
 

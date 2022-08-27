@@ -11,6 +11,9 @@ The basic list of framework configs and example of their definition is as follow
     ; Backendpy Configurations
 
     [networking]
+    allowed_hosts =
+        127.0.0.1
+        localhost
     stream_size = 32768
 
     [environment]
@@ -58,3 +61,26 @@ For example, an account application might have settings like this:
 
     To protect sensitive information in the config file, such as passwords, private keys, etc., be sure to restrict
     access to this file. For example, set the permission to 600.
+
+
+In order to access the project configs inside the code, you can use the ``config`` attribute of the project
+:class:`~backendpy.Backendpy` class instance which contains this configs in dictionary format:
+
+.. code-block:: python
+    :caption: project/main.py
+
+    from backendpy import Backendpy
+
+    bp = Backendpy()
+
+    print(bp.config['database']['host'])
+
+And similarly inside the request handlers:
+
+.. code-block:: python
+    :caption: project/apps/hello/handlers.py
+
+    async def hello_world(request):
+        print(request.app.config['database']['host'])
+        ...
+

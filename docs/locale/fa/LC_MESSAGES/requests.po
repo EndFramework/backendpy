@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-04 17:49+0430\n"
+"POT-Creation-Date: 2022-08-27 04:04+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -59,9 +59,9 @@ msgstr ""
 
 #: backendpy.request.Request:11 dd28bf67b0db455ba840141ce4d60c23 of
 msgid ""
-"Dictionary of request context variables. Applications and middlewares can"
-" store their own data in the request context for other components to use "
-"until the end of the request. For example, auth middleware can set a "
+"A dictionary of request context variables. Applications and middlewares "
+"can store their own data in the request context for other components to "
+"use until the end of the request. For example, auth middleware can set a "
 "user's information into request context after authentication process in "
 "the start of the request, so that other sections in the path of handling "
 "the request, can use the authenticated user information for their "
@@ -81,37 +81,47 @@ msgstr ""
 msgid "URL scheme of HTTP request"
 msgstr ""
 
-#: 848d5f0a48394ffda6ac974b633d4a98 backendpy.request.Request:20 of
-msgid "Dictionary of HTTP request headers"
+#: 864825731dbb4a029ad1cf97ebf42fa9 backendpy.request.Request:20 of
+msgid "A dictionary of server information (including host and port)"
 msgstr ""
 
-#: 74ffc71bf1ce44bb992cc0062896b208 backendpy.request.Request:21 of
-msgid "Dictionary of URL path variables"
+#: 3180b9a9ac3444aa8641eb519b9661dd backendpy.request.Request:21 of
+msgid "A dictionary of client information (including remote host and port)"
 msgstr ""
 
-#: 5c9d629f739c454bbcb3ff8ee0c2ff4d backendpy.request.Request:22 of
-msgid "Dictionary of HTTP request query string values"
+#: 848d5f0a48394ffda6ac974b633d4a98 backendpy.request.Request:22 of
+msgid "A dictionary of HTTP request headers"
 msgstr ""
 
-#: a2d6530783814aa9b483383455e8ef1c backendpy.request.Request:23 of
-msgid "Dictionary of HTTP request form data"
+#: 74ffc71bf1ce44bb992cc0062896b208 backendpy.request.Request:23 of
+msgid "A dictionary of URL path variables"
 msgstr ""
 
-#: backendpy.request.Request:24 c32fc0b117824104b2dcb13b3ce79882 of
-msgid "Dictionary of HTTP request JSON data"
+#: 5c9d629f739c454bbcb3ff8ee0c2ff4d backendpy.request.Request:24 of
+msgid "A dictionary of HTTP request query string values"
 msgstr ""
 
-#: 177c6829aed646f08af2f424cc1f40e5 backendpy.request.Request:25 of
-msgid "Dictionary of multipart HTTP request files data"
+#: a2d6530783814aa9b483383455e8ef1c backendpy.request.Request:25 of
+msgid "A dictionary of HTTP request form data"
 msgstr ""
 
-#: 76ed64968d4a40208709faefecf227ee backendpy.request.Request:26 of
+#: backendpy.request.Request:26 c32fc0b117824104b2dcb13b3ce79882 of
+msgid "A dictionary of HTTP request JSON data"
+msgstr ""
+
+#: 177c6829aed646f08af2f424cc1f40e5 backendpy.request.Request:27 of
+msgid "A dictionary of multipart HTTP request files data"
+msgstr ""
+
+#: 76ed64968d4a40208709faefecf227ee backendpy.request.Request:28 of
 msgid ""
 "Raw body of HTTP request if it does not belong to any of the \"form\", "
 "\"json\" and \"file\" fields"
 msgstr ""
 
-#: 62037c1a3e8747e0bb24cc79809a6ded backendpy.request.Request:28 of
-msgid "Dictionary of data processed by request data handler"
+#: 62037c1a3e8747e0bb24cc79809a6ded backendpy.request.Request:30 of
+msgid "A dictionary of data processed by request data handler"
 msgstr ""
+
+
 
