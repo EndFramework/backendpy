@@ -13,7 +13,6 @@ The basic list of framework configs and example of their definition is as follow
     [networking]
     allowed_hosts =
         127.0.0.1
-        localhost
     stream_size = 32768
 
     [environment]
