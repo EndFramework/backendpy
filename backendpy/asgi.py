@@ -20,6 +20,7 @@ from .request import Request
 from .router import Router
 from .templating import Template
 from .utils.bytes import to_bytes
+from .utils.json import to_json
 
 LOGGER = get_logger(__name__)
 
@@ -73,24 +74,33 @@ class Backendpy:
 
             if '*' not in self.config['networking']['allowed_hosts'] and \
                     (not scope.get('server') or scope['server'][0] not in self.config['networking']['allowed_hosts']):
-                response = Error(1003)
-                await self._send_response(send, *await response(None))
+                await self._send_response(
+                    send,
+                    to_json(self.errors[1003].as_dict()),
+                    self.errors[1003].status.value,
+                    [[b'content-type', b'application/json']])
                 return
 
             try:
                 body: bytes = await self._get_request_body(receive)
             except Exception as e:
                 LOGGER.exception(f'Request data receive error: {e}')
-                response = Error(1000)
-                await self._send_response(send, *await response(None))
+                await self._send_response(
+                    send,
+                    to_json(self.errors[1000].as_dict()),
+                    self.errors[1000].status.value,
+                    [[b'content-type', b'application/json']])
                 return
 
             try:
                 request = Request(app=self, scope=scope, body=body)
             except Exception as e:
                 LOGGER.exception(f'Request instance creation error: {e}')
-                response = Error(1000)
-                await self._send_response(send, *await response(None))
+                await self._send_response(
+                    send,
+                    to_json(self.errors[1000].as_dict()),
+                    self.errors[1000].status.value,
+                    [[b'content-type', b'application/json']])
                 return
 
             token = self._request_context_var.set(request)

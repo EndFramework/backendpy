@@ -55,19 +55,15 @@ class Error(ExceptionResponse, JSON):
         """
         error = request.app.errors[self.code]
         self.status = error.status
-        self.body = {
-            'status': 'error',
-            'code': self.code}
+        self.body = error.as_dict()
 
         if self.message_data:
             if isinstance(self.message_data, Mapping):
-                self.body['message'] = error.message.format(**self.message_data)
+                self.body['message'] = self.body['message'].format(**self.message_data)
             elif isinstance(self.message_data, Iterable):
-                self.body['message'] = error.message.format(*self.message_data)
+                self.body['message'] = self.body['message'].format(*self.message_data)
             else:
-                self.body['message'] = error.message.format(self.message_data)
-        else:
-            self.body['message'] = error.message
+                self.body['message'] = self.body['message'].format(self.message_data)
 
         if self.data is not None:
             self.body['data'] = self.data
@@ -101,6 +97,11 @@ class ErrorCode:
     @property
     def status(self) -> Status:
         return self._status
+
+    def as_dict(self) -> dict:
+        return {'status': 'error',
+                'code': self._code,
+                'message': self._message}
 
 
 class ErrorList:
