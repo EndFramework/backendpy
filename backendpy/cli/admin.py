@@ -66,7 +66,6 @@ def main():
 [networking]
 allowed_hosts =
     127.0.0.1
-    localhost
 stream_size = 32768
 
 [environment]
@@ -96,7 +95,6 @@ active =
 [networking]
 allowed_hosts =
     127.0.0.1
-    localhost
 stream_size = 32768
 
 [environment]
@@ -269,7 +267,6 @@ media/*
 [networking]
 allowed_hosts =
     127.0.0.1
-    localhost
 
 [apps]
 active =
