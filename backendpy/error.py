@@ -145,4 +145,5 @@ class ErrorList:
 base_errors = ErrorList(
     ErrorCode(1000, "Server error", Status.INTERNAL_SERVER_ERROR),
     ErrorCode(1001, "Not found", Status.NOT_FOUND),
-    ErrorCode(1002, "Unexpected data", Status.BAD_REQUEST),)
+    ErrorCode(1002, "Unexpected data", Status.BAD_REQUEST),
+    ErrorCode(1003, "Disallowed host", Status.BAD_REQUEST),)

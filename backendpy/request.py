@@ -32,6 +32,7 @@ class Request:
     :ivar method: Method of HTTP request
     :ivar path: URL path of HTTP request
     :ivar scheme: URL scheme of HTTP request
+    :ivar server: A dictionary of server information (including host and port)
     :ivar client: A dictionary of client information (including remote host and port)
     :ivar headers: A dictionary of HTTP request headers
     :ivar url_vars: A dictionary of URL path variables
@@ -64,6 +65,7 @@ class Request:
         self.method: Optional[str] = None
         self.path: Optional[str] = None
         self.scheme: Optional[str] = None
+        self.server: Optional[dict[str, Any]] = None
         self.client: Optional[dict[str, Any]] = None
         self.headers: Optional[dict[str, str]] = None
         self.url_vars: Optional[dict[str, str]] = url_vars
@@ -79,11 +81,15 @@ class Request:
 
     def _apply_scope(self, scope: Mapping[str, Any]) -> None:
         """Set request information from HTTP connection scope."""
+        if scope.get('server'):
+            self.server = {'host': scope['server'][0],
+                           'port': scope['server'][1]}
+        if scope.get('client'):
+            self.client = {'ip': scope['client'][0],
+                           'port': scope['client'][1]}
         self.method = scope['method']
         self.path = scope['path']
         self.scheme = scope['scheme']
-        self.client = {'ip': scope['client'][0],
-                       'port': scope['client'][1]} if scope.get('client') else None
         self.headers = {k.decode(): v.decode() for k, v in scope['headers']}
         if scope.get('query_string'):
             self.params = {k: (v[0] if len(v) == 1 else v)

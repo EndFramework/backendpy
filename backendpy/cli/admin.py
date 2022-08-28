@@ -64,6 +64,9 @@ def main():
                     f'''; Backendpy Configurations
 
 [networking]
+allowed_hosts =
+    127.0.0.1
+    localhost
 stream_size = 32768
 
 [environment]
@@ -91,6 +94,9 @@ active =
                     f'''; Backendpy Configurations
 
 [networking]
+allowed_hosts =
+    127.0.0.1
+    localhost
 stream_size = 32768
 
 [environment]
@@ -259,6 +265,11 @@ media/*
                 (os.path.join(project_module_path, '__init__.py'), 0o644, ''),
                 (os.path.join(project_module_path, 'config.ini'), 0o600,
                     f'''; Backendpy Configurations
+
+[networking]
+allowed_hosts =
+    127.0.0.1
+    localhost
 
 [apps]
 active =

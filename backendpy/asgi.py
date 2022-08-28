@@ -71,6 +71,12 @@ class Backendpy:
                 else:
                     self._lifespan_startup = True
 
+            if '*' not in self.config['networking']['allowed_hosts'] and \
+                    (not scope.get('server') or scope['server'][0] not in self.config['networking']['allowed_hosts']):
+                response = Error(1003)
+                await self._send_response(send, *await response(None))
+                return
+
             try:
                 body: bytes = await self._get_request_body(receive)
             except Exception as e:
