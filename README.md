@@ -73,6 +73,10 @@ async def hello(request):
 
 *project/config.ini*
 ```ini
+[networking]
+allowed_hosts =
+    127.0.0.1:8000
+
 [apps]
 active =
     project.apps.hello
