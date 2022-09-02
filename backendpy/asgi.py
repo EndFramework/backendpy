@@ -72,15 +72,6 @@ class Backendpy:
                 else:
                     self._lifespan_startup = True
 
-            if '*' not in self.config['networking']['allowed_hosts'] and \
-                    (not scope.get('server') or scope['server'][0] not in self.config['networking']['allowed_hosts']):
-                await self._send_response(
-                    send,
-                    to_json(self.errors[1003].as_dict()),
-                    self.errors[1003].status.value,
-                    [[b'content-type', b'application/json']])
-                return
-
             try:
                 body: bytes = await self._get_request_body(receive)
             except Exception as e:
@@ -101,6 +92,15 @@ class Backendpy:
                     to_json(self.errors[1000].as_dict()),
                     self.errors[1000].status.value,
                     [[b'content-type', b'application/json']])
+                return
+
+            if '*' not in self.config['networking']['allowed_hosts'] and \
+                    ((not request.headers.get('host') or
+                     request.headers['host'] not in self.config['networking']['allowed_hosts']) or
+                     (request.headers.get('x-forwarded-host') and
+                      request.headers['x-forwarded-host'] not in self.config['networking']['allowed_hosts'])):
+                response = Error(1003)
+                await self._send_response(send, *await response(request))
                 return
 
             token = self._request_context_var.set(request)
