@@ -31,6 +31,7 @@ class Request:
                    The scope of the data stored in the request context is the request itself and until it responds.
     :ivar method: Method of HTTP request
     :ivar path: URL path of HTTP request
+    :ivar root_path: The root path this ASGI application is mounted at
     :ivar scheme: URL scheme of HTTP request
     :ivar server: A dictionary of server information (including host and port)
     :ivar client: A dictionary of client information (including remote host and port)
@@ -64,6 +65,7 @@ class Request:
         self.context: dict[str, Any] = {}
         self.method: Optional[str] = None
         self.path: Optional[str] = None
+        self.root_path: Optional[str] = None
         self.scheme: Optional[str] = None
         self.server: Optional[dict[str, Any]] = None
         self.client: Optional[dict[str, Any]] = None
@@ -89,6 +91,7 @@ class Request:
                            'port': scope['client'][1]}
         self.method = scope['method']
         self.path = scope['path']
+        self.root_path = scope['root_path']
         self.scheme = scope['scheme']
         self.headers = {k.decode(): v.decode() for k, v in scope['headers']}
         if scope.get('query_string'):
