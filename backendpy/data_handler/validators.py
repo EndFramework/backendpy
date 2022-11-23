@@ -212,17 +212,14 @@ class Numeric(Validator):
         if value in (None, '', b''):
             return None
         try:
-            int(value)
-        except:
-            try:
-                float(value)
-            except:
-                return self.message
+            float(value)
+        except ValueError:
+            return self.message
         return None
 
 
 class Integer(Validator):
-    """Check if the data is a integer value."""
+    """Check if the data is an integer value or an integer value in string format."""
 
     def __init__(self, message: str = 'Must be integer'):
         super().__init__(message)
@@ -231,8 +228,9 @@ class Integer(Validator):
         if value in (None, '', b''):
             return None
         try:
-            int(value)
-        except:
+            if not float(value).is_integer():
+                return self.message
+        except ValueError:
             return self.message
         return None
 
