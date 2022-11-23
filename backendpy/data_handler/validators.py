@@ -221,6 +221,22 @@ class Numeric(Validator):
         return None
 
 
+class Integer(Validator):
+    """Check if the data is a integer value."""
+
+    def __init__(self, message: str = 'Must be integer'):
+        super().__init__(message)
+
+    async def __call__(self, value, meta):
+        if value in (None, '', b''):
+            return None
+        try:
+            int(value)
+        except:
+            return self.message
+        return None
+
+
 class Boolean(Validator):
     """Check if the data is a boolean value."""
 
