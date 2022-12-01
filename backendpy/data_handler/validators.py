@@ -203,36 +203,62 @@ class EmailAddress(Validator):
 
 
 class Numeric(Validator):
-    """Check if the data is a numeric value."""
+    """Check if the data is an integer or float value."""
 
-    def __init__(self, message: str = 'Must be numeric'):
+    def __init__(self,
+                 allow_string: bool = False,
+                 message: str = 'Must be numeric'):
         super().__init__(message)
+        self.allow_string = allow_string
 
     async def __call__(self, value, meta):
         if value in (None, '', b''):
             return None
-        try:
-            float(value)
-        except ValueError:
-            return self.message
-        return None
+        if self.allow_string and isinstance(value, str):
+            try:
+                float(value)
+            except ValueError:
+                return self.message
+            return None
+        else:
+            if isinstance(value, (float, int)) \
+                    and not isinstance(value, bool):
+                return None
+        return self.message
 
 
 class Integer(Validator):
-    """Check if the data is an integer value or an integer value in string format."""
+    """Check if the data is an integer value."""
 
-    def __init__(self, message: str = 'Must be integer'):
+    def __init__(self,
+                 allow_string: bool = False,
+                 allow_zero_decimal: bool = False,
+                 message: str = 'Must be integer'):
         super().__init__(message)
+        self.allow_string = allow_string
+        self.allow_zero_decimal = allow_zero_decimal
 
     async def __call__(self, value, meta):
         if value in (None, '', b''):
             return None
-        try:
-            if not float(value).is_integer():
+        if self.allow_string and isinstance(value, str):
+            try:
+                if not self.allow_zero_decimal:
+                    int(value)
+                elif not float(value).is_integer():
+                    return self.message
+            except ValueError:
                 return self.message
-        except ValueError:
-            return self.message
-        return None
+            return None
+        else:
+            if not isinstance(value, bool):
+                if isinstance(value, int):
+                    return None
+                elif self.allow_zero_decimal \
+                        and isinstance(value, float) \
+                        and value.is_integer():
+                    return None
+        return self.message
 
 
 class Boolean(Validator):
