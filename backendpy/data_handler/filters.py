@@ -65,7 +65,7 @@ class ParseDateTime(Filter):
         return datetime.datetime.strptime(value, self.format)
 
 
-class ToInteger(Filter):
+class ToIntegerObject(Filter):
     """Convert value to integer object."""
 
     async def __call__(self, value) -> int:
@@ -74,21 +74,21 @@ class ToInteger(Filter):
         return int(value)
 
 
-class ToFloat(Filter):
+class ToFloatObject(Filter):
     """Convert value to float object."""
 
     async def __call__(self, value) -> float:
         return float(value)
 
 
-class ToDecimal(Filter):
+class ToDecimalObject(Filter):
     """Convert value to decimal object."""
 
     async def __call__(self, value) -> decimal.Decimal:
         return decimal.Decimal(str(value))
 
 
-class ToBoolean(Filter):
+class ToBooleanObject(Filter):
     """Convert input values 0, 1, 'true' and 'false' to boolean value."""
 
     async def __call__(self, value) -> bool:
