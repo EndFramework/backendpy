@@ -357,17 +357,18 @@ class PasswordStrength(Validator):
                 return None
 
 
-class Date(Validator):
-    """Verifies that the value is in the valid format of YYYY-MM-DD date."""
+class DateTime(Validator):
+    """Verifies that the value is in the valid format of datetime (default: %Y-%m-%d %H:%M:%S)."""
 
-    def __init__(self, message: str = 'Invalid date format (YYYY-MM-DD)'):
-        super().__init__(message)
+    def __init__(self, format: str = '%Y-%m-%d %H:%M:%S', message: str = 'Invalid datetime format'):
+        super().__init__(f'{message} (must be {format})')
+        self.format = format
 
     async def __call__(self, value, meta):
         if value in (None, '', b''):
             return None
         try:
-            datetime.datetime.strptime(value, '%Y-%m-%d')
+            datetime.datetime.strptime(value, self.format)
         except ValueError:
             return self.message
         return None
