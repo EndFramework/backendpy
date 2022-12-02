@@ -262,7 +262,7 @@ class Integer(Validator):
 
 
 class Boolean(Validator):
-    """Check if the data is a boolean value."""
+    """Check if the data is in (True, False, 'true', 'false', 0, 1)."""
 
     def __init__(self, message: str = 'Must be boolean'):
         super().__init__(message)
@@ -270,7 +270,7 @@ class Boolean(Validator):
     async def __call__(self, value, meta):
         if value in (None, '', b''):
             return None
-        if value in (True, False, 'true', 'false'):
+        if value in (True, False, 'true', 'false', 0, 1):
             return None
         return self.message
 
