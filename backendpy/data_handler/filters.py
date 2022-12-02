@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import base64
 import concurrent.futures.thread
+import datetime
 from functools import partial
 from html import escape, unescape
 from io import BytesIO
@@ -53,6 +54,16 @@ class DecodeBase64(Filter):
         return base64.b64decode(value, validate=True)
 
 
+class ParseDateTime(Filter):
+    """Convert datetime string to datetime object."""
+
+    def __init__(self, format: str = '%Y-%m-%d %H:%M:%S'):
+        self.format = format
+
+    async def __call__(self, value: str):
+        return datetime.datetime.strptime(value, self.format)
+
+
 class ModifyImage(Filter):
     """Change the image format."""
 
@@ -74,33 +85,3 @@ class ModifyImage(Filter):
             with BytesIO() as f_out:
                 im.save(f_out, format=self.format)
                 return f_out.getvalue()
-
-
-"""
-class ModifyVideo(Filter):
-    def __init__(self, format='MP4'):
-        self.format = format
-
-    async def __call__(self, value):
-        with concurrent.futures.ThreadPoolExecutor() as pool:
-            return await asyncio.get_running_loop().run_in_executor(
-                pool, partial(self._modify, value))
-
-    def _modify(self, value):
-        # Todo
-        return value
-
-
-class ModifyAudio(Filter):
-    def __init__(self, format='MP3'):
-        self.format = format
-
-    async def __call__(self, value):
-        with concurrent.futures.ThreadPoolExecutor() as pool:
-            return await asyncio.get_running_loop().run_in_executor(
-                pool, partial(self._modify, value))
-
-    def _modify(self, value):
-        # Todo
-        return value
-"""
