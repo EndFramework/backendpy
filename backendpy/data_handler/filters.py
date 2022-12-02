@@ -88,6 +88,17 @@ class ToDecimal(Filter):
         return decimal.Decimal(str(value))
 
 
+class ToBoolean(Filter):
+    """Convert input values 0, 1, 'true' and 'false' to boolean value."""
+
+    async def __call__(self, value) -> bool:
+        if value in (1, 'true', True):
+            return True
+        elif value in (0, 'false', False):
+            return False
+        raise ValueError("Only input values 0, 1, 'true' and 'false' are acceptable.")
+
+
 class ModifyImage(Filter):
     """Change the image format."""
 
