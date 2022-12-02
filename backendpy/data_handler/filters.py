@@ -4,6 +4,7 @@ import asyncio
 import base64
 import concurrent.futures.thread
 import datetime
+import decimal
 from functools import partial
 from html import escape, unescape
 from io import BytesIO
@@ -60,8 +61,31 @@ class ParseDateTime(Filter):
     def __init__(self, format: str = '%Y-%m-%d %H:%M:%S'):
         self.format = format
 
-    async def __call__(self, value: str):
+    async def __call__(self, value: str) -> datetime.datetime:
         return datetime.datetime.strptime(value, self.format)
+
+
+class ToInteger(Filter):
+    """Convert value to integer object."""
+
+    async def __call__(self, value) -> int:
+        if type(value) is str:
+            return int(float(value))
+        return int(value)
+
+
+class ToFloat(Filter):
+    """Convert value to float object."""
+
+    async def __call__(self, value) -> float:
+        return float(value)
+
+
+class ToDecimal(Filter):
+    """Convert value to decimal object."""
+
+    async def __call__(self, value) -> decimal.Decimal:
+        return decimal.Decimal(str(value))
 
 
 class ModifyImage(Filter):
