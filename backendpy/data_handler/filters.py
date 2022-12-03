@@ -89,14 +89,14 @@ class ToDecimalObject(Filter):
 
 
 class ToBooleanObject(Filter):
-    """Convert input values 0, 1, 'true' and 'false' to boolean value."""
+    """Convert input values 0, 1, '0', '1', 'true' and 'false' to boolean value."""
 
     async def __call__(self, value) -> bool:
-        if value in (1, 'true', True):
+        if value in (True, 1, 'true', '1'):
             return True
-        elif value in (0, 'false', False):
+        elif value in (False, 0, 'false', '0'):
             return False
-        raise ValueError("Only input values 0, 1, 'true' and 'false' are acceptable.")
+        raise ValueError("Only input values 0, 1, '0', '1', 'true' and 'false' are acceptable.")
 
 
 class ModifyImage(Filter):
