@@ -95,7 +95,7 @@ class Request:
         self.scheme = scope['scheme']
         self.headers = {k.decode(): v.decode() for k, v in scope['headers']}
         if scope.get('query_string'):
-            self.params = {k: (v[0] if len(v) == 1 else v)
+            self.params = {k: (v[-1] if not k.endswith('[]') else v)
                            for k, v in parse_qs(scope['query_string'].decode('utf8')).items()}
 
     def _apply_body(self, body: bytes) -> None:
