@@ -206,7 +206,7 @@ class Numeric(Validator):
     """Check if the data is an integer or float value."""
 
     def __init__(self,
-                 allow_string: bool = False,
+                 allow_string: bool = True,
                  message: str = 'Must be numeric'):
         super().__init__(message)
         self.allow_string = allow_string
@@ -231,7 +231,7 @@ class Integer(Validator):
     """Check if the data is an integer value."""
 
     def __init__(self,
-                 allow_string: bool = False,
+                 allow_string: bool = True,
                  allow_zero_decimal: bool = False,
                  message: str = 'Must be integer'):
         super().__init__(message)
