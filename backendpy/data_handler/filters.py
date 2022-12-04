@@ -5,10 +5,12 @@ import base64
 import concurrent.futures.thread
 import datetime
 import decimal
+from collections.abc import Iterable
 from functools import partial
 from html import escape, unescape
 from io import BytesIO
 from typing import Any
+from typing import Optional
 
 try:
     from PIL import Image
@@ -100,11 +102,13 @@ class ToBooleanObject(Filter):
 
 
 class ModifyImage(Filter):
-    """Change the image format."""
+    """Modify the image."""
 
-    def __init__(self, format: str = 'JPEG', mode: str = 'RGB'):
+    def __init__(self, format: str = 'JPEG', mode: str = 'RGB',
+                 max_size: Optional[Iterable[float, float]] = None):
         self.format = format
         self.mode = mode
+        self.max_size = max_size
 
     async def __call__(self, value: bytes) -> bytes:
         with concurrent.futures.ThreadPoolExecutor() as pool:
@@ -117,6 +121,10 @@ class ModifyImage(Filter):
             im = Image.open(f_in)
             if im.mode != self.mode:
                 im = im.convert(self.mode)
+            if self.max_size is not None:
+                thumb_im = im.thumbnail(self.max_size, Image.ANTIALIAS)
+                if thumb_im is not None:
+                    im = thumb_im
             with BytesIO() as f_out:
                 im.save(f_out, format=self.format)
                 return f_out.getvalue()
