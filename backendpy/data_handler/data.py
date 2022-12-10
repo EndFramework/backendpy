@@ -34,6 +34,7 @@ class Data:
             TYPE_URL_VARS: request.url_vars if request.url_vars is not None else {},
             TYPE_FILES: request.files if request.files is not None else {},
             TYPE_HEADER: request.headers}
+        self.auto_blank_to_null = True
 
     async def get_cleaned_data(self) \
             -> tuple[dict[str, Optional[Any]],
@@ -57,7 +58,8 @@ class Data:
                           'request': self._request})
                 if field.errors:
                     errors[name] = field.errors
-                cleaned_data[name] = field.value if (field.value != '' and field.value != b'') else None
+                cleaned_data[name] = field.value \
+                    if ((field.value != '' and field.value != b'') or not self.auto_blank_to_null) else None
             elif field.required:
                 errors[name] = 'Required'
         return cleaned_data, errors

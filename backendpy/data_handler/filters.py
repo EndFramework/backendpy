@@ -111,7 +111,7 @@ class BlankToNull(Filter):
             return None
         return value
     
-
+    
 class ToBooleanObject(Filter):
     """Convert input values 0, 1, '0', '1', 'true' and 'false' to boolean value."""
 
