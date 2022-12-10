@@ -23,7 +23,7 @@ def set_database_hooks(app):
 
     @app.event('startup')
     async def on_startup():
-        app.context['db_engine'] = get_db_engine(config=app.config['database'], echo=False)
+        app.context['db_engine'] = get_db_engine(config=app.config['database'])
         app.context['db_session'] = get_db_session(engine=app.context['db_engine'], scope_func=app.get_current_request)
 
     @app.event('shutdown')
@@ -35,12 +35,14 @@ def set_database_hooks(app):
         await app.context['db_session'].remove()
 
 
-def get_db_engine(config: Mapping, echo: bool = False):
+def get_db_engine(config: Mapping):
     """Create a new Sqlalchemy async engine instance."""
 
     return create_async_engine(
         'postgresql+asyncpg://{username}:{password}@{host}:{port}/{name}'.format(**config),
-        echo=echo, future=True, isolation_level='SERIALIZABLE')
+        echo=config.get('echo') in (True, 'true', 'yes', 'on'),
+        future=True,
+        isolation_level=config.get('isolation_level', 'SERIALIZABLE'))
 
 
 def get_db_session(engine: AsyncEngine, scope_func: callable):
