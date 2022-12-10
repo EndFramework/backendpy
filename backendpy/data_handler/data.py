@@ -52,14 +52,14 @@ class Data:
         for name, field in self._fields.items():
             if name in data:
                 await field.set_value(
-                    value=data[name],
+                    value=data[name] if ((data[name] != '' and data[name] != b'')
+                                         or not self.auto_blank_to_null) else None,
                     meta={'name': name,
                           'received_data': data,
                           'request': self._request})
                 if field.errors:
                     errors[name] = field.errors
-                cleaned_data[name] = field.value \
-                    if ((field.value != '' and field.value != b'') or not self.auto_blank_to_null) else None
+                cleaned_data[name] = field.value
             elif field.required:
                 errors[name] = 'Required'
         return cleaned_data, errors
