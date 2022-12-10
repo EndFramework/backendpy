@@ -103,6 +103,15 @@ class ToDecimalObject(Filter):
         return decimal.Decimal(str(value))
 
 
+class BlankToNull(Filter):
+    """Convert blank value to null value."""
+
+    async def __call__(self, value):
+        if value in ('', b''):
+            return None
+        return value
+    
+
 class ToBooleanObject(Filter):
     """Convert input values 0, 1, '0', '1', 'true' and 'false' to boolean value."""
 
