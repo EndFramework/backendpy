@@ -51,18 +51,28 @@ class Validator:
 
 class NotNull(Validator):
     """
-    Check that the value is not null.
+    Check if the value is not null.
     (Note: NotNull validator is different from the ``required`` parameter of the
     :class:`~backendpy.data_handler.fields.Field` and has a separate purpose.
     Because sometimes we need to differentiate between not sending a value to
     a field and sending a null value to it.)
     """
 
-    def __init__(self, message: str = 'Null value'):
+    def __init__(self, message: str = 'Null value error'):
         super().__init__(message)
 
     async def __call__(self, value, meta):
-        return None if value not in (None, '', b'') else self.message
+        return None if value is not None else self.message
+
+
+class NotBlank(Validator):
+    """Check if the value is not blank."""
+
+    def __init__(self, message: str = 'Blank value error'):
+        super().__init__(message)
+
+    async def __call__(self, value, meta):
+        return None if value not in ('', b'') else self.message
 
 
 class In(Validator):
@@ -310,7 +320,7 @@ class UrlPath(Validator):
 class PasswordStrength(Validator):
     """Checks the hardness of a password and returns an error if the password is weak."""
 
-    def __init__(self, message: str = 'Weak password'):
+    def __init__(self, message: str = 'Weak password error'):
         super().__init__(message)
 
     async def __call__(self, value, meta):
@@ -403,7 +413,7 @@ class RestrictedFile(Validator):
             extensions: Optional[Sequence[str]] = None,
             max_size: Optional[float] = None,
             min_size: Optional[float] = None,
-            message: str = 'File error'):
+            message: str = 'Invalid file error'):
         """
         Initialize file validator instance.
 
@@ -478,7 +488,7 @@ class Unique(Validator):
             except_self: Optional[str] = None,
             except_default: bool = False,
             case_sensitive: bool = False,
-            message: str = 'Unique value error'):
+            message: str = 'Non unique value error'):
         """
         Initialize validator instance.
 

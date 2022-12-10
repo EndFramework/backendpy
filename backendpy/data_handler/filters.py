@@ -5,12 +5,11 @@ import base64
 import concurrent.futures.thread
 import datetime
 import decimal
-from collections.abc import Iterable
+from collections.abc import Iterable, Sequence
 from functools import partial
 from html import escape, unescape
 from io import BytesIO
-from typing import Any
-from typing import Optional
+from typing import Any, Optional
 
 try:
     from PIL import Image
@@ -34,7 +33,9 @@ class Filter:
 class Escape(Filter):
     """Replace special characters "&", "<", ">", (') and (") to HTML-safe sequences."""
 
-    async def __call__(self, value: str) -> str:
+    async def __call__(self, value: str):
+        if value in (None, '', b''):
+            return value
         if type(value) is not str:
             raise TypeError('Escape filter only supports string type.')
         return escape(unescape(value), quote=True)
@@ -46,14 +47,18 @@ class Cut(Filter):
     def __init__(self, length: int):
         self.length = length
 
-    async def __call__(self, value):
+    async def __call__(self, value: Sequence):
+        if value in (None, '', b''):
+            return value
         return value[:self.length]
 
 
 class DecodeBase64(Filter):
     """Decode the Base64 encoded bytes-like object or ASCII string."""
 
-    async def __call__(self, value: bytes | str) -> bytes:
+    async def __call__(self, value: bytes | str):
+        if value in (None, '', b''):
+            return value
         return base64.b64decode(value, validate=True)
 
 
@@ -63,14 +68,18 @@ class ParseDateTime(Filter):
     def __init__(self, format: str = '%Y-%m-%d %H:%M:%S'):
         self.format = format
 
-    async def __call__(self, value: str) -> datetime.datetime:
+    async def __call__(self, value: str):
+        if value in (None, '', b''):
+            return value
         return datetime.datetime.strptime(value, self.format)
 
 
 class ToIntegerObject(Filter):
     """Convert value to integer object."""
 
-    async def __call__(self, value) -> int:
+    async def __call__(self, value):
+        if value in (None, '', b''):
+            return value
         if type(value) is str:
             return int(float(value))
         return int(value)
@@ -79,7 +88,9 @@ class ToIntegerObject(Filter):
 class ToFloatObject(Filter):
     """Convert value to float object."""
 
-    async def __call__(self, value) -> float:
+    async def __call__(self, value):
+        if value in (None, '', b''):
+            return value
         return float(value)
 
 
@@ -87,6 +98,8 @@ class ToDecimalObject(Filter):
     """Convert value to decimal object."""
 
     async def __call__(self, value) -> decimal.Decimal:
+        if value in (None, '', b''):
+            return value
         return decimal.Decimal(str(value))
 
 
@@ -94,6 +107,8 @@ class ToBooleanObject(Filter):
     """Convert input values 0, 1, '0', '1', 'true' and 'false' to boolean value."""
 
     async def __call__(self, value) -> bool:
+        if value in (None, '', b''):
+            return value
         if value in (True, 1, 'true', '1'):
             return True
         elif value in (False, 0, 'false', '0'):
@@ -111,6 +126,8 @@ class ModifyImage(Filter):
         self.max_size = max_size
 
     async def __call__(self, value: bytes) -> bytes:
+        if value in (None, '', b''):
+            return value
         with concurrent.futures.ThreadPoolExecutor() as pool:
             return await asyncio.get_running_loop().run_in_executor(
                 pool, partial(self._modify, value))
