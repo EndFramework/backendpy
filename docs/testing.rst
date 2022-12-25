@@ -43,21 +43,23 @@ API test example:
     :caption: project/apps/hello/tests/test_api.py
 
     import unittest
-    from backendpy.unittest import AsyncTestCase
+    from backendpy.unittest import TestCase
     from backendpy.utils import http
 
-    class MyTestCase(AsyncTestCase):
-        async def setUp(self) -> None:
-            self.client = http.AsyncHttpClient()
+    class MyTestCase(TestCase):
 
-        async def test_user_creation(self):
-            async with self.client as http_session:
+        def setUp(self) -> None:
+            self.client = http.Client('127.0.0.1', 8000)
+
+        def test_user_creation(self):
+            with self.client as session:
                 data = {'first_name': 'Jalil',
-                       'last_name': 'Hamdollahi Oskouei',
-                       'username': 'my_user',
-                       'password': 'my_pass'}
-                result = await http_session.post('http://127.0.0.1:5000/users', json=data)
-                self.assertEqual(result.get('status'), 'success')
+                        'last_name': 'Hamdollahi Oskouei',
+                        'username': 'my_user',
+                        'password': 'my_pass'}
+                result = session.post('/users', json=data)
+                self.assertEqual(result.status, 200)
+                self.assertNotEqual(result.data, '')
 
     if __name__ == '__main__':
         unittest.main()

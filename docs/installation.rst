@@ -39,12 +39,6 @@ requirements is as follows:
     * - jinja2
       - >=3.0.0
       - If using default Templating
-    * - aiohttp
-      - >=3.8.0
-      - If using the AsyncHttpClient class of the backendpy.utils.http
-    * - requests
-      - >=2.27.0
-      - If using the HttpClient class of the backendpy.utils.http
     * - pillow
       - >=9.0.0
       - If using the ModifyImage filter of the backendpy.data_handler.filters
