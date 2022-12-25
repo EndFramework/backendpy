@@ -7,9 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-04 18:44+0430\n"
+"POT-Creation-Date: 2022-12-25 13:32+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -49,7 +50,7 @@ msgstr ""
 
 #: ../../routes.rst:19 044bdeeb8345478abab5e08de30e8e32
 msgid ""
-"To define :class:`~backendpy.router.Uri` we can use "
+"To define :class:`~backendpy.router.Route` we can use "
 ":func:`~backendpy.router.Routes.get`, "
 ":func:`~backendpy.router.Routes.post`, "
 ":func:`~backendpy.router.Routes.path`, "
@@ -58,15 +59,16 @@ msgid ""
 msgstr ""
 
 #: ../../routes.rst:24 ../../routes.rst:43 ../../routes.rst:59
-#: 139bb2c16396423996b462bff47dc667 7bb1873655094518b8839ae401fd6025
-#: dfd67114ef4e443a9bd5177ccb070463
+#: ../../routes.rst:124 ../../routes.rst:139 139bb2c16396423996b462bff47dc667
+#: 7bb1873655094518b8839ae401fd6025 b629489a2eed4628b38352156507f809
+#: d8c9ae38956542e69e2529151b162545 dfd67114ef4e443a9bd5177ccb070463
 msgid "project/apps/hello/handlers.py"
 msgstr ""
 
 #: ../../routes.rst:40 ec4291b8c47943e38eea21e0319828e8
 msgid ""
 "Also, if we need to access a handler with different http methods, we can "
-"use :func:`~backendpy.router.Routes.uri` decorator as follows:"
+"use :func:`~backendpy.router.Routes.route` decorator as follows:"
 msgstr ""
 
 #: ../../routes.rst:56 34d66442b3934e20832f2cead4990054
@@ -75,8 +77,8 @@ msgstr ""
 
 #: ../../routes.rst:57 390ad500a2b7498ab44d74dcdc991583
 msgid ""
-"We can define the list of :class:`~backendpy.router.Uri` separately from "
-"the handlers as follows:"
+"We can define the list of :class:`~backendpy.router.Route` separately "
+"from the handlers as follows:"
 msgstr ""
 
 #: ../../routes.rst:70 f1e9d1411e0340a698dcf1e5699417ff
@@ -87,23 +89,23 @@ msgstr ""
 msgid ""
 "As can be seen in the examples, in both cases, the "
 ":class:`~backendpy.router.Routes` object is defined, which is used to "
-"hold the list of :class:`~backendpy.router.Uri`."
+"hold the list of :class:`~backendpy.router.Route`."
 msgstr ""
 
 #: ../../routes.rst:84 e8cb8f748e5941809b4a0761c06e53c3
 msgid ""
-"The complete list of parameters of a :class:`~backendpy.router.Uri` is as"
-" follows:"
+"The complete list of parameters of a :class:`~backendpy.router.Route` is "
+"as follows:"
 msgstr ""
 
-#: 23fbdc538b7547d793a069e73120a559 backendpy.router.Uri:1 of
-msgid "A class to define the specifications of a route."
+#: 23fbdc538b7547d793a069e73120a559 backendpy.router.Route:1 of
+msgid "A class to define the specifications of a requestable URL path"
 msgstr ""
 
 #: ../../routes.rst:89 fb6b61733b144a939e4d751040a13230
 msgid ""
-"Note that in ``@uri`` decorator, which is defined on the handler function"
-" itself, the ``handler`` parameter does not exist. and in "
+"Note that in ``@route`` decorator, which is defined on the handler "
+"function itself, the ``handler`` parameter does not exist. and in "
 "``@get``,``@post`` and ... decorators, the ``method`` parameter also does"
 " not exist."
 msgstr ""
@@ -122,8 +124,112 @@ msgstr ""
 #: ../../routes.rst:106 8cb8560e1bf648bc9e415f8dafcb979b
 msgid ""
 "In an application, more than one object of the Routes class can be "
-"defined. Each of which can be used to define the Uri of separate parts of"
-" the application or even different versions of the API and the like. For "
-"example:"
+"defined. Each of which can be used to define the routes of separate parts"
+" of the application or even different versions of the API and the like. "
+"For example:"
 msgstr ""
+
+#: ../../routes.rst:121 712a2a62d8174b89bef5fe6d67cefc82
+msgid "Url variables"
+msgstr ""
+
+#: ../../routes.rst:122 ab6a809accb145339b93eef008992e67
+msgid ""
+"In order to get variable values from URL, they can be specified by ``<`` "
+"and ``>`` characters inside the route."
+msgstr ""
+
+#: ../../routes.rst:136 23b4d0c21c4c453d806af1dd2e4ee257
+msgid ""
+"The default matchable data type of variables is string. You can also "
+"specify the type of value that can be matched in the URL with the ``:`` "
+"separator."
+msgstr ""
+
+#: ../../routes.rst:151 49750958d26c48519a458c6901b775ea
+msgid "Allowed data types are ``str``, ``int``, ``float`` and ``uuid``."
+msgstr ""
+
+#: ../../routes.rst:154 d9e19c1f8615439c86a4af9f5138f823
+msgid ""
+"Note that these data types determine the matchable data type in the URL, "
+"and not the data converter to related types in Python, and these data "
+"will be available with the Python string data type. In order to "
+"automatically convert types of received data, as well as to access "
+"various features of working with input data, refer to the "
+":doc:`data_handlers` section."
+msgstr ""
+
+#: ../../routes.rst:162 1ee38ce4b1d2425785dda92c436ec882
+msgid "Priority"
+msgstr ""
+
+#: ../../routes.rst:163 c5119583e8704611814747afd14c7f69
+msgid ""
+"Pay attention that when defining the routes, if several routes overlap, "
+"the route that is defined in a non-variable and explicit way will be "
+"matched first. If the routes are the same in this respect, they will be "
+"prioritized according to the order of their definition in the code. For "
+"example, ``/users/posts`` and ``/users/1`` will take precedence over "
+"``/users/<id>``, even if they are defined in the code after that."
+msgstr ""
+
+#~ msgid ""
+#~ "To define :class:`~backendpy.router.Uri` we "
+#~ "can use :func:`~backendpy.router.Routes.get`, "
+#~ ":func:`~backendpy.router.Routes.post`, "
+#~ ":func:`~backendpy.router.Routes.path`, "
+#~ ":func:`~backendpy.router.Routes.put` and "
+#~ ":func:`~backendpy.router.Routes.delete` decorators as "
+#~ "follows:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Also, if we need to access a "
+#~ "handler with different http methods, we"
+#~ " can use :func:`~backendpy.router.Routes.uri` "
+#~ "decorator as follows:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "We can define the list of "
+#~ ":class:`~backendpy.router.Uri` separately from the"
+#~ " handlers as follows:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "As can be seen in the examples,"
+#~ " in both cases, the "
+#~ ":class:`~backendpy.router.Routes` object is defined,"
+#~ " which is used to hold the list"
+#~ " of :class:`~backendpy.router.Uri`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The complete list of parameters of "
+#~ "a :class:`~backendpy.router.Uri` is as "
+#~ "follows:"
+#~ msgstr ""
+
+#~ msgid "A class to define the specifications of a route."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Note that in ``@uri`` decorator, which"
+#~ " is defined on the handler function"
+#~ " itself, the ``handler`` parameter does "
+#~ "not exist. and in ``@get``,``@post`` and"
+#~ " ... decorators, the ``method`` parameter"
+#~ " also does not exist."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In an application, more than one "
+#~ "object of the Routes class can be"
+#~ " defined. Each of which can be "
+#~ "used to define the Uri of separate"
+#~ " parts of the application or even "
+#~ "different versions of the API and "
+#~ "the like. For example:"
+#~ msgstr ""
 

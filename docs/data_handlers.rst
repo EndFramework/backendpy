@@ -90,6 +90,9 @@ Default validators
 .. autoclass:: backendpy.data_handler.validators.NotNull
     :noindex:
 
+.. autoclass:: backendpy.data_handler.validators.NotBlank
+    :noindex:
+
 .. autoclass:: backendpy.data_handler.validators.In
     :noindex:
 
@@ -111,6 +114,9 @@ Example:
 .. autoclass:: backendpy.data_handler.validators.Numeric
     :noindex:
 
+.. autoclass:: backendpy.data_handler.validators.Integer
+    :noindex:
+
 .. autoclass:: backendpy.data_handler.validators.Boolean
     :noindex:
 
@@ -123,7 +129,7 @@ Example:
 .. autoclass:: backendpy.data_handler.validators.EmailAddress
     :noindex:
 
-.. autoclass:: backendpy.data_handler.validators.Date
+.. autoclass:: backendpy.data_handler.validators.DateTime
     :noindex:
 
 .. autoclass:: backendpy.data_handler.validators.UUID
@@ -203,6 +209,24 @@ Default filters
     :noindex:
 
 .. autoclass:: backendpy.data_handler.filters.DecodeBase64
+    :noindex:
+
+.. autoclass:: backendpy.data_handler.filters.ParseDateTime
+    :noindex:
+
+.. autoclass:: backendpy.data_handler.filters.ToIntegerObject
+    :noindex:
+
+.. autoclass:: backendpy.data_handler.filters.ToFloatObject
+    :noindex:
+
+.. autoclass:: backendpy.data_handler.filters.ToDecimalObject
+    :noindex:
+
+.. autoclass:: backendpy.data_handler.filters.ToBooleanObject
+    :noindex:
+
+.. autoclass:: backendpy.data_handler.filters.BlankToNull
     :noindex:
 
 .. autoclass:: backendpy.data_handler.filters.ModifyImage

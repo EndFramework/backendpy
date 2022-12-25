@@ -7,9 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-27 04:04+0430\n"
+"POT-Creation-Date: 2022-12-25 13:32+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -77,51 +78,53 @@ msgstr ""
 msgid "URL path of HTTP request"
 msgstr ""
 
-#: backendpy.request.Request:19 cfc547fa679a4902831d1f43187e9ef9 of
+#: 85af30d6967242809a8774dcad08735e backendpy.request.Request:19 of
+msgid "The root path this ASGI application is mounted at"
+msgstr ""
+
+#: backendpy.request.Request:20 cfc547fa679a4902831d1f43187e9ef9 of
 msgid "URL scheme of HTTP request"
 msgstr ""
 
-#: 864825731dbb4a029ad1cf97ebf42fa9 backendpy.request.Request:20 of
+#: 864825731dbb4a029ad1cf97ebf42fa9 backendpy.request.Request:21 of
 msgid "A dictionary of server information (including host and port)"
 msgstr ""
 
-#: 3180b9a9ac3444aa8641eb519b9661dd backendpy.request.Request:21 of
+#: 3180b9a9ac3444aa8641eb519b9661dd backendpy.request.Request:22 of
 msgid "A dictionary of client information (including remote host and port)"
 msgstr ""
 
-#: 848d5f0a48394ffda6ac974b633d4a98 backendpy.request.Request:22 of
+#: 848d5f0a48394ffda6ac974b633d4a98 backendpy.request.Request:23 of
 msgid "A dictionary of HTTP request headers"
 msgstr ""
 
-#: 74ffc71bf1ce44bb992cc0062896b208 backendpy.request.Request:23 of
+#: 74ffc71bf1ce44bb992cc0062896b208 backendpy.request.Request:24 of
 msgid "A dictionary of URL path variables"
 msgstr ""
 
-#: 5c9d629f739c454bbcb3ff8ee0c2ff4d backendpy.request.Request:24 of
+#: 5c9d629f739c454bbcb3ff8ee0c2ff4d backendpy.request.Request:25 of
 msgid "A dictionary of HTTP request query string values"
 msgstr ""
 
-#: a2d6530783814aa9b483383455e8ef1c backendpy.request.Request:25 of
+#: a2d6530783814aa9b483383455e8ef1c backendpy.request.Request:26 of
 msgid "A dictionary of HTTP request form data"
 msgstr ""
 
-#: backendpy.request.Request:26 c32fc0b117824104b2dcb13b3ce79882 of
+#: backendpy.request.Request:27 c32fc0b117824104b2dcb13b3ce79882 of
 msgid "A dictionary of HTTP request JSON data"
 msgstr ""
 
-#: 177c6829aed646f08af2f424cc1f40e5 backendpy.request.Request:27 of
+#: 177c6829aed646f08af2f424cc1f40e5 backendpy.request.Request:28 of
 msgid "A dictionary of multipart HTTP request files data"
 msgstr ""
 
-#: 76ed64968d4a40208709faefecf227ee backendpy.request.Request:28 of
+#: 76ed64968d4a40208709faefecf227ee backendpy.request.Request:29 of
 msgid ""
 "Raw body of HTTP request if it does not belong to any of the \"form\", "
 "\"json\" and \"file\" fields"
 msgstr ""
 
-#: 62037c1a3e8747e0bb24cc79809a6ded backendpy.request.Request:30 of
+#: 62037c1a3e8747e0bb24cc79809a6ded backendpy.request.Request:31 of
 msgid "A dictionary of data processed by request data handler"
 msgstr ""
-
-
 
