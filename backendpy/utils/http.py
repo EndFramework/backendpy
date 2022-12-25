@@ -1,190 +1,118 @@
-try:
-    import aiohttp
-except ImportError:
-    pass
+import urllib.parse
+import http.client
+from typing import Optional
 
-try:
-    import requests
-except ImportError:
-    pass
+from .json import to_json, from_json
 
 
-class AsyncHttpClient:
-
-    def __init__(self):
-        self.session = None
-        self._session = None
-
-    async def __aenter__(self):
-        self._session = aiohttp.ClientSession()
-        return self
-
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        if self._session:
-            await self._session.close()
-
-    async def get(self, url, headers=None):
-        if self._session:
-            async with self._session.get(url, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-        elif self.session:
-            async with self.session.get(url, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-    async def post(self, url, data=None, json=None, headers=None):
-        if self._session:
-            async with self._session.post(url, data=data, json=json, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-        elif self.session:
-            async with self.session.post(url, data=data, json=json, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-    async def put(self, url, data=None, json=None, headers=None):
-        if self._session:
-            async with self._session.put(url, data=data, json=json, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-        elif self.session:
-            async with self.session.put(url, data=data, json=json, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-    async def patch(self, url, data=None, json=None, headers=None):
-        if self._session:
-            async with self._session.patch(url, data=data, json=json, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-        elif self.session:
-            async with self.session.patch(url, data=data, json=json, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-    async def delete(self, url, data=None, json=None, headers=None):
-        if self._session:
-            async with self._session.delete(url, data=data, json=json, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-        elif self.session:
-            async with self.session.delete(url, data=data, json=json, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-    async def options(self, url, headers=None):
-        if self._session:
-            async with self._session.options(url, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-        elif self.session:
-            async with self.session.options(url, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-    async def head(self, url, headers=None):
-        if self._session:
-            async with self._session.head(url, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-        elif self.session:
-            async with self.session.head(url, headers=headers) as response:
-                return await response.json() \
-                    if response.content_type == 'application/json' else await response.text()
-
-    async def start_session(self):
-        self.session = aiohttp.ClientSession()
-
-    async def close_session(self):
-        if self.session:
-            await self.session.close()
-
-
-class HttpClient:
-
-    def __init__(self):
-        self.session = None
+class Client:
+    def __init__(
+            self,
+            base_url: str,
+            port: Optional[int] = None,
+            ssl: Optional[bool] = False,
+            timeout: int = 10):
+        self._base_url = base_url
+        self._port = port
+        self._ssl = ssl
+        self._timeout = timeout
         self._session = None
 
     def __enter__(self):
-        self._session = requests.session()
+        self._session = http.client.HTTPSConnection(
+            host=self._base_url, port=self._port if self._port is not None else 443, timeout=self._timeout) \
+            if self._ssl else http.client.HTTPConnection(
+            host=self._base_url, port=self._port if self._port is not None else 80, timeout=self._timeout)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self._session:
             self._session.close()
 
-    def get(self, url, headers=None):
+    def _prepare_data(self, form=None, json=None, headers=None):
+        if not headers:
+            headers = dict()
+        if json is not None:
+            body = to_json(json)
+            headers.setdefault('Content-type', 'application/json')
+            headers.setdefault('Accept', 'application/json')
+        elif form is not None:
+            body = urllib.parse.urlencode(form)
+            headers.setdefault('Content-type', 'application/x-www-form-urlencoded')
+            headers.setdefault('Accept', 'text/plain')
+        else:
+            body = ''
+        return body, headers
+
+    def get(self,
+            url: str,
+            headers: Optional[dict] = None):
         if self._session:
-            result = self._session.get(url, headers=headers)
-            return result.json if result.json else result.text
-        elif self.session:
-            result = self.session.get(url, headers=headers)
-            return result.json if result.json else result.text
+            self._session.request(method='GET', url=url, headers=headers)
+            return Response(self._session.getresponse())
 
-    def post(self, url, data=None, json=None, headers=None):
+    def post(self,
+             url: str,
+             form: Optional[dict] = None,
+             json: Optional[dict] = None,
+             headers: Optional[dict] = None):
         if self._session:
-            result = self._session.post(url, data=data, json=json, headers=headers)
-            return result.json if result.json else result.text
+            body, headers = self._prepare_data(form, json, headers)
+            self._session.request(method='POST', url=url, body=body, headers=headers)
+            return Response(self._session.getresponse())
 
-        elif self.session:
-            result = self.session.post(url, data=data, json=json, headers=headers)
-            return result.json if result.json else result.text
-
-    def put(self, url, data=None, json=None, headers=None):
+    def put(self,
+            url: str,
+            form: Optional[dict] = None,
+            json: Optional[dict] = None,
+            headers: Optional[dict] = None):
         if self._session:
-            result = self._session.put(url, data=data, json=json, headers=headers)
-            return result.json if result.json else result.text
+            body, headers = self._prepare_data(form, json, headers)
+            self._session.request(method='PUT', url=url, body=body, headers=headers)
+            return Response(self._session.getresponse())
 
-        elif self.session:
-            result = self.session.put(url, data=data, json=json, headers=headers)
-            return result.json if result.json else result.text
-
-    def patch(self, url, data=None, json=None, headers=None):
+    def patch(self,
+              url: str,
+              form: Optional[dict] = None,
+              json: Optional[dict] = None,
+              headers: Optional[dict] = None):
         if self._session:
-            result = self._session.patch(url, data=data, json=json, headers=headers)
-            return result.json if result.json else result.text
+            body, headers = self._prepare_data(form, json, headers)
+            self._session.request(method='PATCH', url=url, body=body, headers=headers)
+            return Response(self._session.getresponse())
 
-        elif self.session:
-            result = self.session.patch(url, data=data, json=json, headers=headers)
-            return result.json if result.json else result.text
-
-    def delete(self, url, data=None, json=None, headers=None):
+    def delete(self,
+               url: str,
+               form: Optional[dict] = None,
+               json: Optional[dict] = None,
+               headers: Optional[dict] = None):
         if self._session:
-            result = self._session.delete(url, data=data, json=json, headers=headers)
-            return result.json if result.json else result.text
+            body, headers = self._prepare_data(form, json, headers)
+            self._session.request(method='DELETE', url=url, body=body, headers=headers)
+            return Response(self._session.getresponse())
 
-        elif self.session:
-            result = self.session.delete(url, data=data, json=json, headers=headers)
-            return result.json if result.json else result.text
-
-    def options(self, url, headers=None):
+    def options(self,
+                url: str,
+                headers: Optional[dict] = None):
         if self._session:
-            result = self._session.options(url, headers=headers)
-            return result.json if result.json else result.text
-        elif self.session:
-            result = self.session.options(url, headers=headers)
-            return result.json if result.json else result.text
+            self._session.request(method='OPTIONS', url=url, headers=headers)
+            return Response(self._session.getresponse())
 
-    def head(self, url, headers=None):
+    def head(self,
+             url: str,
+             headers: Optional[dict] = None):
         if self._session:
-            result = self._session.head(url, headers=headers)
-            return result.json if result.json else result.text
-        elif self.session:
-            result = self.session.head(url, headers=headers)
-            return result.json if result.json else result.text
+            self._session.request(method='HEAD', url=url, headers=headers)
+            return Response(self._session.getresponse())
 
-    async def start_session(self):
-        self.session = requests.session()
 
-    def close_session(self):
-        if self.session:
-            self.session.close()
+class Response:
+    def __init__(self, r: http.client.HTTPResponse):
+        self.headers = {k.lower(): w.lower() for k, w in r.getheaders()}
+        self.status = r.status
+        self.reason = r.reason
+        self.message = r.msg
+        self.version = r.version
+        self.data = r.read()
+        if self.headers.get('content-type') == 'application/json':
+            self.data = from_json(self.data)
