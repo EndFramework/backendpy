@@ -78,6 +78,28 @@ class AsyncHttpClient:
                 return await response.json() \
                     if response.content_type == 'application/json' else await response.text()
 
+    async def options(self, url, headers=None):
+        if self._session:
+            async with self._session.options(url, headers=headers) as response:
+                return await response.json() \
+                    if response.content_type == 'application/json' else await response.text()
+
+        elif self.session:
+            async with self.session.options(url, headers=headers) as response:
+                return await response.json() \
+                    if response.content_type == 'application/json' else await response.text()
+
+    async def head(self, url, headers=None):
+        if self._session:
+            async with self._session.head(url, headers=headers) as response:
+                return await response.json() \
+                    if response.content_type == 'application/json' else await response.text()
+
+        elif self.session:
+            async with self.session.head(url, headers=headers) as response:
+                return await response.json() \
+                    if response.content_type == 'application/json' else await response.text()
+
     async def start_session(self):
         self.session = aiohttp.ClientSession()
 
@@ -142,6 +164,22 @@ class HttpClient:
 
         elif self.session:
             result = self.session.delete(url, data=data, json=json, headers=headers)
+            return result.json if result.json else result.text
+
+    def options(self, url, headers=None):
+        if self._session:
+            result = self._session.options(url, headers=headers)
+            return result.json if result.json else result.text
+        elif self.session:
+            result = self.session.options(url, headers=headers)
+            return result.json if result.json else result.text
+
+    def head(self, url, headers=None):
+        if self._session:
+            result = self._session.head(url, headers=headers)
+            return result.json if result.json else result.text
+        elif self.session:
+            result = self.session.head(url, headers=headers)
             return result.json if result.json else result.text
 
     async def start_session(self):
