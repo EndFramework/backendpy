@@ -24,7 +24,8 @@ This middleware takes a :class:`~backendpy.request.Request` object before it rea
 processed or modified Request object to the handler layer.
 
 Also, depending on the type of processing in this middleware, the middleware can prevent the request process from
-continuing and interrupt it with an error response and prevent it from reaching the handler layer.
+continuing and interrupt it with either raise an error response or returning a direct response in the second index
+of return tuple and prevent request from reaching the handler layer.
 
 Handler middleware
 ..................
@@ -61,7 +62,7 @@ How to define these methods is as follows:
         @staticmethod
         async def process_request(request):
             ...
-            return request
+            return request, None
 
         @staticmethod
         async def process_handler(request, handler):
@@ -103,7 +104,7 @@ As an example of a request middleware, it can be used to authenticate the user b
                 'user_id': user.id,
                 'user_roles': user.roles}
 
-            return request
+            return request, None
 
 In this example, after receiving a request, first the user identity is checked inside the middleware and if there
 is an error, the error response is returned and if successful, the user information is added to the request context
