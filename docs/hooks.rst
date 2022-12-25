@@ -19,7 +19,7 @@ Example of defining user creation event:
 
 .. code-block:: python
 
-    @routes.post(r'^/users$', data_handler=UserCreationData)
+    @routes.post('/users', data_handler=UserCreationData)
     async def user_creation(request):
         ...
         await request.app.execute_event('user_created')
@@ -29,7 +29,7 @@ If the event also contains arguments, we send them in the second parameter in th
 
 .. code-block:: python
 
-    @routes.post(r'^/users$', data_handler=UserCreationData)
+    @routes.post('/users', data_handler=UserCreationData)
     async def user_creation(request):
         ...
         await request.app.execute_event('user_created', {'username': username})

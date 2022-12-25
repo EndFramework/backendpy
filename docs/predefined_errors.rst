@@ -63,10 +63,10 @@ And finally, examples of returning the :class:`~backendpy.error.Error` response:
 
     routes = Routes()
 
-    @routes.get(r'^/example-error$')
+    @routes.get('/example-error')
     async def example_error(request):
         raise Error(1100)
 
-    @routes.post(r'^/login$')
+    @routes.post('/login')
     async def login(request):
         raise Error(1101, 'jalil')

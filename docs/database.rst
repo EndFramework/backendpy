@@ -37,7 +37,7 @@ And then we use these resources inside the project:
 
 .. code-block:: python
 
-    @routes.get(r'^/hello-world$')
+    @routes.get('/hello-world')
     async def hello(request):
         db_session = request.app.context['db_session']()
         ...
@@ -88,7 +88,7 @@ the service, this function also sets database sessions for the scope of each req
 
 .. code-block:: python
 
-    @routes.get(r'^/hello-world$')
+    @routes.get('/hello-world')
     async def hello(request):
         db_session = request.app.context['db_session']()
         ...
@@ -161,11 +161,11 @@ We can now use database queries in any part of the application:
     ...
     from ..db import queries
 
-    @routes.get(r'^/users/(?P<identifier>.+)$', data_handler=UserFilterData)
+    @routes.get('/users/<id:int>', data_handler=UserFilterData)
     async def user_detail(request):
         data = request.cleaned_data
         db_session = request.app.context['db_session']()
-        result = await queries.get_user(db_session, data['identifier'])
+        result = await queries.get_user(db_session, data['id'])
         return Success(to_dict(result))
 
 Note that in the sample code above, some functions such as to_dict or UserFilterData, etc. are used, which have an

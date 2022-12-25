@@ -64,7 +64,7 @@ from backendpy.response import Text
 
 routes = Routes()
 
-@routes.get(r'^/hello-world$')
+@routes.get('/hello-world')
 async def hello(request):
     return Text('Hello World!')
 ```

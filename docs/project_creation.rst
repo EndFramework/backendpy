@@ -49,7 +49,7 @@ For example, in the "/apps" path inside the project, we create a package called 
 
     routes = Routes()
 
-    @routes.get(r'^/hello-world$')
+    @routes.get('/hello-world')
     async def hello_world(request):
         return Text('Hello World!')
 

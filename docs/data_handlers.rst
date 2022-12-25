@@ -43,7 +43,7 @@ section with the ``data_handler`` parameter:
 
     routes = Routes()
 
-    @routes.post(r'^/users$', data_handler=UserCreationData)
+    @routes.post('/users', data_handler=UserCreationData)
     async def user_creation(request):
         data = request.cleaned_data
         ...

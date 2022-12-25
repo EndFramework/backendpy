@@ -53,7 +53,7 @@ For example, an account application might have settings like this:
 
 .. code-block::
 
-    [keys]
+    [accounts]
     aes_key = 11111111111111111111111111111111
     auth_tokens_secret = 2222222222222222222222222222
 

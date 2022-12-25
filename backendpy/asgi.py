@@ -49,7 +49,7 @@ class Backendpy:
         for app_data in self._project_apps:
             if app_data['app'].routes:
                 for i in app_data['app'].routes:
-                    self._router.routes.merge(i)
+                    self._router.extend(i.items)
             if app_data['app'].hooks:
                 for i in app_data['app'].hooks:
                     self._hook_runner.hooks.merge(i)
@@ -172,7 +172,7 @@ class Backendpy:
 
         try:
             handler, data_handler_cls, request.url_vars = \
-                self._router.match(request.path, request.method, request.scheme)
+                self._router.lookup(request.path, request.method, request.scheme)
             if not handler:
                 response = Error(1001)
                 return await response(request)

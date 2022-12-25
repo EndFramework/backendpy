@@ -160,12 +160,12 @@ from backendpy.error import Error
 routes = Routes()
 
 
-@routes.get(r'^/hello-world$')
+@routes.get('/hello-world')
 async def hello(request):
     return Success('Hello World!')
 
 
-@routes.get(r'^/example-error$')
+@routes.get('/example-error')
 async def example_error(request):
     raise Error(2001)
 
@@ -178,7 +178,7 @@ from backendpy.templating import Template
 routes = Routes()
 
 
-@routes.get(r'^/home$')
+@routes.get('/home')
 async def home(request):
     context = {'message': 'Hello World!'}
     return HTML(await Template('home.html').render(context))
@@ -308,7 +308,7 @@ from backendpy.response import Text
 routes = Routes()
 
 
-@routes.get(r'^/hello-world$')
+@routes.get('/hello-world')
 async def hello(request):
     return Text('Hello World!')
 
@@ -376,12 +376,12 @@ from backendpy.error import Error
 routes = Routes()
 
 
-@routes.get(r'^/hello-world$')
+@routes.get('/hello-world')
 async def hello(request):
     return Success('Hello World!')
 
 
-@routes.get(r'^/example-error$')
+@routes.get('/example-error')
 async def example_error(request):
     raise Error(2001)
 
@@ -394,7 +394,7 @@ from backendpy.templating import Template
 routes = Routes()
 
 
-@routes.get(r'^/home$')
+@routes.get('/home')
 async def home(request):
     context = {'message': 'Hello World!'}
     return HTML(await Template('home.html').render(context))
@@ -487,7 +487,7 @@ from backendpy.response import Text
 routes = Routes()
 
 
-@routes.get(r'^/hello-world$')
+@routes.get('/hello-world')
 async def hello(request):
     return Text('Hello World!')
 

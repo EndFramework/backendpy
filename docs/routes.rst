@@ -16,7 +16,7 @@ Consider the following examples:
 
 Decorator based routes
 ----------------------
-To define :class:`~backendpy.router.Uri` we can use :func:`~backendpy.router.Routes.get`,
+To define :class:`~backendpy.router.Route` we can use :func:`~backendpy.router.Routes.get`,
 :func:`~backendpy.router.Routes.post`, :func:`~backendpy.router.Routes.path`,
 :func:`~backendpy.router.Routes.put` and :func:`~backendpy.router.Routes.delete` decorators
 as follows:
@@ -29,16 +29,16 @@ as follows:
 
     routes = Routes()
 
-    @routes.get(r'^/hello-world$')
+    @routes.get('/hello-world')
     async def hello_world(request):
         return Text('Hello World!')
 
-    @routes.post(r'^/login$')
+    @routes.post('/login')
     async def login(request):
         ...
 
 Also, if we need to access a handler with different http methods, we can use
-:func:`~backendpy.router.Routes.uri` decorator as follows:
+:func:`~backendpy.router.Routes.route` decorator as follows:
 
 .. code-block:: python
     :caption: project/apps/hello/handlers.py
@@ -48,13 +48,13 @@ Also, if we need to access a handler with different http methods, we can use
 
     routes = Routes()
 
-    @routes.uri(r'^/hello-world$', ('GET', 'POST'))
+    @routes.route('/hello-world', ('GET', 'POST'))
     async def hello_world(request):
         return Text('Hello World!')
 
 Separate routes
 ---------------
-We can define the list of :class:`~backendpy.router.Uri` separately from the handlers as follows:
+We can define the list of :class:`~backendpy.router.Route` separately from the handlers as follows:
 
 .. code-block:: python
     :caption: project/apps/hello/handlers.py
@@ -70,23 +70,23 @@ We can define the list of :class:`~backendpy.router.Uri` separately from the han
 .. code-block:: python
     :caption: project/apps/hello/urls.py
 
-    from backendpy.router import Routes, Uri
+    from backendpy.router import Routes, Route
     from .handlers import hello_world, login
 
     routes = Routes(
-        Uri(r'^/hello-world$', ['GET'], hello_world),
-        Uri(r'^/login', ['POST'], login),
+        Route('/hello-world', ('GET',), hello_world),
+        Route('/login', ('POST',), login)
     )
 
 As can be seen in the examples, in both cases, the :class:`~backendpy.router.Routes` object
-is defined, which is used to hold the list of :class:`~backendpy.router.Uri`.
+is defined, which is used to hold the list of :class:`~backendpy.router.Route`.
 
-The complete list of parameters of a :class:`~backendpy.router.Uri` is as follows:
+The complete list of parameters of a :class:`~backendpy.router.Route` is as follows:
 
-.. autoclass:: backendpy.router.Uri
+.. autoclass:: backendpy.router.Route
     :noindex:
 
-Note that in ``@uri`` decorator, which is defined on the handler function itself, the ``handler``
+Note that in ``@route`` decorator, which is defined on the handler function itself, the ``handler``
 parameter does not exist. and in ``@get``,``@post`` and ... decorators, the ``method``
 parameter also does not exist.
 
@@ -104,7 +104,7 @@ the application:
         routes=[routes])
 
 In an application, more than one object of the Routes class can be defined. Each of which
-can be used to define the Uri of separate parts of the application or even different
+can be used to define the routes of separate parts of the application or even different
 versions of the API and the like. For example:
 
 .. code-block:: python
@@ -116,3 +116,53 @@ versions of the API and the like. For example:
 
     app = App(
         routes=[routes_v1, routes_v2])
+
+Url variables
+-------------
+In order to get variable values from URL, they can be specified by ``<`` and ``>`` characters inside the route.
+
+.. code-block:: python
+    :caption: project/apps/hello/handlers.py
+
+    from backendpy.router import Routes
+
+    routes = Routes()
+
+    @routes.patch('/users/<id>')
+    async def user_modification(request):
+        id = request.url_vars['id']
+        ...
+
+The default matchable data type of variables is string.
+You can also specify the type of value that can be matched in the URL with the ``:`` separator.
+
+.. code-block:: python
+    :caption: project/apps/hello/handlers.py
+
+    from backendpy.router import Routes
+
+    routes = Routes()
+
+    @routes.patch('/users/<id:int>')
+    async def user_modification(request):
+        id = int(request.url_vars['id'])
+        ...
+
+Allowed data types are ``str``, ``int``, ``float`` and ``uuid``.
+
+.. note::
+    Note that these data types determine the matchable data type in the URL,
+    and not the data converter to related types in Python, and these data
+    will be available with the Python string data type.
+    In order to automatically convert types of received data, as well as
+    to access various features of working with input data, refer to the
+    :doc:`data_handlers` section.
+
+Priority
+--------
+Pay attention that when defining the routes, if several routes overlap, the route
+that is defined in a non-variable and explicit way will be matched first. If the
+routes are the same in this respect, they will be prioritized according to the order
+of their definition in the code.
+For example, ``/users/posts`` and ``/users/1`` will take precedence over ``/users/<id>``,
+even if they are defined in the code after that.

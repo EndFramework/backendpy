@@ -28,7 +28,7 @@ Example usage:
 
     routes = Routes()
 
-    @routes.post(r'^/login$')
+    @routes.post('/login')
     async def login(request):
         raise BadRequest({'message': 'Login failed!'})
 

@@ -49,7 +49,7 @@ Finally, we use these template inside a handler:
 
     routes = Routes()
 
-    @routes.get(r'^/home$')
+    @routes.get('/home')
     async def home(request):
         context = {'message': 'Hello World!'}
         return HTML(await Template('home.html').render(context))

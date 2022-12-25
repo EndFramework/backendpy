@@ -25,7 +25,7 @@ Example usage:
 
     routes = Routes()
 
-    @routes.get(r'^/hello-world$')
+    @routes.get('/hello-world')
     async def hello_world(request):
         return Text('Hello World!')
 
@@ -43,7 +43,7 @@ Example usage:
 
     routes = Routes()
 
-    @routes.get(r'^/hello-world$')
+    @routes.get('/hello-world')
     async def hello_world(request):
         return JSON({'message': 'Hello World!'})
 
@@ -61,7 +61,7 @@ Example usage:
 
     routes = Routes()
 
-    @routes.get(r'^/hello-world$')
+    @routes.get('/hello-world')
     async def hello_world(request):
         return HTML('<html><body>Hello World!</body></html>')
 
@@ -83,7 +83,7 @@ Example usage:
 
     routes = Routes()
 
-    @routes.get(r'^/hello-world$')
+    @routes.get('/hello-world')
     async def hello_world(request):
         return File(os.path.join('images', 'logo.jpg'))
 
@@ -107,11 +107,11 @@ Example usage:
 
     routes = Routes()
 
-    @routes.get(r'^/hello-world$')
+    @routes.get('/hello-world')
     async def hello_world(request):
         return Success()
 
-    @routes.post(r'^/login$')
+    @routes.post('/login')
     async def login(request):
         return Success('Successful login!')
 
