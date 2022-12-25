@@ -2,6 +2,7 @@ import importlib
 
 from .request import Request
 from .response import Response
+from .exception import ExceptionResponse
 
 
 class Middleware:
@@ -19,11 +20,13 @@ class Middleware:
     async def process_request(request: Request):
         """
         Take a :class:`~backendpy.request.Request` object before it reaches the handler layer and return a processed
-        or modified version of it or interrupt the execution of the request with raise an exception response.
+        or modified version of it or interrupt the normal execution of the request with raise an exception response
+        or return a direct response in the second index of return tuple.
         :param request: :class:`~backendpy.request.Request` class instance (Received from the middlewares queue)
-        :return: Modified :class:`~backendpy.request.Request` class instance
+        :return: A pair of the modified :class:`~backendpy.request.Request` instance and None or optional direct
+        :class:`~backendpy.response.Response` instance.
         """
-        return request
+        return request, None
 
     @staticmethod
     async def process_handler(request: Request, handler):
@@ -70,8 +73,13 @@ class MiddlewareProcessor:
 
     async def run_process_request(self, request):
         for middleware in self.middlewares:
-            request = await middleware.process_request(request)
-        return request
+            try:
+                request, direct_response = await middleware.process_request(request)
+                if direct_response:
+                    return request, direct_response
+            except ExceptionResponse as e:
+                return request, e
+        return request, None
 
     async def run_process_handler(self, request, handler):
         for middleware in self.middlewares:

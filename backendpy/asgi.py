@@ -162,9 +162,9 @@ class Backendpy:
 
     async def _get_response(self, request):
         try:
-            request = await self._middleware_processor.run_process_request(request=request)
-        except ExceptionResponse as e:
-            return await e(request)
+            request, direct_response = await self._middleware_processor.run_process_request(request=request)
+            if direct_response:
+                return await direct_response(request)
         except Exception as e:
             LOGGER.exception(f'Middleware error: {e}')
             response = Error(1000)
