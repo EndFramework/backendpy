@@ -232,7 +232,7 @@ class Backendpy:
         await send({
             'type': 'http.response.start',
             'status': status,
-            'headers': headers})
+            'headers': [(name.lower(), value) for name, value in headers]})
 
         if stream:
             if hasattr(body, '__aiter__'):

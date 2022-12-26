@@ -108,12 +108,11 @@ class Client:
 
 class Response:
     def __init__(self, r: http.client.HTTPResponse):
-        self.headers = r.getheaders()
+        self.headers = dict(r.getheaders())
         self.status = r.status
         self.reason = r.reason
         self.message = r.msg
         self.version = r.version
         self.data = r.read()
-        self._headers = {k.lower(): w.lower() for k, w in self.headers}
-        if self._headers.get('content-type') == 'application/json':
+        if self.headers.get('content-type') == 'application/json':
             self.data = from_json(self.data)
