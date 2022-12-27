@@ -48,7 +48,7 @@ class Client:
             url: str,
             headers: Optional[dict] = None):
         if self._session:
-            self._session.request(method='GET', url=url, headers=headers)
+            self._session.request(method='GET', url=url, headers=headers if headers else dict())
             return Response(self._session.getresponse())
 
     def post(self,
@@ -95,14 +95,14 @@ class Client:
                 url: str,
                 headers: Optional[dict] = None):
         if self._session:
-            self._session.request(method='OPTIONS', url=url, headers=headers)
+            self._session.request(method='OPTIONS', url=url, headers=headers if headers else dict())
             return Response(self._session.getresponse())
 
     def head(self,
              url: str,
              headers: Optional[dict] = None):
         if self._session:
-            self._session.request(method='HEAD', url=url, headers=headers)
+            self._session.request(method='HEAD', url=url, headers=headers if headers else dict())
             return Response(self._session.getresponse())
 
 
