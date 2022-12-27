@@ -15,7 +15,7 @@ from .error import Error, base_errors
 from .exception import ExceptionResponse
 from .hook import HookRunner
 from .logging import get_logger
-from .middleware import MiddlewareProcessor
+from .middleware.middleware import MiddlewareProcessor
 from .request import Request
 from .router import Router
 from .templating import Template

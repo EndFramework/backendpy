@@ -42,7 +42,7 @@ returns a processed, modified, or replaced Response object.
 
 Creating middleware
 -------------------
-To create a middleware, use :class:`~backendpy.middleware.Middleware` class and implement its methods. Each of these
+To create a middleware, use :class:`~backendpy.middleware.middleware.Middleware` class and implement its methods. Each of these
 methods is specific to implementing different types of middleware mentioned in the previous section.
 
 How to define these methods is as follows:
@@ -74,7 +74,7 @@ How to define these methods is as follows:
             ...
             return response
 
-.. autoclass:: backendpy.middleware.Middleware
+.. autoclass:: backendpy.middleware.middleware.Middleware
     :noindex:
 
 As can be seen, all methods are static and also except for ``process_application`` which is a simple function, all

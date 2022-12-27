@@ -79,6 +79,7 @@ active =
 
 [middlewares]
 active =
+    backendpy.middleware.defaults.cors.CORSMiddleware
     {project_name}.apps.hello.middlewares.example.Example
 ;   backendpy_accounts.middleware.auth.AuthMiddleware
 
@@ -88,6 +89,15 @@ active =
 ;name = {project_name}
 ;username = 
 ;password = 
+
+[cors]
+allowed_origins =
+    http://127.0.0.1
+    https://127.0.0.1
+allowed_methods = *
+allowed_headers = *
+allow_credentials = true
+max-age = 86400
 
 '''),
                 (os.path.join(project_module_path, 'config.dev.ini'), 0o600,
@@ -109,6 +119,7 @@ active =
 
 [middlewares]
 active =
+    backendpy.middleware.defaults.cors.CORSMiddleware
     {project_name}.apps.hello.middlewares.example.Example
 ;   backendpy_accounts.middleware.auth.AuthMiddleware
 
@@ -118,6 +129,15 @@ active =
 ;name = {project_name}_dev
 ;username = 
 ;password = 
+
+[cors]
+allowed_origins =
+    http://127.0.0.1
+    https://127.0.0.1
+allowed_methods = *
+allowed_headers = *
+allow_credentials = true
+max-age = 86400
 
 '''),
                 (os.path.join(project_module_path, 'main.py'), 0o644,
