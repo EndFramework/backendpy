@@ -161,70 +161,68 @@ class Backendpy:
                     return
 
     async def _get_response(self, request):
+        # Execute request middlewares
         try:
-            request, direct_response = await self._middleware_processor.run_process_request(request=request)
-            if direct_response:
-                return await direct_response(request)
+            request, response = await self._middleware_processor.run_process_request(request=request)
         except Exception as e:
-            LOGGER.exception(f'Middleware error: {e}')
+            LOGGER.exception(f'Request middleware error: {e}')
             response = Error(1000)
-            return await response(request)
-
-        try:
-            handler, data_handler_cls, request.url_vars = \
-                self._router.lookup(request.path, request.method, request.scheme)
-            if not handler:
-                response = Error(1001)
-                return await response(request)
-        except Exception as e:
-            LOGGER.exception(e)
-            response = Error(1000)
-            return await response(request)
-
-        try:
-            handler = await self._middleware_processor.run_process_handler(
-                request=request,
-                handler=handler)
-        except ExceptionResponse as e:
-            return await e(request)
-        except Exception as e:
-            LOGGER.exception(f'Middleware error: {e}')
-            response = Error(1000)
-            return await response(request)
-
-        try:
-            data_errors = None
-            if data_handler_cls:
-                request.cleaned_data, data_errors = \
-                    await data_handler_cls(request=request).get_cleaned_data()
-            if data_errors:
-                response = Error(1002, data=data_errors)
-                return await response(request)
-        except Exception as e:
-            LOGGER.exception(f'Data handler error: {e}')
-            response = Error(1000)
-            return await response(request)
-
-        try:
-            response = await handler(request=request)
-        except ExceptionResponse as e:
-            return await e(request)
-        except Exception as e:
-            LOGGER.exception(f'Handler error: {e}')
-            response = Error(1000)
-            return await response(request)
-
+        else:
+            if not response:
+                # Routing request
+                try:
+                    handler, data_handler_cls, request.url_vars = \
+                        self._router.lookup(request.path, request.method, request.scheme)
+                except Exception as e:
+                    LOGGER.exception(e)
+                    response = Error(1000)
+                else:
+                    if not handler:
+                        response = Error(1001)
+                    else:
+                        # Execute handler middlewares
+                        try:
+                            handler = await self._middleware_processor.run_process_handler(
+                                request=request,
+                                handler=handler)
+                        except ExceptionResponse as e:
+                            response = e
+                        except Exception as e:
+                            LOGGER.exception(f'Handler middleware error: {e}')
+                            response = Error(1000)
+                        else:
+                            # Execute request data handlers
+                            try:
+                                data_errors = None
+                                if data_handler_cls:
+                                    request.cleaned_data, data_errors = \
+                                        await data_handler_cls(request=request).get_cleaned_data()
+                            except Exception as e:
+                                LOGGER.exception(f'Data handler error: {e}')
+                                response = Error(1000)
+                            else:
+                                if data_errors:
+                                    response = Error(1002, data=data_errors)
+                                else:
+                                    # Get response from handler
+                                    try:
+                                        response = await handler(request=request)
+                                    except ExceptionResponse as e:
+                                        response = e
+                                    except Exception as e:
+                                        LOGGER.exception(f'Handler error: {e}')
+                                        response = Error(1000)
+        # Execute resopnse middlewares
         try:
             response = await self._middleware_processor.run_process_response(
                 request=request,
                 response=response)
-        except ExceptionResponse as e:
-            return await e(request)
+        except ExceptionResponse as r:
+            response = r
         except Exception as e:
-            LOGGER.exception(f'Middleware error: {e}')
+            LOGGER.exception(f'Response middleware error: {e}')
             response = Error(1000)
-            return await response(request)
-
+        # Call and return response instance
         return await response(request)
 
     @staticmethod
