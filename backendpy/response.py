@@ -7,15 +7,17 @@ import zlib
 from collections.abc import Iterable, AsyncGenerator
 from enum import IntEnum
 from mimetypes import guess_type
-from typing import Optional, Any
+from typing import TYPE_CHECKING, Optional, Any
 from urllib.parse import unquote
 
 import aiofiles.os
 
-from .request import Request
 from .utils.bytes import to_bytes
 from .utils.file import read_file_chunks, read_file
 from .utils.json import to_json
+
+if TYPE_CHECKING:
+    from .request import Request
 
 
 class Status(IntEnum):

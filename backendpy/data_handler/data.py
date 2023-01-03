@@ -13,30 +13,19 @@ from ..request import Request
 class Data:
     """The base class that will be inherited to create data handler classes."""
 
-    def __init__(
-            self,
-            request: Request,
-            default: Optional[Mapping[str, Any]] = None):
+    def __init__(self, default: Optional[Mapping[str, Any]] = None):
         """
         Initialize data handler instance.
 
         :param request: :class:`~backendpy.request.Request` class instance
         :param default: Optional default values for the data handler fields
         """
-        self._request = request
         self._fields = {i[0]: deepcopy(i[1]) for i in inspect.getmembers(self) if isinstance(i[1], Field)}
         self._default_data = default if type(default) is dict else \
             (default.__dict__ if hasattr(default, "__dict__") else {})
-        self._raw_data = {
-            TYPE_JSON: request.json if request.json is not None else {},
-            TYPE_FORM: request.form if request.form is not None else {},
-            TYPE_PARAMS: request.params if request.params is not None else {},
-            TYPE_URL_VARS: request.url_vars if request.url_vars is not None else {},
-            TYPE_FILES: request.files if request.files is not None else {},
-            TYPE_HEADER: request.headers}
         self.auto_blank_to_null = True
 
-    async def get_cleaned_data(self) \
+    async def get_cleaned_data(self, request: Request) \
             -> tuple[dict[str, Optional[Any]],
                      dict[str, str | list[str]]]:
         """Return the processed data of the data handler class and related error messages."""
@@ -45,8 +34,29 @@ class Data:
         errors = dict()
         for name, field in self._fields.items():
             k = field.data_name if field.data_name else name
-            if k in self._raw_data[field.type]:
-                data[name] = self._raw_data[field.type][k]
+            if field.type == TYPE_JSON \
+                    and request.body.json is not None \
+                    and k in request.body.json:
+                data[name] = request.body.json[k]
+            elif field.type == TYPE_FORM \
+                    and request.body.form is not None \
+                    and k in request.body.form:
+                data[name] = request.body.form[k]
+            elif field.type == TYPE_PARAMS \
+                    and request.params is not None \
+                    and k in request.params:
+                data[name] = request.params[k]
+            elif field.type == TYPE_URL_VARS \
+                    and request.url_vars is not None \
+                    and k in request.url_vars:
+                data[name] = request.url_vars[k]
+            elif field.type == TYPE_FILES \
+                    and request.body.files is not None \
+                    and k in request.body.files:
+                data[name] = request.body.files[k]
+            elif field.type == TYPE_HEADER \
+                    and k in request.headers:
+                data[name] = request.body.files[k]
             elif name in self._default_data:
                 data[name] = self._default_data[name]
         for name, field in self._fields.items():
@@ -56,7 +66,7 @@ class Data:
                                          or not self.auto_blank_to_null) else None,
                     meta={'name': name,
                           'received_data': data,
-                          'request': self._request})
+                          'request': request})
                 if field.errors:
                     errors[name] = field.errors
                 cleaned_data[name] = field.value

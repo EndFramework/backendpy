@@ -20,7 +20,7 @@ from .request import Request
 from .router import Router
 from .templating import Template
 from .utils.bytes import to_bytes
-from .utils.json import to_json
+
 
 LOGGER = get_logger(__name__)
 
@@ -71,28 +71,10 @@ class Backendpy:
                     LOGGER.exception(e)
                 else:
                     self._lifespan_startup = True
-
             try:
-                body: bytes = await self._get_request_body(receive)
+                request = Request(app=self, scope=scope, body_receiver=receive)
             except Exception as e:
-                LOGGER.exception(f'Request data receive error: {e}')
-                await self._send_response(
-                    send,
-                    to_json(self.errors[1000].as_dict()),
-                    self.errors[1000].status.value,
-                    [[b'content-type', b'application/json']])
-                return
-
-            try:
-                request = Request(app=self, scope=scope, body=body)
-            except Exception as e:
-                LOGGER.exception(f'Request instance creation error: {e}')
-                await self._send_response(
-                    send,
-                    to_json(self.errors[1000].as_dict()),
-                    self.errors[1000].status.value,
-                    [[b'content-type', b'application/json']])
-                return
+                raise RuntimeError(f'Request instance creation error: {e}')
 
             if '*' not in self.config['networking']['allowed_hosts'] and \
                     ((not request.headers.get('host') or
@@ -148,7 +130,6 @@ class Backendpy:
                 else:
                     self._lifespan_startup = True
                     await send({'type': 'lifespan.startup.complete'})
-
             elif message['type'] == 'lifespan.shutdown':
                 try:
                     await self.execute_event('shutdown')
@@ -171,7 +152,7 @@ class Backendpy:
             if not response:
                 # Routing request
                 try:
-                    handler, data_handler_cls, request.url_vars = \
+                    handler, request._data_handler, request.url_vars = \
                         self._router.lookup(request.path, request.method, request.scheme)
                 except Exception as e:
                     LOGGER.exception(e)
@@ -191,28 +172,15 @@ class Backendpy:
                             LOGGER.exception(f'Handler middleware error: {e}')
                             response = Error(1000)
                         else:
-                            # Execute request data handlers
+                            # Get response from handler
                             try:
-                                data_errors = None
-                                if data_handler_cls:
-                                    request.cleaned_data, data_errors = \
-                                        await data_handler_cls(request=request).get_cleaned_data()
+                                response = await handler(request=request)
+                            except ExceptionResponse as e:
+                                response = e
                             except Exception as e:
-                                LOGGER.exception(f'Data handler error: {e}')
+                                LOGGER.exception(f'Handler error: {e}')
                                 response = Error(1000)
-                            else:
-                                if data_errors:
-                                    response = Error(1002, data=data_errors)
-                                else:
-                                    # Get response from handler
-                                    try:
-                                        response = await handler(request=request)
-                                    except ExceptionResponse as e:
-                                        response = e
-                                    except Exception as e:
-                                        LOGGER.exception(f'Handler error: {e}')
-                                        response = Error(1000)
-        # Execute resopnse middlewares
+        # Execute response middlewares
         try:
             response = await self._middleware_processor.run_process_response(
                 request=request,
@@ -231,7 +199,6 @@ class Backendpy:
             'type': 'http.response.start',
             'status': status,
             'headers': [(name.lower(), value) for name, value in headers]})
-
         if stream:
             if hasattr(body, '__aiter__'):
                 async for chunk in body:
@@ -252,25 +219,6 @@ class Backendpy:
             await send({
                 'type': 'http.response.body',
                 'body': to_bytes(body)})
-
-    @staticmethod
-    async def _get_request_body(receive) -> bytes:
-        # Todo: Problem for a huge body ?
-        body = b''
-        more_body = True
-        while more_body:
-            message = await receive()
-            body += message.get('body', b'')
-            more_body = message.get('more_body', False)
-        return body
-
-    @staticmethod
-    async def _get_request_body_generator(receive):
-        more_body = True
-        while more_body:
-            message = await receive()
-            yield message.get('body', b'')
-            more_body = message.get('more_body', False)
 
     def _get_project_apps(self):
         apps: list[dict] = list()

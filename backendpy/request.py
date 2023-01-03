@@ -1,14 +1,19 @@
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, AsyncIterable, Callable, Awaitable
 from email.parser import BytesParser
-from typing import TYPE_CHECKING, Optional, Any
+from typing import TYPE_CHECKING, Optional, Any, Type
 from urllib.parse import parse_qs
 
+from .error import Error
+from .logging import get_logger
 from .utils.json import from_json
 
 if TYPE_CHECKING:
     from .asgi import Backendpy
+    from .data_handler.data import Data
+
+LOGGER = get_logger(__name__)
 
 
 class Request:
@@ -38,19 +43,14 @@ class Request:
     :ivar headers: A dictionary of HTTP request headers
     :ivar url_vars: A dictionary of URL path variables
     :ivar params: A dictionary of HTTP request query string values
-    :ivar form: A dictionary of HTTP request form data
-    :ivar json: A dictionary of HTTP request JSON data
-    :ivar files: A dictionary of multipart HTTP request files data
-    :ivar body: Raw body of HTTP request if it does not belong to any of the "form",
-                "json" and "file" fields
-    :ivar cleaned_data: A dictionary of data processed by request data handler
+    :ivar body: A :class:`~backendpy.request.RequestBody` class instance
     """
 
     def __init__(
             self,
             app: Backendpy,
             scope: Mapping[str, Any],
-            body: Optional[bytes] = None,
+            body_receiver: Optional[Callable[..., Awaitable[dict]]] = None,
             url_vars: Optional[dict[str, str]] = None) -> None:
         """
         Initialize request instance.
@@ -58,7 +58,7 @@ class Request:
         :param app: :class:`~backendpy.Backendpy` class instance of the current
                     project (that is an ASGI application)
         :param scope: HTTP connection scope
-        :param body: Body of HTTP request
+        :param body_receiver: Async callable to receive request body chunks
         :param url_vars: URL path variables of HTTP request
         """
         self.app: Backendpy = app
@@ -72,16 +72,12 @@ class Request:
         self.headers: Optional[dict[str, str]] = None
         self.url_vars: Optional[dict[str, str]] = url_vars
         self.params: Optional[dict[str, str | list[str]]] = None
-        self.form: Optional[dict[str, str | list[str]]] = None
-        self.json: Optional[dict[str, Any]] = None
-        self.files: Optional[dict[str, dict]] = None
-        self.body: Optional[bytes] = None
-        self.cleaned_data: Optional[dict[str, Any]] = None
-        self._apply_scope(scope)
-        if body:
-            self._apply_body(body)
+        self._data_handler: Optional[Type[Data]] = None
+        self._set_scope_data(scope)
+        self.body: RequestBody = RequestBody(content_type=self.headers.get('content-type'),
+                                             receiver=body_receiver)
 
-    def _apply_scope(self, scope: Mapping[str, Any]) -> None:
+    def _set_scope_data(self, scope: Mapping[str, Any]) -> None:
         """Set request information from HTTP connection scope."""
         if scope.get('server'):
             self.server = {'host': scope['server'][0],
@@ -98,44 +94,122 @@ class Request:
             self.params = {k: (v[-1] if not k.endswith('[]') else v)
                            for k, v in parse_qs(scope['query_string'].decode('utf8')).items()}
 
-    def _apply_body(self, body: bytes) -> None:
-        """Set request body."""
-        if self.headers is None:
-            raise Exception('Request information is not applied.')
-        if self.headers.get('content-type') == 'application/json':
-            self.json = from_json(body)
-        elif self.headers.get('content-type') == 'application/x-www-form-urlencoded':
-            self.form = {k: (v[0] if len(v) == 1 else v)
-                         for k, v in parse_qs(body.decode('utf8')).items()}
-        elif self.headers.get('content-type') == 'multipart/form-data':
-            json_parts = dict()
-            form_parts = dict()
-            file_parts = dict()
-            text_parts = dict()
-            for part in BytesParser().parsebytes(body).get_payload():
-                part_type = part.get_content_type()
-                if part_type == 'application/json':
-                    json_parts[part.get_param(param='name', header='content-disposition')] = \
-                        from_json(part.get_payload())
-                elif part_type == 'application/x-www-form-urlencoded':
-                    form_parts[part.get_param(param='name', header='content-disposition')] = \
-                        {k: (v[0] if len(v) == 1 else v)
-                         for k, v in parse_qs(part.get_payload().decode('utf8')).items()}
-                elif part_type == 'application/octet-stream':
-                    file_parts[part.get_param(param='name', header='content-disposition')] = \
-                        {'content': part.get_payload(),
-                         'file-name': part.get_param(param='filename', header='content-disposition'),
-                         'content-type': part.get_content_subtype()}  # Todo: test
-                elif part_type == 'text/plain':
-                    text_parts[part.get_param(param='name', header='content-disposition')] = \
-                        str(part.get_payload(decode=True))
-            if json_parts:
-                self.json = json_parts if len(json_parts) > 1 else json_parts[0]
-            if form_parts:
-                self.form = form_parts if len(form_parts) > 1 else form_parts[0]
-            if file_parts:
-                self.files = file_parts
-            if text_parts:
-                self.body = text_parts if len(text_parts) > 1 else text_parts[0]
+    async def get_cleaned_data(self) -> Optional[dict[str, Any]]:
+        """Return a dictionary of data processed by request data handler"""
+        await self.body()
+        if self._data_handler:
+            try:
+                cleaned_data, data_errors = \
+                    await self._data_handler().get_cleaned_data(request=self)
+                if data_errors:
+                    raise Error(1002, data=data_errors)
+                return cleaned_data
+            except Exception as e:
+                LOGGER.exception(f'Data handle error: {e}')
+                raise Error(1000)
         else:
-            self.body = body
+            return None
+
+
+class RequestBody:
+    """
+    HTTP request body class whose instances are used to store the information of a request
+    and then these instances are sent to the requests handlers.
+
+    :ivar form: A dictionary of HTTP request form data
+    :ivar json: A dictionary of HTTP request JSON data
+    :ivar files: A dictionary of multipart HTTP request files data
+    :ivar text: HTTP request text body or a dictionary of text parts
+    :ivar bytes: Raw body of HTTP request if it does not belong to any of the "form",
+                "json", "file" and "text" fields
+    """
+    def __init__(self,
+                 body: bytes = None,
+                 content_type: str = None,
+                 receiver: Optional[Callable[..., Awaitable[dict]]] = None) -> None:
+        self.form: Optional[dict[str, str | list[str]]] = None
+        self.json: Optional[dict[str, Any]] = None
+        self.files: Optional[dict[str, dict]] = None
+        self.text: Optional[str|dict[str, str]] = None
+        self.bytes: Optional[bytes] = None
+        self._receiver: Optional[Callable[..., Awaitable[dict]]] = receiver
+        self._is_received = False
+        self._content_type = content_type
+        if body is not None:
+            self.set_received_body(body)
+
+    async def __call__(self):
+        if not self._is_received:
+            self.set_received_body(await self.receive())
+        return self
+
+    async def receive(self) -> bytes:
+        """Receive request body"""
+        if self._is_received:
+            raise Exception('The request body has already been received')
+        else:
+            self._is_received = True
+        body = b''
+        async for chunk in self.receive_stream():
+            body += chunk
+        return body
+
+    async def receive_stream(self) -> AsyncIterable[bytes]:
+        """Stream request body"""
+        self._is_received = True
+        try:
+            more_body = True
+            while more_body:
+                message = await self._receiver()
+                yield message.get('body', b'')
+                more_body = message.get('more_body', False)
+        except Exception as e:
+            LOGGER.exception(f'Request data receive error: {e}')
+            raise Error(1000)
+
+    def set_received_body(self, body: bytes) -> None:
+        """Set request body"""
+        if body:
+            if self._content_type == 'application/json':
+                self.json = from_json(body)
+            elif self._content_type == 'application/x-www-form-urlencoded':
+                self.form = {k: (v[0] if len(v) == 1 else v)
+                             for k, v in parse_qs(body.decode('utf8')).items()}
+            elif self._content_type == 'multipart/form-data':
+                json_parts = dict()
+                form_parts = dict()
+                file_parts = dict()
+                text_parts = dict()
+                for part in BytesParser().parsebytes(body).get_payload():
+                    part_type = part.get_content_type()
+                    if part_type == 'application/json':
+                        json_parts[part.get_param(param='name', header='content-disposition')] = \
+                            from_json(part.get_payload())
+                    elif part_type == 'application/x-www-form-urlencoded':
+                        form_parts[part.get_param(param='name', header='content-disposition')] = \
+                            {k: (v[0] if len(v) == 1 else v)
+                             for k, v in parse_qs(part.get_payload().decode('utf8')).items()}
+                    elif part_type == 'application/octet-stream':
+                        file_parts[part.get_param(param='name', header='content-disposition')] = \
+                            {'content': part.get_payload(),
+                             'file-name': part.get_param(param='filename', header='content-disposition'),
+                             'content-type': part.get_content_subtype()}
+                    elif part_type == 'text/plain':
+                        text_parts[part.get_param(param='name', header='content-disposition')] = \
+                            str(part.get_payload(decode=True))
+                if json_parts:
+                    keys = list(json_parts.keys())
+                    self.json = json_parts if len(keys) > 1 else json_parts[keys[0]]
+                if form_parts:
+                    keys = list(form_parts.keys())
+                    self.form = form_parts if len(keys) > 1 else form_parts[keys[0]]
+                if file_parts:
+                    self.files = file_parts
+                if text_parts:
+                    keys = list(text_parts.keys())
+                    self.text = text_parts if len(keys) > 1 else text_parts[keys[0]]
+            # Todo: multipart/related
+            elif self._content_type == 'text/plain':
+                self.text = str(body)
+            else:
+                self.bytes = body

@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 from collections.abc import Iterable, Mapping, AsyncGenerator
-from typing import Optional, Any
+from typing import TYPE_CHECKING, Optional, Any
 
-from .request import Request
 from .response import Status, Response
 from .utils.json import to_json
+
+if TYPE_CHECKING:
+    from .request import Request
 
 
 class ExceptionResponse(BaseException, Response):
