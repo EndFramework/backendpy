@@ -29,20 +29,22 @@ class Client:
         if self._session:
             self._session.close()
 
-    def _prepare_data(self, form=None, json=None, headers=None):
+    def _prepare_data(self, form=None, json=None, body=None, headers=None):
         if not headers:
             headers = dict()
         if json is not None:
-            body = to_json(json)
-            headers.setdefault('Content-type', 'application/json')
-            headers.setdefault('Accept', 'application/json')
+            data = to_json(json)
+            headers.setdefault('content-type', 'application/json')
+            headers.setdefault('accept', 'application/json')
         elif form is not None:
-            body = urllib.parse.urlencode(form)
-            headers.setdefault('Content-type', 'application/x-www-form-urlencoded')
-            headers.setdefault('Accept', 'text/plain')
+            data = urllib.parse.urlencode(form)
+            headers.setdefault('content-type', 'application/x-www-form-urlencoded')
+            headers.setdefault('accept', 'text/plain')
+        elif body is not None:
+            data = body
         else:
-            body = ''
-        return body, headers
+            data = ''
+        return data, headers
 
     def get(self,
             url: str,
@@ -55,9 +57,10 @@ class Client:
              url: str,
              form: Optional[dict] = None,
              json: Optional[dict] = None,
+             body: Optional[bytes | str] = None,
              headers: Optional[dict] = None):
         if self._session:
-            body, headers = self._prepare_data(form, json, headers)
+            body, headers = self._prepare_data(form, json, body, headers)
             self._session.request(method='POST', url=url, body=body, headers=headers)
             return Response(self._session.getresponse())
 
@@ -65,9 +68,10 @@ class Client:
             url: str,
             form: Optional[dict] = None,
             json: Optional[dict] = None,
+            body: Optional[bytes | str] = None,
             headers: Optional[dict] = None):
         if self._session:
-            body, headers = self._prepare_data(form, json, headers)
+            body, headers = self._prepare_data(form, json, body, headers)
             self._session.request(method='PUT', url=url, body=body, headers=headers)
             return Response(self._session.getresponse())
 
@@ -75,9 +79,10 @@ class Client:
               url: str,
               form: Optional[dict] = None,
               json: Optional[dict] = None,
+              body: Optional[bytes | str] = None,
               headers: Optional[dict] = None):
         if self._session:
-            body, headers = self._prepare_data(form, json, headers)
+            body, headers = self._prepare_data(form, json, body, headers)
             self._session.request(method='PATCH', url=url, body=body, headers=headers)
             return Response(self._session.getresponse())
 
@@ -87,7 +92,7 @@ class Client:
                json: Optional[dict] = None,
                headers: Optional[dict] = None):
         if self._session:
-            body, headers = self._prepare_data(form, json, headers)
+            body, headers = self._prepare_data(form, json, headers=headers)
             self._session.request(method='DELETE', url=url, body=body, headers=headers)
             return Response(self._session.getresponse())
 
