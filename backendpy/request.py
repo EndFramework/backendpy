@@ -130,8 +130,7 @@ class RequestBody:
         self.form: Optional[dict[str, str | list[str]]] = None
         self.json: Optional[dict[str, Any]] = None
         self.files: Optional[dict[str, dict]] = None
-        self.text: Optional[str|dict[str, str]] = None
-        self.bytes: Optional[bytes] = None
+        self.content: Optional[bytes | str | dict[str, str | bytes] | list[str | bytes]] = None
         self._receiver: Optional[Callable[..., Awaitable[dict]]] = receiver
         self._is_received = False
         self._content_type = content_type
@@ -168,7 +167,7 @@ class RequestBody:
             raise Error(1000)
 
     def set_received_body(self, body: bytes) -> None:
-        """Set request body"""
+        """Parse and set the received request body"""
         if body:
             if self._content_type == 'application/json':
                 self.json = from_json(body)
@@ -176,40 +175,19 @@ class RequestBody:
                 self.form = {k: (v[0] if len(v) == 1 else v)
                              for k, v in parse_qs(body.decode('utf8')).items()}
             elif self._content_type == 'multipart/form-data':
-                json_parts = dict()
-                form_parts = dict()
-                file_parts = dict()
-                text_parts = dict()
+                self.form = dict()
+                self.files = dict()
                 for part in BytesParser().parsebytes(body).get_payload():
-                    part_type = part.get_content_type()
-                    if part_type == 'application/json':
-                        json_parts[part.get_param(param='name', header='content-disposition')] = \
-                            from_json(part.get_payload())
-                    elif part_type == 'application/x-www-form-urlencoded':
-                        form_parts[part.get_param(param='name', header='content-disposition')] = \
-                            {k: (v[0] if len(v) == 1 else v)
-                             for k, v in parse_qs(part.get_payload().decode('utf8')).items()}
-                    elif part_type == 'application/octet-stream':
-                        file_parts[part.get_param(param='name', header='content-disposition')] = \
+                    if part.get_param(param='filename', header='content-disposition'):
+                        self.files[part.get_param(param='name', header='content-disposition')] = \
                             {'content': part.get_payload(),
                              'file-name': part.get_param(param='filename', header='content-disposition'),
-                             'content-type': part.get_content_subtype()}
-                    elif part_type == 'text/plain':
-                        text_parts[part.get_param(param='name', header='content-disposition')] = \
+                             'content-type': part.get_content_subtype()
+                             if part.get_content_type() == 'application/octet-stream' else part.get_content_type()}
+                    else:
+                        self.form[part.get_param(param='name', header='content-disposition')] = \
                             str(part.get_payload(decode=True))
-                if json_parts:
-                    keys = list(json_parts.keys())
-                    self.json = json_parts if len(keys) > 1 else json_parts[keys[0]]
-                if form_parts:
-                    keys = list(form_parts.keys())
-                    self.form = form_parts if len(keys) > 1 else form_parts[keys[0]]
-                if file_parts:
-                    self.files = file_parts
-                if text_parts:
-                    keys = list(text_parts.keys())
-                    self.text = text_parts if len(keys) > 1 else text_parts[keys[0]]
-            # Todo: multipart/related
             elif self._content_type == 'text/plain':
-                self.text = str(body)
+                self.content = str(body)
             else:
-                self.bytes = body
+                self.content = body

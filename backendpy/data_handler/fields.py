@@ -6,12 +6,13 @@ from typing import Optional, Any, Union
 from .filters import Filter
 from .validators import Validator
 
-TYPE_JSON = 1
-TYPE_FORM = 2
-TYPE_PARAMS = 3
-TYPE_URL_VARS = 4
-TYPE_FILES = 5
-TYPE_HEADER = 6
+TYPE_JSON_FIELD = 1
+TYPE_FORM_FIELD = 2
+TYPE_PARAM = 3
+TYPE_URL_VAR = 4
+TYPE_FILE = 5
+TYPE_CONTENT = 6
+TYPE_HEADER = 7
 
 
 class Field:
@@ -25,8 +26,8 @@ class Field:
                 request. For example, take one field from the URL and another field from
                 the form, where all of these values are passed to the handler in a single format.
                 The type can take the following values which are available from
-                the :class:`~backendpy.data_handler.fields` module: ``TYPE_JSON``, ``TYPE_FORM``,
-                ``TYPE_PARAMS``, ``TYPE_URL_VARS``, ``TYPE_FILES``, ``TYPE_HEADER``
+                the :class:`~backendpy.data_handler.fields` module: ``TYPE_JSON_FIELD``, ``TYPE_FORM_FIELD``,
+                ``TYPE_PARAM``, ``TYPE_URL_VAR``, ``TYPE_FILE``, ``TYPE_CONTENT``, ``TYPE_HEADER``
     :ivar value: Field value
     :ivar required: Specifies whether the field is required or optional
     :ivar errors: List of error messages related to the data in this field
@@ -38,7 +39,7 @@ class Field:
             default: Optional[Any] = None,
             processors: Optional[Iterable[Union[Validator, Filter]] |
                                  Iterable[Iterable[Union[Validator, Filter]]]] = None,
-            field_type=TYPE_JSON,
+            field_type=TYPE_JSON_FIELD,
             required: bool = False):
         """
         Initialize data field instance.
@@ -58,8 +59,8 @@ class Field:
                            Request. For example, take one field from the URL and another field from
                            the form, where all of these values are passed to the Handler in a single format.
                            The field_type parameter can take the following values which are available from
-                           the :class:`~backendpy.data_handler.fields` module: ``TYPE_JSON``, ``TYPE_FORM``,
-                           ``TYPE_PARAMS``, ``TYPE_URL_VARS``, ``TYPE_FILES``, ``TYPE_HEADER``
+                           the :class:`~backendpy.data_handler.fields` module: ``TYPE_JSON_FIELD``, ``TYPE_FORM_FIELD``,
+                           ``TYPE_PARAM``, ``TYPE_URL_VAR``, ``TYPE_FILE``, ``TYPE_CONTENT`, ``TYPE_HEADER``
         :param required: Specifies whether the field is required or optional
         """
         self.data_name = name

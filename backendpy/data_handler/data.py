@@ -6,7 +6,7 @@ from copy import deepcopy
 from typing import Optional, Any
 
 from .fields import Field
-from .fields import TYPE_JSON, TYPE_FORM, TYPE_PARAMS, TYPE_URL_VARS, TYPE_FILES, TYPE_HEADER
+from .fields import TYPE_JSON_FIELD, TYPE_FORM_FIELD, TYPE_PARAM, TYPE_URL_VAR, TYPE_FILE, TYPE_CONTENT, TYPE_HEADER
 from ..request import Request
 
 
@@ -34,29 +34,32 @@ class Data:
         errors = dict()
         for name, field in self._fields.items():
             k = field.data_name if field.data_name else name
-            if field.type == TYPE_JSON \
+            if field.type == TYPE_JSON_FIELD \
                     and request.body.json is not None \
                     and k in request.body.json:
                 data[name] = request.body.json[k]
-            elif field.type == TYPE_FORM \
+            elif field.type == TYPE_FORM_FIELD \
                     and request.body.form is not None \
                     and k in request.body.form:
                 data[name] = request.body.form[k]
-            elif field.type == TYPE_PARAMS \
+            elif field.type == TYPE_PARAM \
                     and request.params is not None \
                     and k in request.params:
                 data[name] = request.params[k]
-            elif field.type == TYPE_URL_VARS \
+            elif field.type == TYPE_URL_VAR \
                     and request.url_vars is not None \
                     and k in request.url_vars:
                 data[name] = request.url_vars[k]
-            elif field.type == TYPE_FILES \
+            elif field.type == TYPE_FILE \
                     and request.body.files is not None \
                     and k in request.body.files:
                 data[name] = request.body.files[k]
+            elif field.type == TYPE_CONTENT \
+                    and request.body.content is not None:
+                data[name] = request.body.content
             elif field.type == TYPE_HEADER \
                     and k in request.headers:
-                data[name] = request.body.files[k]
+                data[name] = request.headers[k]
             elif name in self._default_data:
                 data[name] = self._default_data[name]
         for name, field in self._fields.items():
