@@ -22,7 +22,7 @@ For example:
     ...
 
     class UserCreationData(Data):
-        group = String('group', required=True, processors=[v.NotNull()], field_type=TYPE_URL_VARS)
+        group = String('group', required=True, processors=[v.NotNull()], field_type=TYPE_URL_VAR)
         first_name = String('first_name', processors=[v.Length(max=50)])
         last_name = String('last_name', processors=[v.Length(max=50)])
         email = String('email', processors=[v.EmailAddress()])
@@ -45,11 +45,11 @@ section with the ``data_handler`` parameter:
 
     @routes.post('/users', data_handler=UserCreationData)
     async def user_creation(request):
-        data = request.cleaned_data
+        data = await request.get_cleaned_data()
         ...
 
-To get the final validated and filtered data inside the request main handler, we use ``request.cleaned_data``,
-which will be a dictionary of data with defined fields in our data handler class.
+To get the final validated and filtered data inside the request main handler, we use ``request.get_cleaned_data()``,
+which return a dictionary of data with defined fields in our data handler class.
 
 Data fields
 -----------

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-25 13:32+0330\n"
+"POT-Creation-Date: 2023-01-04 04:59+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,25 +106,25 @@ msgstr ""
 msgid "A dictionary of HTTP request query string values"
 msgstr ""
 
-#: a2d6530783814aa9b483383455e8ef1c backendpy.request.Request:26 of
-msgid "A dictionary of HTTP request form data"
+#: 964f691f53914828879abba22cb55a2a backendpy.request.Request:26 of
+msgid "A :class:`~backendpy.request.RequestBody` class instance"
 msgstr ""
 
-#: backendpy.request.Request:27 c32fc0b117824104b2dcb13b3ce79882 of
-msgid "A dictionary of HTTP request JSON data"
-msgstr ""
+#~ msgid "A dictionary of HTTP request form data"
+#~ msgstr ""
 
-#: 177c6829aed646f08af2f424cc1f40e5 backendpy.request.Request:28 of
-msgid "A dictionary of multipart HTTP request files data"
-msgstr ""
+#~ msgid "A dictionary of HTTP request JSON data"
+#~ msgstr ""
 
-#: 76ed64968d4a40208709faefecf227ee backendpy.request.Request:29 of
-msgid ""
-"Raw body of HTTP request if it does not belong to any of the \"form\", "
-"\"json\" and \"file\" fields"
-msgstr ""
+#~ msgid "A dictionary of multipart HTTP request files data"
+#~ msgstr ""
 
-#: 62037c1a3e8747e0bb24cc79809a6ded backendpy.request.Request:31 of
-msgid "A dictionary of data processed by request data handler"
-msgstr ""
+#~ msgid ""
+#~ "Raw body of HTTP request if it "
+#~ "does not belong to any of the "
+#~ "\"form\", \"json\" and \"file\" fields"
+#~ msgstr ""
+
+#~ msgid "A dictionary of data processed by request data handler"
+#~ msgstr ""
 

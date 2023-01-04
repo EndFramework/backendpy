@@ -163,7 +163,7 @@ We can now use database queries in any part of the application:
 
     @routes.get('/users/<id:int>', data_handler=UserFilterData)
     async def user_detail(request):
-        data = request.cleaned_data
+        data = await request.get_cleaned_data()
         db_session = request.app.context['db_session']()
         result = await queries.get_user(db_session, data['id'])
         return Success(to_dict(result))
