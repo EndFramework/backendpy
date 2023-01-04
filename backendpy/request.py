@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, AsyncIterable, Callable, Awaitable
-from email.parser import BytesParser
+from email import parser
 from typing import TYPE_CHECKING, Optional, Any, Type
 from urllib.parse import parse_qs
 
@@ -174,16 +174,17 @@ class RequestBody:
             elif self._content_type == 'application/x-www-form-urlencoded':
                 self.form = {k: (v[0] if len(v) == 1 else v)
                              for k, v in parse_qs(body.decode('utf8')).items()}
-            elif self._content_type == 'multipart/form-data':
+            elif self._content_type.startswith('multipart/form-data'):
                 self.form = dict()
                 self.files = dict()
-                for part in BytesParser().parsebytes(body).get_payload():
+                body = str.encode(f'content-type: {self._content_type}\n') + body
+                for part in parser.BytesParser().parsebytes(body).get_payload():
                     if part.get_param(param='filename', header='content-disposition'):
                         self.files[part.get_param(param='name', header='content-disposition')] = \
-                            {'content': part.get_payload(),
+                            {'content': part.get_payload(decode=True),
                              'file-name': part.get_param(param='filename', header='content-disposition'),
-                             'content-type': part.get_content_subtype()
-                             if part.get_content_type() == 'application/octet-stream' else part.get_content_type()}
+                             'content-type': part.get_content_type()
+                             if part.get_content_type() else 'application/octet-stream'}
                     else:
                         self.form[part.get_param(param='name', header='content-disposition')] = \
                             str(part.get_payload(decode=True))

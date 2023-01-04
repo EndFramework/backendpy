@@ -53,7 +53,7 @@ class Data:
             elif field.type == TYPE_FILE \
                     and request.body.files is not None \
                     and k in request.body.files:
-                data[name] = request.body.files[k]
+                data[name] = request.body.files[k]['content']
             elif field.type == TYPE_CONTENT \
                     and request.body.content is not None:
                 data[name] = request.body.content
