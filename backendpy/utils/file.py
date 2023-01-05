@@ -53,6 +53,26 @@ async def write_file(data, dir_path, name, chunk_size=32768, mode: WRITE_MODES =
     return os.path.isfile(path)
 
 
+async def move_file(src_dir_path, dst_dir_path, name):
+    src_file_path = os.path.join(src_dir_path, name)
+    if not os.path.isfile(src_file_path):
+        return False
+    if not os.path.isdir(dst_dir_path):
+        await aiofiles.os.makedirs(dst_dir_path)
+    dst_file_path = os.path.join(dst_dir_path, name)
+    await aiofiles.os.replace(src_file_path, dst_file_path)
+    return os.path.isfile(dst_file_path)
+
+
+async def rename_file(dir_path, old_name, new_name):
+    file_path = os.path.join(dir_path, old_name)
+    if not os.path.isfile(file_path):
+        return False
+    renamed_file_path = os.path.join(dir_path, new_name)
+    await aiofiles.os.rename(file_path, renamed_file_path)
+    return os.path.isfile(renamed_file_path)
+
+
 async def remove_file(path):
     if os.path.isfile(path):
         try:
