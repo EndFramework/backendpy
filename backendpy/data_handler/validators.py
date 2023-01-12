@@ -6,8 +6,11 @@ import re
 import sys
 import uuid
 from collections.abc import Mapping, Sequence
-from typing import Any, Optional
+from typing import Any, Optional, TYPE_CHECKING
 from urllib.parse import urlparse
+
+if TYPE_CHECKING:
+    from .fields import Field
 
 from ..utils.file import get_human_readable_size, get_extension, get_type
 
@@ -485,9 +488,8 @@ class Unique(Validator):
             self,
             model: object,
             model_field_name: Optional[str] = None,
-            except_self: Optional[str] = None,
-            except_default: bool = False,
-            case_sensitive: bool = False,
+            except_self_by_field: Optional[Field] = None,
+            except_default_value: bool = False,
             message: str = 'Non unique value error'):
         """
         Initialize validator instance.
@@ -496,20 +498,19 @@ class Unique(Validator):
         :param model_field_name: The name of the database table field that must be checked for uniqueness.
                                  This parameter only needs to be set if the name of the database table field
                                  to be checked is different from the name of the data handler class field.
-        :param except_self: The name of identifier field of database table (This ID field value must also be set
-                            in input data). We only need to set this parameter when we are editing a row from
-                            the database table (not adding a new row) and we do not want to return the non-unique
-                            value error if the previous value of the unique field for this row is retrieved.
-        :param except_default: Specifies whether to return a non-unique value error if the value is equal to
-                               the default value defined for data handler class field.
+        :param except_self_by_field: The identifier field of database table (This field value must also be set
+                                     in the input data). We only need to set this parameter when we are
+                                     editing a row from the database table and we do not want to return the
+                                     non-unique value error if the previous value of itself is retrieved.
+        :param except_default_value: Specifies whether to return a non-unique value error if the value is
+                                     equal to the default value defined for data handler class field.
         :param message: Error message that will be returned if the value is not unique
         """
         super().__init__(message)
         self.model = model
         self.model_field_name = model_field_name
-        self.except_self = except_self
-        self.except_default = except_default
-        self.case_sensitive = case_sensitive
+        self.except_self_by_field = except_self_by_field
+        self.except_default_value = except_default_value
 
     async def __call__(self, value, meta):
         # Todo: Support for case sensitive uniqueness check
@@ -518,20 +519,20 @@ class Unique(Validator):
         if not self.model:
             return self.message
         model_field = getattr(self.model, self.model_field_name if self.model_field_name else meta['name'])
-        if self.except_default is True and meta.get('default') is not None and meta['default'] == value:
+        if self.except_default_value is True and meta.get('default') is not None and meta['default'] == value:
             return None
-        if self.except_self is not None and \
-                meta['received_data'].get(self.except_self) is not None:
-            model_except_field = getattr(self.model, self.except_self)
+        if self.except_self_by_field is not None and \
+                self.except_self_by_field.data_name in meta['received_data']:
+            await self.except_self_by_field.set_value(meta['received_data'][self.except_self_by_field.data_name], meta)
             q = select(exists()
                        .where(model_field == value)
-                       .where(model_except_field != meta['received_data'][self.except_self]))
+                       .where(getattr(self.model, self.except_self_by_field.data_name)
+                              != self.except_self_by_field.value))
             result = await meta['request'].app.context['db_session']().execute(q)
             if not result.scalar():
                 return None
         else:
-            q = select(exists()
-                       .where(model_field == value))
+            q = select(exists().where(model_field == value))
             result = await meta['request'].app.context['db_session']().execute(q)
             if not result.scalar():
                 return None
