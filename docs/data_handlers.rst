@@ -169,12 +169,12 @@ Example:
 In this example, the value sent to the "username" field is queried directly to the "username" column from the "Users"
 model and checked for its uniqueness, and returns an error if it is exists.
 
-In the previous example, if the name of the model table field is "user_id" instead of "username", we should change it
+In the previous example, if the name of the model table field is "user_name" instead of "username", we should change it
 as follows:
 
 .. code-block:: python
 
-    username = String('username', processors=[v.Unique(model=Users, model_field_name='user_id')])
+    username = String('username', processors=[v.Unique(model=Users, model_field_name='user_name')])
 
 The previous example was for adding a new user with a unique username to the database; However, if our request is
 to edit a user, the previous example should change as follows to prevent the error from being displayed when the
@@ -182,7 +182,8 @@ user's current username is resubmitted:
 
 .. code-block:: python
 
-    username = String('username', processors=[v.Unique(model=Users, model_field_name='user_id', except_self='id')])
+    id = String('id', processors=[v.Integer(), f.ToIntegerObject()])])
+    username = String('username', processors=[v.Unique(model=Users, model_field_name='user_name', exclude_self_by_field=id)])
 
 Note that in this example the "id" column of the model is used to identify each row of data. It is also necessary
 to send a field named "id" with the value of the current row id of this user in the database in the submitted data
