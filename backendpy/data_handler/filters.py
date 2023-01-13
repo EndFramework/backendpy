@@ -80,9 +80,12 @@ class ToIntegerObject(Filter):
     async def __call__(self, value):
         if value in (None, '', b''):
             return value
-        if type(value) is str:
-            return int(float(value))
-        return int(value)
+        try:
+            return int(value)
+        except ValueError:
+            if type(value) is str and '.' in value:
+                return int(value.split('.')[0])
+        raise ValueError('The input value cannot be converted to int type')
 
 
 class ToFloatObject(Filter):
