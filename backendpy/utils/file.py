@@ -84,30 +84,56 @@ async def remove_file(path):
 
 
 async def get_checksum(data=b'', path=None, chunk_size=32768):
+    h = hashlib.blake2b()
     if path:
         async with aiofiles.open(path, 'rb') as f:
-            h = hashlib.blake2b()
             while chunk := await f.read(chunk_size):
                 h.update(chunk)
     elif isinstance(data, types.AsyncGeneratorType):
-        h = hashlib.blake2b()
         async for chunk in data:
             h.update(chunk)
     elif isinstance(data, types.GeneratorType):
-        h = hashlib.blake2b()
         for chunk in data:
             h.update(chunk)
     elif isinstance(data, aiofiles.threadpool.binary.AsyncBufferedIOBase):
-        h = hashlib.blake2b()
         while chunk := await data.read(chunk_size):
             h.update(chunk)
     elif isinstance(data, io.IOBase):
-        h = hashlib.blake2b()
         while chunk := data.read(chunk_size):
             h.update(chunk)
     else:
-        h = hashlib.blake2b(data)
+        h.update(data)
     return h.hexdigest()
+
+
+async def write_file_and_get_checksum(data, dir_path, name, chunk_size=32768, mode: WRITE_MODES = 'wb+'):
+    if not os.path.isdir(dir_path):
+        await aiofiles.os.makedirs(dir_path)
+    path = os.path.join(dir_path, name)
+    h = hashlib.blake2b()
+    async with aiofiles.open(path, mode) as f:
+        if isinstance(data, types.AsyncGeneratorType):
+            async for chunk in data:
+                await f.write(chunk)
+                h.update(chunk)
+        elif isinstance(data, types.GeneratorType):
+            for chunk in data:
+                await f.write(chunk)
+                h.update(chunk)
+        elif isinstance(data, aiofiles.threadpool.binary.AsyncBufferedIOBase):
+            while chunk := await data.read(chunk_size):
+                await f.write(chunk)
+                h.update(chunk)
+        elif isinstance(data, io.IOBase):
+            while chunk := data.read(chunk_size):
+                await f.write(chunk)
+                h.update(chunk)
+        else:
+            await f.write(data)
+            h.update(data)
+    if os.path.isfile(path):
+        return h.hexdigest()
+    return None
 
 
 def get_human_readable_size(size, precision=1):
