@@ -113,7 +113,7 @@ class Client:
 
 class Response:
     def __init__(self, r: http.client.HTTPResponse):
-        self.headers = dict(r.getheaders())
+        self.headers = {k.lower(): v for k, v in r.getheaders()}
         self.status = r.status
         self.reason = r.reason
         self.message = r.msg
