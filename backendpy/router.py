@@ -330,6 +330,7 @@ PREDEFINED_REGEXES = {
     'int': re.compile(r'^([-+]?\d+)$'),
     'float': re.compile(r'^([-+]?\d+\.\d+)$'),
     'uuid': re.compile(r'^([0-9a-f]{8}\-[0-9a-f]{4}\-4[0-9a-f]{3}\-[89ab][0-9a-f]{3}\-[0-9a-f]{12})$'),
+    'slug': re.compile(r'^([-\w]+)$'),
     # Todo: 'path'
     # Todo: 'any_of(a|b|c)'
 }
