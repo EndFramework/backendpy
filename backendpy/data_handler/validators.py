@@ -198,23 +198,6 @@ class UUID(Validator):
         return self.message
 
 
-class EmailAddress(Validator):
-    """Check if the data is a valid email address."""
-
-    def __init__(self, message: str = 'Invalid email address'):
-        super().__init__(message)
-
-    async def __call__(self, value, meta):
-        if value in (None, '', b''):
-            return None
-        if len(value) > 7 and \
-                re.match(r'^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*'
-                         r'(\.[-a-z0-9_]+)*\.([a-z][a-z]+)|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
-                         r'))(:[0-9]{1,5})?$', value):
-            return None
-        return self.message
-
-
 class Numeric(Validator):
     """Check if the data is an integer or float value."""
 
@@ -316,6 +299,39 @@ class UrlPath(Validator):
         if value in (None, '', b''):
             return None
         if re.match(r'^/(([^/]*)((/[^/]+)*))$', value):
+            return None
+        return self.message
+
+
+class EmailAddress(Validator):
+    """Check if the data is a valid email address."""
+
+    def __init__(self, message: str = 'Invalid email address'):
+        super().__init__(message)
+
+    async def __call__(self, value, meta):
+        if value in (None, '', b''):
+            return None
+        if len(value) > 7 and \
+                re.match(r'^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*'
+                         r'(\.[-a-z0-9_]+)*\.([a-z][a-z]+)|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
+                         r'))(:[0-9]{1,5})?$', value):
+            return None
+        return self.message
+
+
+class PhoneNumber(Validator):
+    """Check if the data is an acceptable phone number"""
+
+    def __init__(self, message: str = 'Not acceptable phone number'):
+        super().__init__(message)
+
+    async def __call__(self, value, meta):
+        if value in (None, '', b''):
+            return None
+        if re.match(r'\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|'
+                    r'2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|'
+                    r'4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$', value):
             return None
         return self.message
 
@@ -536,6 +552,20 @@ class Unique(Validator):
             result = await meta['request'].app.context['db_session']().execute(q)
             if not result.scalar():
                 return None
+        return self.message
+
+
+class IsEqualToField(Validator):
+    """Validate the value is equal to another field value of request."""
+
+    def __init__(self, another_field_name: str, message: str = None):
+        super().__init__(message if message else f'The value is not equal to "{another_field_name}" field value.')
+        self.another_field_name = another_field_name
+
+    async def __call__(self, value, meta):
+        if self.another_field_name in meta['received_data'] \
+                and value == meta['received_data'][self.another_field_name]:
+            return None
         return self.message
 
 
