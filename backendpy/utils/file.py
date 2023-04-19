@@ -83,6 +83,16 @@ async def remove_file(path):
     return False
 
 
+async def remove_file(path):
+    if os.path.isfile(path):
+        try:
+            await aiofiles.os.remove(path)
+        except:
+            pass
+        return not os.path.exists(path)
+    return False
+
+
 async def get_checksum(data=b'', path=None, chunk_size=32768):
     h = hashlib.blake2b()
     if path:
@@ -136,6 +146,10 @@ async def write_file_and_get_checksum(data, dir_path, name, chunk_size=32768, mo
     return None
 
 
+async def get_file_size(path):
+    return await aiofiles.os.path.getsize(path)
+
+
 def get_human_readable_size(size, precision=1):
     for suffix in ['B', 'KB', 'MB', 'GB']:
         if size < 1024.0:
@@ -152,6 +166,10 @@ def get_extension(filename: AnyStr) -> AnyStr:
 def get_suffix_mimetype(filename):
     type, encoding = mimetypes.guess_type(filename)
     return type
+
+
+def get_extension_mimetype(extension):
+    return mimetypes.types_map.get(f'.{extension}')
 
 
 def get_type(value) -> list[str] | None:
