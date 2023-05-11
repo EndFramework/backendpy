@@ -6,7 +6,7 @@ import io
 import mimetypes
 import os
 import types
-from typing import Literal, AnyStr
+from typing import Literal, AnyStr, Optional
 
 import aiofiles
 import aiofiles.os
@@ -15,14 +15,44 @@ READ_MODES = Literal['r', 'rb', 'rt']
 WRITE_MODES = Literal['w', 'w+', 'wb', 'wb+', 'wt', 'wt+']
 
 
-async def read_file_chunks(path, chunk_size=32768, mode: READ_MODES = 'rb'):
+async def read_file_chunks(
+        path,
+        chunk_size=32768,
+        mode: READ_MODES = 'rb',
+        start_index: Optional[int] = None,
+        end_index: Optional[int] = None):
     async with aiofiles.open(path, mode) as f:
+        remaining_size = None
+        if start_index is not None:
+            await f.seek(start_index)
+            if end_index is not None:
+                remaining_size = end_index-start_index+1
+                if remaining_size < chunk_size:
+                    chunk_size = remaining_size
+        elif end_index is not None:
+            remaining_size = end_index+1
+            if remaining_size < chunk_size:
+                chunk_size = remaining_size
         while chunk := await f.read(chunk_size):
             yield chunk
+            if remaining_size is not None:
+                remaining_size -= chunk_size
+                if remaining_size < chunk_size:
+                    chunk_size = remaining_size
 
 
-async def read_file(path, mode: READ_MODES = 'rb'):
+async def read_file(
+        path,
+        mode: READ_MODES = 'rb',
+        start_index: Optional[int] = None,
+        end_index: Optional[int] = None):
     async with aiofiles.open(path, mode) as f:
+        if start_index:
+            await f.seek(start_index)
+            if end_index:
+                return await f.read(end_index-start_index+1)
+        elif end_index:
+            return await f.read(end_index+1)
         return await f.read()
 
 

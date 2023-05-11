@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import datetime
 import gzip
 import os
 import types
@@ -281,7 +282,10 @@ class File(Response):
             status: Status = Status.OK,
             headers: Optional[Iterable[[bytes, bytes]]] = None,
             stream: bool = True,
-            compress: bool = False):
+            compress: bool = False,
+            partial: bool = False,
+            last_modified: Optional[int] = None,
+            entity_tag: Optional[str] = None):
         """
         Initialize response instance.
 
@@ -290,6 +294,9 @@ class File(Response):
         :param headers: The HTTP response headers
         :param stream: Determines whether or not to stream the response
         :param compress: Determines whether or not to compress (gzip) the response
+        :param partial: Determines whether to support partial response
+        :param last_modified: Specifies the Last-Modified HTTP header and uses it in the if-range condition check
+        :param entity_tag: Specifies the ETag HTTP header and uses it in the if-range condition check
         """
         super().__init__(
             body=b'',
@@ -299,6 +306,9 @@ class File(Response):
             compress=compress)
         self.path = path
         self.stream = stream
+        self.partial = partial
+        self.last_modified = last_modified
+        self.entity_tag = entity_tag
 
     async def __call__(self, request: Request) \
             -> tuple[bytes | AsyncGenerator[bytes],
@@ -311,23 +321,69 @@ class File(Response):
 
         self.headers = list(self.headers) if self.headers else []
         content_type, encoding = guess_type(path)
-        self.headers += [[b'content-type', to_bytes(content_type) if content_type else self.content_type]]
-
-        if self.stream:
-            self.body = read_file_chunks(path, int(request.app.config['networking']['stream_size']))
-            if self.compress:
-                self.body = self._gzip_stream(self.body)
-                self.headers += [[b'content-encoding', b'deflate']]
+        self.headers += [[b'content-type', to_bytes(content_type) if content_type else self.content_type],
+                         [b'accept-ranges', b'bytes' if self.partial else b'none']]
+        try:
+            partial = self.partial \
+                      and 'range' in request.headers \
+                      and request.headers['range'].startswith('bytes=') \
+                      and ('if-range' not in request.headers
+                           or (self.entity_tag is not None
+                               and not self.entity_tag.startswith('/W')
+                               and not request.headers['if-range'].startswith('/W')
+                               and request.headers['if-range'] == self.entity_tag)
+                           or (self.entity_tag is None
+                               and self.last_modified is not None
+                               and datetime.datetime.utcfromtimestamp(self.last_modified).replace(microsecond=0) ==
+                               datetime.datetime.strptime(request.headers['if-range'], '%a, %d %b %Y %H:%M:%S %Z')))
+        except ValueError:
+            partial = False
+        if partial:
+            total_length = (await aiofiles.os.stat(path)).st_size
+            try:
+                ranges = request.headers['range'][6:].split(',')
+                range_ = ranges[0].split('-')
+                range_start = int(range_[0]) if range_[0] != '' else 0
+                range_end = int(range_[1]) if range_[1] != '' else total_length - 1
+                is_invalid_range = range_start > range_end or range_end > total_length
+            except (ValueError, IndexError):
+                is_invalid_range = True
+            if is_invalid_range:
+                self.status = Status.REQUESTED_RANGE_NOT_SATISFIABLE
+                return self.body, self.status.value, self.headers, False
+            self.status = Status.PARTIAL_CONTENT
+            if self.stream:
+                self.body = read_file_chunks(
+                    path,
+                    chunk_size=int(request.app.config['networking']['stream_size']),
+                    start_index=range_start,
+                    end_index=range_end)
             else:
-                file_stat = await aiofiles.os.stat(path)
-                self.headers += [[b'content-length', to_bytes(file_stat.st_size)]]
+                self.body = await read_file(
+                    path,
+                    start_index=range_start,
+                    end_index=range_end)
+            self.headers += [[b'content-range', to_bytes(f'bytes {range_start}-{range_end}/{total_length}')],
+                             [b'content-length', to_bytes(range_end-range_start+1)]]
         else:
-            self.body = await read_file(path)
-            if self.compress:
-                self.body = self._gzip(self.body)
-                self.headers += [[b'content-encoding', b'gzip']]
-            self.headers += [[b'content-length', to_bytes(len(self.body))]]
-
+            if self.stream:
+                self.body = read_file_chunks(path, int(request.app.config['networking']['stream_size']))
+                if self.compress:
+                    self.body = self._gzip_stream(self.body)
+                    self.headers += [[b'content-encoding', b'deflate']]
+                else:
+                    file_stat = await aiofiles.os.stat(path)
+                    self.headers += [[b'content-length', to_bytes(file_stat.st_size)]]
+            else:
+                self.body = await read_file(path)
+                if self.compress:
+                    self.body = self._gzip(self.body)
+                    self.headers += [[b'content-encoding', b'gzip']]
+                self.headers += [[b'content-length', to_bytes(len(self.body))]]
+        if self.last_modified is not None:
+            self.headers += [[b'last-modified', to_bytes(self.last_modified)]]
+        if self.entity_tag is not None:
+            self.headers += [[b'etag', to_bytes(self.entity_tag)]]
         return self.body, self.status.value, self.headers, self.stream
 
 
