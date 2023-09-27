@@ -25,13 +25,13 @@ class Init:
                             if iscoroutinefunction(app.init_func):
                                 await app.init_func(self.config)
                             else:
-                                LOGGER.error(f'"{package_name}" init error: '
-                                             f'The init_func must be a coroutine function')
+                                LOGGER.error(f'"{package_name}" Initialization error: '
+                                             f'The "init_func" must be a coroutine function')
                     else:
-                        LOGGER.error(f'"{package_name}" init error: '
+                        LOGGER.error(f'"{package_name}" Initialization error: '
                                      f'App instance error')
-                except (ImportError, AttributeError):
-                    LOGGER.error(f'"{package_name}" init error: '
-                                 f'App instance import error')
+                except (ImportError, AttributeError) as e:
+                    LOGGER.error(f'"{package_name}" Initialization error: '
+                                 f'App instance import error ({e})')
         except Exception as e:
             LOGGER.error(f'Failed to run initializations: {e}')
