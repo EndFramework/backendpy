@@ -74,6 +74,15 @@ class ParseDateTime(Filter):
         return datetime.datetime.strptime(value, self.format)
 
 
+class ToStringObject(Filter):
+    """Convert value to string object."""
+
+    async def __call__(self, value):
+        if value in (None, '', b''):
+            return value
+        return str(value)
+
+
 class ToIntegerObject(Filter):
     """Convert value to integer object."""
 

@@ -5,7 +5,7 @@ import datetime
 import re
 import sys
 import uuid
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping, Sequence, Iterable
 from typing import Any, Optional, TYPE_CHECKING
 from urllib.parse import urlparse
 
@@ -113,7 +113,7 @@ class NotIn(Validator):
 
 
 class Length(Validator):
-    """Check data length."""
+    """Check data length"""
 
     def __init__(
             self,
@@ -568,6 +568,40 @@ class Unique(Validator):
         return self.message
 
 
+class Exists(Validator):
+    """
+    This validator is used to check the existence of the data in the database table and can
+    be used when using the default database helpers of the framework.
+    """
+
+    def __init__(
+            self,
+            model: object,
+            model_field_name: str,
+            message: str = 'Does not exists'):
+        """
+        Initialize validator instance.
+
+        :param model: Database model to check for existence
+        :param model_field_name: The name of the database table field that must be checked for existence.
+        :param message: Error message that will be returned if the value is not unique
+        """
+        super().__init__(message)
+        self.model = model
+        self.model_field_name = model_field_name
+
+    async def __call__(self, value, meta):
+        if value in (None, '', b''):
+            return None
+        if not self.model or not self.model_field_name:
+            return self.message
+        q = select(exists().where(getattr(self.model, self.model_field_name) == value))
+        result = await meta['request'].app.context['db_session']().execute(q)
+        if result.scalar():
+            return None
+        return self.message
+
+
 class IsEqualToField(Validator):
     """Validate the value is equal to another field value of request."""
 
@@ -580,3 +614,39 @@ class IsEqualToField(Validator):
                 and value == meta['received_data'][self.another_field_name]:
             return None
         return self.message
+
+
+class DictInnerTypes(Validator):
+    """Check dictionary value types."""
+
+    def __init__(self, key_types: Iterable, value_types: Iterable, message: Optional[str] = None):
+        super().__init__(f'Must be a mapping of '
+                         f'<{"|".join(t.__name__ for t in key_types) if key_types else "Any"}>:'
+                         f'<{"|".join(t.__name__ for t in value_types) if value_types else "Any"}>'
+                         if message is None else message)
+        self.key_types = key_types
+        self.value_types = value_types
+
+    async def __call__(self, value, meta):
+        if type(value) is dict:
+            for k, v in value.items():
+                if type(k) not in self.key_types:
+                    return self.message
+                if type(v) not in self.value_types:
+                    return self.message
+        return None
+
+
+class NoDuplicateDictItemValueInList(Validator):
+    def __init__(self, key: str, message: Optional[str] = None):
+        super().__init__(f'Duplicate "{key}" value in data' if message is None else message)
+        self.key = key
+
+    async def __call__(self, value: list[Mapping], meta):
+        if value:
+            exist = []
+            for d in value:
+                if d.get(self.key) in exist:
+                    return self.message
+                exist.append(d.get(self.key))
+        return None

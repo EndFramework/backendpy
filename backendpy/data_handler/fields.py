@@ -1,10 +1,15 @@
 from __future__ import annotations
 
 from collections.abc import Iterable, Mapping
-from typing import Optional, Any, Union
+from typing import Optional, Any, Union, Type, TYPE_CHECKING
+from copy import deepcopy
 
 from .filters import Filter
 from .validators import Validator
+
+if TYPE_CHECKING:
+    from .data import Data
+
 
 TYPE_JSON_FIELD = 1
 TYPE_FORM_FIELD = 2
@@ -112,5 +117,131 @@ class Field:
 
 class String(Field):
     """String data field class"""
-    # Todo: set type annotations and default validators
     pass
+
+
+class List(Field):
+    def __init__(
+            self,
+            name: Optional[str] = None,
+            default: Optional[Any] = None,
+            processors: Optional[Iterable[Union[Validator, Filter]]] = None,
+            item_field: Optional[Field] = None,
+            field_type=TYPE_JSON_FIELD,
+            required: bool = False,
+            auto_blank_to_null: Optional[bool] = True):
+        super().__init__(name, default, processors, field_type, required)
+        self._item_field = item_field
+        self.auto_blank_to_null = auto_blank_to_null
+
+    async def set_value(
+            self,
+            value: Any,
+            meta: Mapping[str, Any]) -> None:
+        """After applying the processors to the value, set the value to the field"""
+        if self.value is not None and value is None:
+            return
+        if type(value) is not list and value is not None:
+            self.errors = ['Required list data']
+            return
+        if self._processors:
+            value = await self._apply_processors(self._processors, value, meta)
+            if self.errors:
+                return
+        if self._item_field and value is not None:
+            value = await self._apply_item_field(self._item_field, value, meta)
+            if self.errors:
+                return
+        self.value = value
+
+    async def _apply_processors(
+            self,
+            processors: Iterable[Union[Validator, Filter]],
+            value: Any,
+            meta: Mapping[str, Any]):
+        """Apply the processors to the list"""
+        for p in processors:
+            if isinstance(p, Validator):
+                err = await p(value, meta)
+                if err is not None:
+                    self.errors = [err]
+                    return None
+            elif isinstance(p, Filter) and value is not None:
+                value = await p(value)
+        return value
+
+    async def _apply_item_field(
+            self,
+            item_field: Field,
+            values: list[Any],
+            meta: Mapping[str, Any]):
+        """Apply the processors to the list items"""
+        for i, value in enumerate(values):
+            field = deepcopy(item_field)
+            await field.set_value(
+                value=value if ((value != '' and value != b'') or not self.auto_blank_to_null) else None,
+                meta=meta)
+            if field.errors:
+                self.errors = {i: field.errors}
+                return None
+            values[i] = field.value
+        return values
+
+
+class Dict(Field):
+    def __init__(
+            self,
+            name: Optional[str] = None,
+            default: Optional[Any] = None,
+            processors: Optional[Iterable[Union[Validator, Filter]]] = None,
+            data_class: Optional[Type[Data]] = None,
+            field_type=TYPE_JSON_FIELD,
+            required: bool = False):
+        super().__init__(name, default, processors, field_type, required)
+        self._data_class = data_class
+
+    async def set_value(
+            self,
+            value: Any,
+            meta: Mapping[str, Any]) -> None:
+        """After applying the processors to the value, set the value to the field"""
+        if self.value is not None and value is None:
+            return
+        if type(value) is not dict and value is not None:
+            self.errors = ['Required dict data']
+            return
+        if self._processors:
+            value = await self._apply_processors(self._processors, value, meta)
+            if self.errors:
+                return
+        if self._data_class and value is not None:
+            value = await self._apply_data_class(self._data_class, value, meta)
+            if self.errors:
+                return
+        self.value = value
+
+    async def _apply_processors(
+            self,
+            processors: Iterable[Union[Validator, Filter]],
+            value: Any,
+            meta: Mapping[str, Any]):
+        """Apply the processors to the dict"""
+        for p in processors:
+            if isinstance(p, Validator):
+                err = await p(value, meta)
+                if err is not None:
+                    self.errors = [err]
+                    return None
+            elif isinstance(p, Filter) and value is not None:
+                value = await p(value)
+        return value
+
+    async def _apply_data_class(
+            self,
+            data_class: Type[Data],
+            data: dict[Any],
+            meta: Mapping[str, Any]):
+        """Apply the processors to the dict data"""
+        cleaned_data, self.errors = \
+            await data_class(data).get_cleaned_data(request=meta['request'])
+        return cleaned_data
