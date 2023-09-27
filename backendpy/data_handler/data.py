@@ -13,7 +13,10 @@ from ..request import Request
 class Data:
     """The base class that will be inherited to create data handler classes."""
 
-    def __init__(self, default: Optional[Mapping[str, Any]] = None):
+    def __init__(
+            self,
+            default: Optional[Mapping[str, Any]] = None,
+            auto_blank_to_null: Optional[bool] = True):
         """
         Initialize data handler instance.
 
@@ -23,7 +26,7 @@ class Data:
         self._fields = {i[0]: deepcopy(i[1]) for i in inspect.getmembers(self) if isinstance(i[1], Field)}
         self._default_data = default if type(default) is dict else \
             (default.__dict__ if hasattr(default, "__dict__") else {})
-        self.auto_blank_to_null = True
+        self.auto_blank_to_null = auto_blank_to_null
 
     async def get_cleaned_data(self, request: Request) \
             -> tuple[dict[str, Optional[Any]],
@@ -72,6 +75,9 @@ class Data:
                           'request': request})
                 if field.errors:
                     errors[name] = field.errors
+                cleaned_data[name] = field.value
+            elif field.value is not None:
+                # Set default value if the field value is not sent
                 cleaned_data[name] = field.value
             elif field.required:
                 errors[name] = 'Required'

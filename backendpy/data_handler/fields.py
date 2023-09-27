@@ -76,6 +76,7 @@ class Field:
             meta: Mapping[str, Any]) -> None:
         """After applying the processors to the value, set the value to the field."""
         if value is None and self.value is not None:
+            # Set default value if the field value is none
             return
         if self._processors:
             self.value = await self._apply_processors(self._processors, value, meta)

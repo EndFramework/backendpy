@@ -105,20 +105,26 @@ async def rename_file(dir_path, old_name, new_name):
 
 async def remove_file(path):
     if os.path.isfile(path):
-        try:
-            await aiofiles.os.remove(path)
-        except:
-            pass
+        await aiofiles.os.remove(path)
         return not os.path.exists(path)
     return False
 
 
-async def remove_file(path):
-    if os.path.isfile(path):
-        try:
-            await aiofiles.os.remove(path)
-        except:
-            pass
+async def remove_dir(path):
+    if os.path.isdir(path):
+        await aiofiles.os.rmdir(path)
+        return not os.path.exists(path)
+    return False
+
+
+async def remove_tree(path):
+    if os.path.isdir(path):
+        for i in os.listdir(path):
+            await remove_tree(os.path.join(path, i))
+        await aiofiles.os.rmdir(path)
+        return not os.path.exists(path)
+    elif os.path.isfile(path):
+        await aiofiles.os.remove(path)
         return not os.path.exists(path)
     return False
 

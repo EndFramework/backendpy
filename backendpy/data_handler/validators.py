@@ -113,7 +113,7 @@ class NotIn(Validator):
 
 
 class Length(Validator):
-    """Check data string length."""
+    """Check data length."""
 
     def __init__(
             self,
@@ -136,7 +136,6 @@ class Length(Validator):
     async def __call__(self, value, meta):
         if value is None:
             return None
-        value = str(value)
         if self.equal is not None and len(value) != self.equal:
             return self.message
         else:
@@ -336,54 +335,68 @@ class PhoneNumber(Validator):
         return self.message
 
 
-class PasswordStrength(Validator):
-    """Checks the hardness of a password and returns an error if the password is weak."""
+class PasswordPolicy(Validator):
+    """Check if the data is an acceptable password"""
 
-    def __init__(self, message: str = 'Weak password error'):
+    def __init__(self, min_score: int = 50, message: str = 'Not acceptable password error'):
+        super().__init__(message)
+        self.min_score = min_score
+
+    async def __call__(self, value, meta):
+        if value in (None, '', b''):
+            return None
+
+        score = 50
+        num = {'excess': 0, 'uppers': 0, 'numbers': 0, 'symbols': 0}
+        bonus = {'excess': 3, 'uppers': 4, 'numbers': 5, 'symbols': 5, 'combo': 0, 'all_lower': 0,
+                 'all_number': 0, 'regulated': 0, 'repeated': 0}
+        num['excess'] = len(value) - 8
+        num['uppers'] = len(re.findall(r'[A-Z]', value))
+        num['numbers'] = len(re.findall(r'[0-9]', value))
+        num['symbols'] = len(re.findall(r'[!,@,#,$,%,^,&,*,?,_,~]', value))
+        if num['uppers'] and num['numbers'] and num['symbols']:
+            bonus['combo'] = 25
+        elif (num['uppers'] and num['numbers']) or (num['uppers'] and num['symbols']) or \
+                (num['numbers'] and num['symbols']):
+            bonus['combo'] = 15
+        if re.match(r'^[\sa-z]+$', value):
+            bonus['all_lower'] = -30
+        elif re.match(r'^[\s0-9]+$', value):
+            bonus['all_number'] = -90
+        if value in 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678909876543210' \
+                    'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm':
+            bonus['regulated'] = -35
+        else:
+            for i in range(len(value)-1):
+                if value[i] == value[i+1]:
+                    if re.match(r'^[\sa-z]$', value[i]):
+                        bonus['repeated'] -= 3
+                    elif re.match(r'^[A-Z]$', value[i]):
+                        bonus['repeated'] -= 7
+                    elif re.match(r'^[0-9]|[!,@,#,$,%,^,&,*,?,_,~]$', value[i]):
+                        bonus['repeated'] -= 8
+        score = score + (num['excess'] * bonus['excess']) + (num['uppers'] * bonus['uppers']) \
+                + (num['numbers'] * bonus['numbers']) + (num['symbols'] * bonus['symbols']) \
+                + bonus['combo'] + bonus['all_lower'] + bonus['all_number'] + bonus['regulated'] \
+                + bonus['repeated']
+        if score < self.min_score:
+            return self.message
+        else:
+            return None
+
+
+class UserNamePolicy(Validator):
+    """Check if the data is an acceptable username"""
+
+    def __init__(self, message: str = 'Not acceptable username'):
         super().__init__(message)
 
     async def __call__(self, value, meta):
         if value in (None, '', b''):
             return None
-        if len(value) < 10:
-            return self.message
-        else:
-            score = 50
-            num = {'excess': 0, 'uppers': 0, 'numbers': 0, 'symbols': 0}
-            bonus = {'excess': 3, 'uppers': 4, 'numbers': 5, 'symbols': 5, 'combo': 0, 'all_lower': 0,
-                     'all_number': 0, 'regulated': 0, 'repeated': 0}
-            num['excess'] = len(value) - 8
-            num['upperss'] = len(re.findall(r'[A-Z]', value))
-            num['numbers'] = len(re.findall(r'[0-9]', value))
-            num['symbols'] = len(re.findall(r'[!,@,#,$,%,^,&,*,?,_,~]', value))
-            if num['uppers'] and num['numbers'] and num['symbols']:
-                bonus['combo'] = 25
-            elif (num['uppers'] and num['numbers']) or (num['uppers'] and num['symbols']) or \
-                    (num['numbers'] and num['symbols']):
-                bonus['combo'] = 15
-            if re.match(r'^[\sa-z]+$', value):
-                bonus['all_lower'] = -30
-            elif re.match(r'^[\s0-9]+$', value):
-                bonus['all_number'] = -90
-            if value in 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678909876543210' \
-                        'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm':
-                bonus['regulated'] = -35
-            else:
-                for i in range(len(value)-1):
-                    if value[i] == value[i+1]:
-                        if re.match(r'^[\sa-z]$', value[i]):
-                            bonus['repeated'] -= 3;
-                        elif re.match(r'^[A-Z]$', value[i]):
-                            bonus['repeated'] -= 7;
-                        elif re.match(r'^[0-9]|[!,@,#,$,%,^,&,*,?,_,~]$', value[i]):
-                            bonus['repeated'] -= 8;
-            score = score + (num['excess'] * bonus['excess']) + (num['uppers'] * bonus['uppers']) + \
-                    (num['numbers'] * bonus['numbers']) + (num['symbols'] * bonus['symbols']) + \
-                    bonus['combo'] + bonus['all_lower'] + bonus['all_number'] + bonus['regulated'] + bonus['repeated']
-            if score < 50:
-                return self.message
-            else:
-                return None
+        if re.match(r'^(?=.{3,64}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$', value):
+            return None
+        return self.message
 
 
 class DateTime(Validator):
@@ -567,29 +580,3 @@ class IsEqualToField(Validator):
                 and value == meta['received_data'][self.another_field_name]:
             return None
         return self.message
-
-
-'''class List(Validator):
-    
-    def __init__(self, inner_processors=None, message: str = 'Must be list'):
-        super().__init__(message)
-        self.inner_processors = inner_processors
-
-    async def __call__(self, value, meta):
-        if value in (None, '', b''):
-            return None
-        if type(value) is list:
-            if not self.inner_processors:
-                return None
-            for p in self.inner_processors:
-                for v in value:
-                    if isinstance(p, Validator):
-                        err = await p(v, meta)
-                        if err is not None:
-                            return err
-                    elif isinstance(p, Filter) and v is not None:
-                        v = await p(v)  # Todo
-            else:
-                return None
-        return self.message
-'''

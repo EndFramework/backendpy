@@ -174,7 +174,7 @@ class RequestBody:
             elif self._content_type == 'application/x-www-form-urlencoded':
                 self.form = {k: (v[0] if len(v) == 1 else v)
                              for k, v in parse_qs(body.decode('utf8')).items()}
-            elif self._content_type.startswith('multipart/form-data'):
+            elif self._content_type and self._content_type.startswith('multipart/form-data'):
                 self.form = dict()
                 self.files = dict()
                 body = str.encode(f'content-type: {self._content_type}\n') + body

@@ -5,17 +5,22 @@ import importlib
 from collections.abc import Mapping
 
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import AsyncSession, AsyncEngine
+from sqlalchemy.ext.asyncio import AsyncEngine
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.ext.asyncio import async_scoped_session
 from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.asyncio import async_sessionmaker
+from sqlalchemy.orm import DeclarativeBase
 
 from .app import App
 from .logging import get_logger
 
 LOGGER = get_logger(__name__)
-Base = declarative_base()
+
+
+class Base(AsyncAttrs, DeclarativeBase):
+    pass
 
 
 def set_database_hooks(app):
@@ -23,8 +28,11 @@ def set_database_hooks(app):
 
     @app.event('startup')
     async def on_startup():
-        app.context['db_engine'] = get_db_engine(config=app.config['database'])
-        app.context['db_session'] = get_db_session(engine=app.context['db_engine'], scope_func=app.get_current_request)
+        app.context['db_engine'] = get_db_engine(
+            config=app.config['database'])
+        app.context['db_session'] = get_db_session(
+            engine=app.context['db_engine'],
+            scope_func=app.get_current_request)
 
     @app.event('shutdown')
     async def on_shutdown():
@@ -34,8 +42,16 @@ def set_database_hooks(app):
     async def on_request_end():
         await app.context['db_session'].remove()
 
+    @app.event('success_response')
+    async def on_request_success():
+        await app.context['db_session'].commit()
 
-def get_db_engine(config: Mapping):
+    @app.event('exception_response')
+    async def on_request_exception():
+        await app.context['db_session'].rollback()
+
+
+def get_db_engine(config: Mapping) -> AsyncEngine:
     """Create a new Sqlalchemy async engine instance."""
 
     return create_async_engine(
@@ -45,10 +61,10 @@ def get_db_engine(config: Mapping):
         isolation_level=config.get('isolation_level', 'SERIALIZABLE'))
 
 
-def get_db_session(engine: AsyncEngine, scope_func: callable):
+def get_db_session(engine: AsyncEngine, scope_func: callable) -> async_scoped_session[AsyncSession]:
     """Construct a new Sqlalchemy async scoped session."""
 
-    async_session_factory = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
+    async_session_factory = async_sessionmaker(engine, expire_on_commit=False)
     return async_scoped_session(async_session_factory, scopefunc=scope_func)
 
 
