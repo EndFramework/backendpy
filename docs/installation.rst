@@ -34,7 +34,7 @@ requirements is as follows:
       - >=0.25.0
       - If using default ORM
     * - sqlalchemy
-      - >=1.4.27
+      - >=2.0.13
       - If using default ORM
     * - jinja2
       - >=3.0.0

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-04 04:59+0330\n"
+"POT-Creation-Date: 2023-09-28 10:27+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,35 +136,50 @@ msgstr ""
 msgid "List of error messages related to the data in this field"
 msgstr ""
 
-#: ../../data_handlers.rst:69 00341cd902474a6e9ca30ddf46ebbf1d
+#: ../../data_handlers.rst:68 540c8fd044a44146b3a73fcd721bb6ea
+msgid "Default field classes:"
+msgstr ""
+
+#: 0f072e5ca2e64e79a4a48789447a735d backendpy.data_handler.fields.String:1 of
+msgid "String data field class"
+msgstr ""
+
+#: ../../data_handlers.rst:76 ../../data_handlers.rst:85
+#: ../../data_handlers.rst:132 ../../data_handlers.rst:186
+#: ../../data_handlers.rst:198 ../../data_handlers.rst:284
+#: 0ddc505bc6f54ab796a694dbd4278c4c
+msgid "Example:"
+msgstr ""
+
+#: ../../data_handlers.rst:102 00341cd902474a6e9ca30ddf46ebbf1d
 msgid "Data processors"
 msgstr ""
 
-#: ../../data_handlers.rst:70 d4e0fdad554b481daa5cfd1b39a9fa18
+#: ../../data_handlers.rst:103 d4e0fdad554b481daa5cfd1b39a9fa18
 msgid ""
 "Processors are classes for processing data field values that include "
 "validators and filters."
 msgstr ""
 
-#: ../../data_handlers.rst:72 56fba101d27c4a03bb91f90eee727a26
+#: ../../data_handlers.rst:105 56fba101d27c4a03bb91f90eee727a26
 msgid ""
 "A list of processors is assigned to a data field via the ``processors`` "
 "parameter and will run in sequence as specified. Also in this list, "
 "validators and filters can be used with any combination."
 msgstr ""
 
-#: ../../data_handlers.rst:76 c7a9231823a24e1482a543946d928a6c
+#: ../../data_handlers.rst:109 c7a9231823a24e1482a543946d928a6c
 msgid "Validators"
 msgstr ""
 
-#: ../../data_handlers.rst:77 567f9c43bfe046c48bc87c68dd46ffe6
+#: ../../data_handlers.rst:110 567f9c43bfe046c48bc87c68dd46ffe6
 msgid ""
 "Validators are responsible for reviewing and validating data, and a data "
 "is either passed over or, if there is a discrepancy, the defined error is"
 " returned."
 msgstr ""
 
-#: ../../data_handlers.rst:80 54a2ad7e302a4e13951b4143bba50237
+#: ../../data_handlers.rst:113 54a2ad7e302a4e13951b4143bba50237
 msgid ""
 "Developers can create and use the various validators they need by "
 "inheriting from the base "
@@ -183,13 +198,13 @@ msgstr ""
 msgid "Error message that this validator will return if it receives invalid data"
 msgstr ""
 
-#: ../../data_handlers.rst:86 e54a0a9ee64d459b991b746b33621d87
+#: ../../data_handlers.rst:119 e54a0a9ee64d459b991b746b33621d87
 msgid ""
 "Ready-made validators are also provided in the framework that can be "
 "used. The following is a list of them:"
 msgstr ""
 
-#: ../../data_handlers.rst:89 d708592c37d749d899398faa35e63332
+#: ../../data_handlers.rst:122 d708592c37d749d899398faa35e63332
 msgid "Default validators"
 msgstr ""
 
@@ -212,12 +227,6 @@ msgstr ""
 msgid "Check if the value is present among the predefined values."
 msgstr ""
 
-#: ../../data_handlers.rst:99 ../../data_handlers.rst:147
-#: ../../data_handlers.rst:163 ../../data_handlers.rst:235
-#: 0ddc505bc6f54ab796a694dbd4278c4c
-msgid "Example:"
-msgstr ""
-
 #: 147c0da884be490aaa4191fcdf746c75 backendpy.data_handler.validators.NotIn:1
 #: of
 msgid "Check if the value is not present among the predefined values."
@@ -225,7 +234,7 @@ msgstr ""
 
 #: backendpy.data_handler.validators.Length:1 fcba75a9a6b5402e9acba6e97d55a49e
 #: of
-msgid "Check data string length."
+msgid "Check data length"
 msgstr ""
 
 #: 96d75bccc34648dd8549066d5e550e63 backendpy.data_handler.validators.Limit:1
@@ -264,6 +273,11 @@ msgstr ""
 msgid "Check if the data is a valid email address."
 msgstr ""
 
+#: backendpy.data_handler.validators.PhoneNumber:1
+#: d2c87989361c4795bb281d3cdcbe6976 of
+msgid "Check if the data is an acceptable phone number"
+msgstr ""
+
 #: 9bee7cc0dac94ae98586ba2fc25b5942
 #: backendpy.data_handler.validators.DateTime:1 of
 #, python-format
@@ -281,11 +295,14 @@ msgstr ""
 msgid "Checks that the value matches a regular expression pattern."
 msgstr ""
 
-#: 74aa360eebc24c1c8ba2e2cfe75e3e84
-#: backendpy.data_handler.validators.PasswordStrength:1 of
-msgid ""
-"Checks the hardness of a password and returns an error if the password is"
-" weak."
+#: 8a617b8b2f8445feae2cecf188846807
+#: backendpy.data_handler.validators.PasswordPolicy:1 of
+msgid "Check if the data is an acceptable password"
+msgstr ""
+
+#: 8a617b8b2f8445feae2cecf188846807
+#: backendpy.data_handler.validators.UserNamePolicy:1 of
+msgid "Check if the data is an acceptable username"
 msgstr ""
 
 #: backendpy.data_handler.validators.RestrictedFile:1
@@ -295,12 +312,12 @@ msgid ""
 "predefined valid extensions and size range."
 msgstr ""
 
-#: ../../data_handlers.rst:153 243fe832dc314a5eb7af65a9c00988da
+#: aaa4db8c19db424db06ab88aa2d13cff backendpy.data_handler.validators.Exists:1
+#: of
 msgid ""
-"In this example, if the data we receive is a list of images instead of an"
-" image file, and we want these processors to be applied to all of those "
-"images, we can nest the list of processors inside another list as "
-"follows:"
+"This validator is used to check the existence of the data in the database"
+" table and can be used when using the default database helpers of the "
+"framework."
 msgstr ""
 
 #: aaa4db8c19db424db06ab88aa2d13cff backendpy.data_handler.validators.Unique:1
@@ -311,20 +328,20 @@ msgid ""
 " the framework."
 msgstr ""
 
-#: ../../data_handlers.rst:169 c622c8c79f7b4e2a9125a38d2d34b2e9
+#: ../../data_handlers.rst:204 c622c8c79f7b4e2a9125a38d2d34b2e9
 msgid ""
 "In this example, the value sent to the \"username\" field is queried "
 "directly to the \"username\" column from the \"Users\" model and checked "
 "for its uniqueness, and returns an error if it is exists."
 msgstr ""
 
-#: ../../data_handlers.rst:172 ef80f6cf78e3489fbb712d60cc3d62a3
+#: ../../data_handlers.rst:207 ef80f6cf78e3489fbb712d60cc3d62a3
 msgid ""
 "In the previous example, if the name of the model table field is "
-"\"user_id\" instead of \"username\", we should change it as follows:"
+"\"user_name\" instead of \"username\", we should change it as follows:"
 msgstr ""
 
-#: ../../data_handlers.rst:179 fde7543fda474090955d64b6cb8c6ad2
+#: ../../data_handlers.rst:214 fde7543fda474090955d64b6cb8c6ad2
 msgid ""
 "The previous example was for adding a new user with a unique username to "
 "the database; However, if our request is to edit a user, the previous "
@@ -332,7 +349,7 @@ msgid ""
 "displayed when the user's current username is resubmitted:"
 msgstr ""
 
-#: ../../data_handlers.rst:187 f17cf39dc95a411c8c9c9462eceeb292
+#: ../../data_handlers.rst:223 f17cf39dc95a411c8c9c9462eceeb292
 msgid ""
 "Note that in this example the \"id\" column of the model is used to "
 "identify each row of data. It is also necessary to send a field named "
@@ -341,17 +358,27 @@ msgid ""
 "uniqueness of the username."
 msgstr ""
 
-#: ../../data_handlers.rst:192 024e627802424f34911c553bcd2f45d0
+#: 4ddf0c3b908b4cd7996ceb469de2fb0c
+#: backendpy.data_handler.validators.IsEqualToField:1 of
+msgid "Validate the value is equal to another field value of request."
+msgstr ""
+
+#: 8a617b8b2f8445feae2cecf188846807
+#: backendpy.data_handler.validators.DictInnerTypes:1 of
+msgid "Check dictionary value types."
+msgstr ""
+
+#: ../../data_handlers.rst:238 024e627802424f34911c553bcd2f45d0
 msgid "Filters"
 msgstr ""
 
-#: ../../data_handlers.rst:193 25891c9fa9c6487083d740b2b1e9824b
+#: ../../data_handlers.rst:239 25891c9fa9c6487083d740b2b1e9824b
 msgid ""
 "Filters are responsible for modifying data as needed, and changes are "
 "made when data passes through it."
 msgstr ""
 
-#: ../../data_handlers.rst:195 8d30acdc72d842338bf06fbf4c2d7a62
+#: ../../data_handlers.rst:241 8d30acdc72d842338bf06fbf4c2d7a62
 msgid ""
 "Developers can create and use the various filters they need by inheriting"
 " from the base :class:`~backendpy.data_handler.filters.Filter` class."
@@ -361,11 +388,11 @@ msgstr ""
 msgid "The base class that will be inherited to create the data filter classes."
 msgstr ""
 
-#: ../../data_handlers.rst:201 540c8fd044a44146b3a73fcd721bb6ea
+#: ../../data_handlers.rst:247 540c8fd044a44146b3a73fcd721bb6ea
 msgid "Default filters are also can be used:"
 msgstr ""
 
-#: ../../data_handlers.rst:204 a827d0fddd9c4f8eb7fa7383b5ebd1ce
+#: ../../data_handlers.rst:250 a827d0fddd9c4f8eb7fa7383b5ebd1ce
 msgid "Default filters"
 msgstr ""
 
@@ -387,6 +414,11 @@ msgstr ""
 #: 65640fe53c5e41219c5ba2f40317b45c
 #: backendpy.data_handler.filters.ParseDateTime:1 of
 msgid "Convert datetime string to datetime object."
+msgstr ""
+
+#: backendpy.data_handler.filters.ToStringObject:1
+#: d2c87989361c4795bb281d3cdcbe6976 of
+msgid "Convert value to string object."
 msgstr ""
 
 #: backendpy.data_handler.filters.ToIntegerObject:1
@@ -419,7 +451,7 @@ msgstr ""
 msgid "Modify the image."
 msgstr ""
 
-#: ../../data_handlers.rst:245 09100572598c46ff9bb3f6abb07eb7da
+#: ../../data_handlers.rst:294 09100572598c46ff9bb3f6abb07eb7da
 msgid ""
 "In this example, a combination of validators and filters is used. First "
 "it checks that the value is not null, then it applies a filter to the "
@@ -473,5 +505,21 @@ msgstr ""
 #~ ":class:`~backendpy.data_handler.fields` module: "
 #~ "``TYPE_JSON``, ``TYPE_FORM``, ``TYPE_PARAMS``, "
 #~ "``TYPE_URL_VARS``, ``TYPE_FILES``, ``TYPE_HEADER``"
+#~ msgstr ""
+
+#~ msgid "Check data string length."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Checks the hardness of a password "
+#~ "and returns an error if the "
+#~ "password is weak."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In the previous example, if the "
+#~ "name of the model table field is"
+#~ " \"user_id\" instead of \"username\", we"
+#~ " should change it as follows:"
 #~ msgstr ""
 

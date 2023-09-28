@@ -22,13 +22,13 @@ For example:
     ...
 
     class UserCreationData(Data):
-        group = String('group', required=True, processors=[v.NotNull()], field_type=TYPE_URL_VAR)
+        group = String('group', field_type=TYPE_URL_VAR)
         first_name = String('first_name', processors=[v.Length(max=50)])
         last_name = String('last_name', processors=[v.Length(max=50)])
         email = String('email', processors=[v.EmailAddress()])
-        username = String('username', processors=[v.Unique(model=Users)])
-        password = String('password', processors=[v.PasswordStrength()])
-        password_re = String('password_re')
+        username = String('username', required=True, processors=[v.UserNamePolicy(), v.Unique(model=Users)])
+        password = String('password', required=True, processors=[v.PasswordPolicy()])
+        password_re = String('password_re', required=True, processors=[v.IsEqualToField('password')])
 
 each of the items in the example is described below.
 
@@ -64,6 +64,39 @@ The parameters of the base field class are as follows:
 
 .. autoclass:: backendpy.data_handler.fields.Field
     :noindex:
+
+Default field classes:
+
+.. autoclass:: backendpy.data_handler.fields.String
+    :noindex:
+
+.. autoclass:: backendpy.data_handler.fields.List
+    :noindex:
+
+Example:
+
+.. code-block:: python
+
+    emails = List('emails', item_field=String(processors=[v.NotNull(), v.EmailAddress()]))
+
+.. autoclass:: backendpy.data_handler.fields.Dict
+    :noindex:
+
+Example:
+
+.. code-block:: python
+
+    class AddressData(Data):
+        country = String('country', required=True, field_type=None)
+        state = String('state', required=True, field_type=None)
+        city = String('city', required=True, field_type=None)
+        street = String('street', field_type=None)
+        zip_code = String('zip_code', required=True, field_type=None)
+
+    class UserCreationData(Data):
+        ...
+        address = Dict('address', data_class=AddressData)
+
 
 Data processors
 ---------------
@@ -129,6 +162,9 @@ Example:
 .. autoclass:: backendpy.data_handler.validators.EmailAddress
     :noindex:
 
+.. autoclass:: backendpy.data_handler.validators.PhoneNumber
+    :noindex:
+
 .. autoclass:: backendpy.data_handler.validators.DateTime
     :noindex:
 
@@ -138,7 +174,10 @@ Example:
 .. autoclass:: backendpy.data_handler.validators.MatchRegex
     :noindex:
 
-.. autoclass:: backendpy.data_handler.validators.PasswordStrength
+.. autoclass:: backendpy.data_handler.validators.PasswordPolicy
+    :noindex:
+
+.. autoclass:: backendpy.data_handler.validators.UserNamePolicy
     :noindex:
 
 .. autoclass:: backendpy.data_handler.validators.RestrictedFile
@@ -150,12 +189,8 @@ Example:
 
     image = String('image', processors=[v.NotNull(), v.RestrictedFile(extensions=('jpg', 'jpeg', 'png'), min_size=1, max_size=2048)])
 
-In this example, if the data we receive is a list of images instead of an image file, and we want these processors
-to be applied to all of those images, we can nest the list of processors inside another list as follows:
-
-.. code-block:: python
-
-    images = String('images', processors=[list((v.NotNull(), v.RestrictedFile(extensions=('jpg', 'jpeg', 'png'), min_size=1, max_size=2048)))])
+.. autoclass:: backendpy.data_handler.validators.Exists
+    :noindex:
 
 .. autoclass:: backendpy.data_handler.validators.Unique
     :noindex:
@@ -189,6 +224,16 @@ Note that in this example the "id" column of the model is used to identify each 
 to send a field named "id" with the value of the current row id of this user in the database in the submitted data
 in order to exclude this row when checking the uniqueness of the username.
 
+.. autoclass:: backendpy.data_handler.validators.IsEqualToField
+    :noindex:
+
+.. autoclass:: backendpy.data_handler.validators.DictInnerTypes
+    :noindex:
+
+.. autoclass:: backendpy.data_handler.validators.NoDuplicateDictItemValueInList
+    :noindex:
+
+
 Filters
 .......
 Filters are responsible for modifying data as needed, and changes are made when data passes through it.
@@ -213,6 +258,9 @@ Default filters
     :noindex:
 
 .. autoclass:: backendpy.data_handler.filters.ParseDateTime
+    :noindex:
+
+.. autoclass:: backendpy.data_handler.filters.ToStringObject
     :noindex:
 
 .. autoclass:: backendpy.data_handler.filters.ToIntegerObject

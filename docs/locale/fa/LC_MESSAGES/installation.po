@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Backendpy \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-25 22:51+0330\n"
+"POT-Creation-Date: 2023-09-28 10:45+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jalil Hamdollahi Oskouei <jalil.hamdollahi@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,7 +90,7 @@ msgid "sqlalchemy"
 msgstr ""
 
 #: ../../installation.rst:37 8ec68aae8d974bb8a36848eeb38b7827
-msgid ">=1.4.27"
+msgid ">=2.0.13"
 msgstr ""
 
 #: ../../installation.rst:39 dba7f6288cd54a9bb32bc83ee205010b
@@ -160,4 +160,7 @@ msgstr ""
 
 #~ msgid "If using the HttpClient class of the backendpy.utils.http"
 #~ msgstr "‫در صورت استفاده از کلاس HttpClient از ماژول backendpy.utils.http‬"
+
+#~ msgid ">=1.4.27"
+#~ msgstr ""
 

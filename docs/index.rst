@@ -17,8 +17,6 @@ Overview
    projects
    apps
    deployment
-.. cli
-.. api
 
 
 Indices and tables
