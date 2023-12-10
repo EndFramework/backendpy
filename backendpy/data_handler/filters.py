@@ -160,7 +160,7 @@ class ModifyImage(Filter):
             if im.mode != self.mode:
                 im = im.convert(self.mode)
             if self.max_size is not None:
-                thumb_im = im.thumbnail(self.max_size, Image.ANTIALIAS)
+                thumb_im = im.thumbnail(self.max_size, Image.Resampling.LANCZOS)
                 if thumb_im is not None:
                     im = thumb_im
             with BytesIO() as f_out:
