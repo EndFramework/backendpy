@@ -180,21 +180,24 @@ class Backendpy:
                             except Exception as e:
                                 LOGGER.exception(f'Handler error: {e}')
                                 response = Error(1000)
-                            else:
-                                # Execute response middlewares
-                                try:
-                                    response = await self._middleware_processor.run_process_response(
-                                        request=request,
-                                        response=response)
-                                except ExceptionResponse as r:
-                                    response = r
-                                except Exception as e:
-                                    LOGGER.exception(f'Response middleware error: {e}')
-                                    response = Error(1000)
+
+        # Execute response middlewares
+        try:
+            response = await self._middleware_processor.run_process_response(
+                request=request,
+                response=response)
+        except ExceptionResponse as r:
+            response = r
+        except Exception as e:
+            LOGGER.exception(f'Response middleware error: {e}')
+            response = Error(1000)
+
+        # Execute hooks
         if isinstance(response, ExceptionResponse):
             await self.execute_event('exception_response')
         else:
             await self.execute_event('success_response')
+
         # Call and return response instance
         return await response(request)
 
