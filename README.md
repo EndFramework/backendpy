@@ -1,4 +1,3 @@
-![alt text](https://github.com/EndFramework/backendpy/blob/master/assets/backendpy_logo_small.png?raw=true)
 
 # Backendpy
 Python web framework for building the backend of your project!
